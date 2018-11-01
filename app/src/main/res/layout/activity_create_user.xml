@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listday"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:background="#E2E4DF"
+    >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/line1"
+            android:padding="4dp"
+            android:layout_marginBottom="6dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="120dp"
+                    style="@style/CodeFontCreate"
+                    android:text="Nombre "
+                    />
+                <EditText
+                    style="@style/CodeFontInput"
+                    android:id="@+id/user_name"
+                    />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    style="@style/CodeFontCreate"
+                    android:layout_width="120dp"
+                    android:text="Teléfono   "
+                    />
+                <EditText
+                    style="@style/CodeFontInput"
+                    android:id="@+id/user_phone"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/CodeFontCreate"
+                    android:text="Dirección "
+                    android:layout_width="120dp"
+                    />
+
+                <EditText
+                    style="@style/CodeFontInput"
+                    android:id="@+id/user_address"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/CodeFontCreate"
+                    android:text="Barrio  "
+                    android:layout_width="120dp"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:orientation="horizontal">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:id="@+id/nei"
+                        style="@style/CodeFontInput"
+
+                        />
+
+                    <ImageView
+                        android:layout_width="40sp"
+                        android:padding="2dp"
+                        android:layout_marginLeft="4dp"
+                        android:id="@+id/add_neigh"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/add_rose"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/select_photo"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="4dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_below="@+id/line1"
+        card_view:cardBackgroundColor="@color/colorDialogButton"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="1dp"
+        card_view:cardMaxElevation="1dp"
+        card_view:contentPaddingBottom="2dp"
+        card_view:contentPaddingLeft="4dp"
+        card_view:contentPaddingRight="4dp"
+        card_view:contentPaddingTop="2dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text=" "
+                android:textColor="#FFFF"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:src="@drawable/camera"
+
+                />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/person_color"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        />
+
+
+
+</RelativeLayout>
+
+<!--
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listday"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:background="#E2E4DF"
+    >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/line1"
+            android:padding="4dp"
+            android:layout_marginBottom="6dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+
+
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/CodeFontCreate"
+
+                android:text="Nombre"
+                />
+            <EditText
+                style="@style/CodeFontInput"
+                android:id="@+id/user_name"
+                />
+
+            <TextView
+                style="@style/CodeFontCreate"
+                android:text="Teléfono"
+                />
+            <EditText
+                style="@style/CodeFontInput"
+                android:id="@+id/user_phone"
+                />
+
+            <TextView
+                style="@style/CodeFontCreate"
+                android:text="Dirección"
+                />
+
+            <EditText
+                style="@style/CodeFontInput"
+                android:id="@+id/user_address"
+                />
+
+            <TextView
+                style="@style/CodeFontCreate"
+                android:text="Barrio"
+                />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingLeft="2dp"
+                android:orientation="horizontal">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:id="@+id/nei"
+                    style="@style/CodeFontInput"
+
+                    />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/select_photo"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="4dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_below="@+id/line1"
+        card_view:cardBackgroundColor="@color/colorDialogButton"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="1dp"
+        card_view:cardMaxElevation="1dp"
+        card_view:contentPaddingBottom="2dp"
+        card_view:contentPaddingLeft="4dp"
+        card_view:contentPaddingRight="4dp"
+        card_view:contentPaddingTop="2dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text=" "
+                android:textColor="#FFFF"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:src="@drawable/camera"
+
+                />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/person_color"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        />
+
+
+
+</RelativeLayout>
+-->

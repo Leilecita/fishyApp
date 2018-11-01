@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <!-- <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+     <color name="colorAccent">#FF4081</color>
+     -->
+    <color name="colorPrimary">#103041</color>
+    <color name="colorPrimaryDark">#133a4e</color>
+
+    <color name="colorAccent">#7F7359</color>
+
+    <!--<color name="colorDialogButton"> #7a47b1</color>
+    <color name="word_info">#7d47b2</color>
+
+    -->
+    <color name="colorDialogButton"> #7F7359</color>
+    <color name="edithText">#310d58</color>
+
+   <!--
+   <color name="word">#142831</color>
+   -->
+ <color name="word">#252525</color>
+    <color name="word_clear">#807e7e</color>
+
+    <color name="word_info">#7F7359</color>
+
+    <color name="background_create">#d9d1d1</color>
+    <color name="text_create">#ab3059</color>
+
+    <color name="title_dialog">#FF4081</color>
+    <color name="title_dialog_helper">#252525</color>
+
+    <color name="title_dialog_info">#252525</color>
+    <color name="verde">#1b5b48</color>
+    <color name="rojo">#a71528</color>
+
+    <color name="borrador">#534f4f</color>
+
+    <color name="colorPrimaryFishy">#3F51B5</color>
+
+    <color name="colorPrimaryDarkFishy">#142831</color>
+    <color name="FishyBlue">#103041</color>
+    <color name="FishyRose">#DAB6AA</color>
+    <color name="FishyRose2">#E3C2B9</color>
+    <color name="FishyLetra">#7F7359</color>
+    <color name="FishyBlanco">#E3E4DF</color>
+    <color name="FishyBlanco2">#E2E4DF</color>
+
+</resources>

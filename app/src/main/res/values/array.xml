@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <string-array name="zone_array">
+        <item>Playa grande</item>
+        <item>Moron</item>
+        <item>Alsina</item>
+    </string-array>
+
+
+</resources>

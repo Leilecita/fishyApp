@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/listado">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/line1"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line2"
+            android:padding="8dp"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Día de entrega  "
+                android:paddingLeft="4dp"
+                android:textSize="18dp"
+                android:textColor="#000"
+
+
+                />
+            <TextView
+                android:id="@+id/deliver_date"
+                android:layout_height="30dp"
+                android:paddingLeft="8dp"
+                android:layout_marginLeft="8dp"
+                style="@style/Widget.Design.TextInputLayout"
+                android:background="@drawable/rec_find"
+                android:layout_width="match_parent"
+                android:hint="Ingrese fecha"
+                android:textColor="@color/word"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:inputType="textCapWords" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner_zone"
+                android:layout_width="fill_parent"
+                android:paddingLeft="8dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:id="@+id/spinner_time"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/divisor"
+        android:layout_below="@+id/line1"
+        style="@style/DivisorCategoryStyle"
+        android:layout_marginBottom="8dp"
+        />
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_orders"
+        android:layout_below="@+id/divisor"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_save"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="80dp"
+        android:src="@drawable/save" />
+
+
+
+</RelativeLayout>
+<!--
+
+<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="4dp"
+                android:layout_marginLeft="4dp"
+                android:id="@+id/lineZone"
+
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="8dp"
+                    android:textSize="18sp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/zone"
+                    android:text="Zona"
+                    />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/expand"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/lineTime"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/time"
+                    android:textSize="18sp"
+                    android:paddingLeft="8dp"
+                    android:text="Horario"
+                    />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/expand"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+-->

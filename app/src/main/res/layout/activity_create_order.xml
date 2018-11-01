@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/create_order">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/deliverDate"
+            android:layout_below="@id/title"
+            android:padding="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/deliver_date"
+                android:layout_height="30dp"
+                android:paddingLeft="8dp"
+                style="@style/Widget.Design.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/word"
+                android:gravity="center_vertical"
+                android:textColorHint="@color/word"
+                android:textSize="16sp"
+                android:hint="Día de entrega"
+                android:layout_marginRight="4dp"
+                android:background="@drawable/rec_text_edit"
+                android:inputType="textCapWords" />
+            <TextView
+                android:id="@+id/delivery_time"
+                android:layout_height="30dp"
+                android:paddingLeft="8dp"
+                style="@style/Widget.Design.TextInputLayout"
+                android:textColorHint="@color/word"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/word"
+                android:hint="Horario"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:background="@drawable/rec_text_edit"
+                android:inputType="textCapWords" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/list_items2"
+            android:layout_margin="10dp"
+            android:layout_below="@id/deliverDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            card_view:cardCornerRadius="4dp"
+            card_view:cardMaxElevation="4dp"
+            card_view:cardElevation="2dp"
+            card_view:contentPadding="8dp"
+            >
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rel"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/name"
+                    android:padding="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="Fernando castro"
+                    android:textColor="@color/word"
+                    android:layout_marginBottom="4dp"
+                    />
+
+                <TextView
+                    android:layout_below="@+id/name"
+                    android:id="@+id/style"
+                    android:layout_width="match_parent"
+                    android:layout_margin="0dp"
+                    style="@style/DivisorCategoryStyle"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list_items"
+                    android:layout_below="@+id/style"
+                    android:layout_width="match_parent"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="25dp"
+                    android:paddingLeft="2dp"
+                    android:layout_height="match_parent"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/total_amount"
+                    android:textColor="@color/word"
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:textSize="17sp"
+                    android:text="$"
+                    android:layout_alignBottom="@id/list_items"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:id="@+id/total_amount"
+                    android:layout_alignRight="@id/list_items"
+                    android:layout_alignBottom="@id/list_items"
+                    android:textStyle="bold"
+                    android:text="0.0"
+                    android:textSize="17sp"
+                    android:textColor="@color/word"
+                    android:layout_marginRight="8dp"
+                    />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_products"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="4dp"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>
