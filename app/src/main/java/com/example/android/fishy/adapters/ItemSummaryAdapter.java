@@ -17,7 +17,7 @@ import com.example.android.fishy.network.models.reportsOrder.SummaryDay;
 
 import java.util.List;
 
-public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapter.ViewHolder>{
+public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapter.ViewHolder> {
 
     private Context mContext;
 

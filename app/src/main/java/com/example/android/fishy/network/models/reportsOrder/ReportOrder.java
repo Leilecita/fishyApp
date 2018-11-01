@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ReportOrder {
 
     public Long order_id;
+    public Long user_id;
     public String name;
     public String address;
     public String neighborhood;
@@ -23,8 +24,9 @@ public class ReportOrder {
         return address;
     }
 
-    public ReportOrder(Long order_id,String name, String address ,String neighbor,String phone,String deliver_date,Double total_amount, ArrayList<ReportItemOrder> reports,String state,Integer priority){
+    public ReportOrder(Long order_id,Long user_id,String name, String address ,String neighbor,String phone,String deliver_date,Double total_amount, ArrayList<ReportItemOrder> reports,String state,Integer priority){
         this.order_id=order_id;
+        this.user_id=user_id;
         this.total_amount=total_amount;
         this.name=name;
         this.address=address;

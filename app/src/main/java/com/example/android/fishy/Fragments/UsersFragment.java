@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.fishy.CustomLoadingListItemCreator;
+import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.R;
 import com.example.android.fishy.activities.CreateUserActivity;
 import com.example.android.fishy.adapters.UserAdapter;
@@ -27,9 +28,9 @@ import com.paginate.recycler.LoadingListItemSpanLookup;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import android.app.SearchManager;
+
 import android.support.v7.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
+
 
 
 public class UsersFragment extends BaseFragment implements Paginate.Callbacks{

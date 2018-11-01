@@ -3,33 +3,29 @@ package com.example.android.fishy.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.example.android.fishy.CurrentValuesHelper;
 import com.example.android.fishy.DialogHelper;
+import com.example.android.fishy.Events.EventOrderState;
+import com.example.android.fishy.Events.EventReloadSummaryDay;
 import com.example.android.fishy.Interfaces.ItemTouchHelperAdapter;
-import com.example.android.fishy.Interfaces.ItemTouchHelperViewHolder;
 import com.example.android.fishy.Interfaces.OnStartDragListener;
-import com.example.android.fishy.ItemViewHolder;
 import com.example.android.fishy.R;
 
-import com.example.android.fishy.ValidatorHelper;
 import com.example.android.fishy.activities.CreateOrderActivity;
 import com.example.android.fishy.network.ApiClient;
 import com.example.android.fishy.network.Error;
@@ -38,11 +34,13 @@ import com.example.android.fishy.network.models.Order;
 import com.example.android.fishy.network.models.reportsOrder.ReportItemOrder;
 import com.example.android.fishy.network.models.reportsOrder.ReportOrder;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdapter.ViewHolder> implements ItemTouchHelperAdapter {
+
 
     private Context mContext;
     private boolean mOnlyAdress;
@@ -239,12 +237,14 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
     private void finishOrder(final ReportOrder r, final Integer position){
 
+
         ApiClient.get().finishOrder(r.order_id, new GenericCallback<Order>() {
             @Override
             public void onSuccess(Order data) {
                 r.state=data.state;
                 updateItem(position,r);
-                System.out.println("se ha actualizado");
+
+                EventBus.getDefault().post(new EventReloadSummaryDay(CurrentValuesHelper.get().getLastDate()));
             }
 
             @Override
@@ -279,6 +279,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                     @Override
                     public void onSuccess(Void data) {
                         removeItem(position);
+                        EventBus.getDefault().post(new EventOrderState(r.user_id,"deleted"));
                     }
                     @Override
                     public void onError(Error error) {

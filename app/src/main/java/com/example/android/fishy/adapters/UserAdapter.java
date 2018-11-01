@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.android.fishy.DialogHelper;
+import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.R;
 import com.example.android.fishy.activities.CreateOrderActivity;
 import com.example.android.fishy.activities.PhotoEdithActivity;
@@ -31,6 +33,9 @@ import com.example.android.fishy.network.Error;
 import com.example.android.fishy.network.GenericCallback;
 import com.example.android.fishy.network.models.Neighborhood;
 import com.example.android.fishy.network.models.User;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +50,40 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
     private ArrayAdapter<String> adapter;
     private boolean validateNeigh;
 
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        EventBus.getDefault().unregister(this);
+    }
+
     public UserAdapter(Context context, List<User> users){
         setItems(users);
         mContext = context;
         validateNeigh=false;
+
+
     }
 
+
+    @Subscribe
+    public void onEvent(EventOrderState event){
+        for(int i=0;i<getListUser().size();++i){
+            if(getListUser().get(i).equals(event.getIdUser())){
+                if(event.mState.equals("deleted")){
+                    getListUser().get(i).pendient_orders-=1;
+                }else if(event.mState.equals("created")){
+                    getListUser().get(i).pendient_orders+=1;
+                }
+                updateItem(i,getListUser().get(i));
+            }
+        }
+    }
     public UserAdapter(){
 
     }
@@ -79,6 +112,8 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         // Create a new View
         View v = LayoutInflater.from(mContext).inflate(R.layout.card_item_user,parent,false);
         ViewHolder vh = new ViewHolder(v);
+
+
 
         return vh;
     }

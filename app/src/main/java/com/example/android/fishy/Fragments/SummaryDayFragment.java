@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,9 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.fishy.CurrentValuesHelper;
-import com.example.android.fishy.Interfaces.Refreshable;
+import com.example.android.fishy.Events.EventReloadSummaryDay;
 import com.example.android.fishy.R;
 import com.example.android.fishy.adapters.ItemSummaryAdapter;
 import com.example.android.fishy.network.ApiClient;
@@ -25,11 +25,14 @@ import com.example.android.fishy.network.models.reportsOrder.SummaryDay;
 import com.example.android.fishy.network.models.reportsOrder.ValuesDay;
 import com.paginate.Paginate;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class SummaryDayFragment extends BaseFragment{
+public class SummaryDayFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
     private ItemSummaryAdapter mAdapter;
@@ -77,8 +80,7 @@ public class SummaryDayFragment extends BaseFragment{
         mRecyclerView.setAdapter(mAdapter);
         setHasOptionsMenu(true);
 
-        listItemsDay();
-        getValuesDay();
+        loadSummaryDay();
 
         mDeliver_date= mRootView.findViewById(R.id.deliver_date);
         mSumDone= mRootView.findViewById(R.id.sumDone);
@@ -93,8 +95,38 @@ public class SummaryDayFragment extends BaseFragment{
             }
         });
 
+
+        EventBus.getDefault().register(this);
+
        // implementsPaginate();
         return mRootView;
+    }
+
+    public void loadSummaryDay(){
+        listItemsDay();
+        getValuesDay();
+    }
+
+    @Subscribe
+    public void onEvent(EventReloadSummaryDay event){
+        if(event.getMessage().equals(CurrentValuesHelper.get().getSummaryDate())){
+            loadSummaryDay();
+            Toast.makeText(getContext(), event.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     private void getValuesDay(){

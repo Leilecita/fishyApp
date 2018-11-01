@@ -1,9 +1,11 @@
 package com.example.android.fishy.adapters;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.fishy.DialogHelper;
+import com.example.android.fishy.Events.EventProductState;
 import com.example.android.fishy.Interfaces.OnAddItemListener;
 import com.example.android.fishy.R;
 
@@ -36,6 +39,10 @@ import com.example.android.fishy.network.models.reportsOrder.ReportOrder;
 import java.util.ArrayList;
 import java.util.List;
 import android.view.WindowManager.LayoutParams;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapter.ViewHolder> {
 
     private OnAddItemListener onAddItemOrderLister = null;
@@ -52,6 +59,31 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
         mContext = context;
         mOrderId=90L;
     }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(EventProductState event){
+        for(int i=0;i<getListProduct().size();++i){
+            if(getListProduct().get(i).id.equals(event.getIdProduct())){
+                if(event.mState.equals("edited")){
+                    getListProduct().get(i).stock=event.getStock();
+                    updateItem(i,getListProduct().get(i));
+                }
+            }
+        }
+    }
+
 
     public void setOrderId(Long orderId){
         mOrderId=orderId;
@@ -163,6 +195,7 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
 
 
                     }else{
+                        //dialog.dismiss();
                         loadStock(p.fish_name);
                        // DialogHelper.get().showMessage(p.fish_name,"No hay stock disponible para este producto",mContext);
 
@@ -218,9 +251,13 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
 
     private void startProductsActivity(){
 
-        
-        mContext.startActivity(new Intent(mContext, ProductsActivity.class));
+        Intent intent = new Intent(mContext, ProductsActivity.class);
+        ((Activity) mContext).startActivityForResult(intent, 1);
+
     }
+
+
+
 
 }
 

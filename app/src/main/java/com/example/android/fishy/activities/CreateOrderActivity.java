@@ -2,12 +2,10 @@ package com.example.android.fishy.activities;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,18 +14,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.fishy.DialogHelper;
+import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.Interfaces.OnAddItemListener;
 import com.example.android.fishy.R;
 import com.example.android.fishy.adapters.ItemOrderAdapter;
-import com.example.android.fishy.adapters.ProductAdapter;
 import com.example.android.fishy.adapters.ProductOrderAdapter;
 import com.example.android.fishy.network.ApiClient;
 import com.example.android.fishy.network.Error;
@@ -38,6 +33,8 @@ import com.example.android.fishy.network.models.Order;
 import com.example.android.fishy.network.models.Product;
 import com.example.android.fishy.network.models.User;
 import com.example.android.fishy.network.models.reportsOrder.ReportOrder;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -235,7 +232,7 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
             ApiClient.get().deleteOrder(mOrder.id, new GenericCallback<Void>() {
                 @Override
                 public void onSuccess(Void data) {
-
+                    EventBus.getDefault().post(new EventOrderState(mOrder.user_id,"deleted"));
                 }
 
                 @Override
@@ -375,6 +372,8 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
                         editItems();
                         Toast.makeText(CreateOrderActivity.this,"El pedido ha sido actualizado ",Toast.LENGTH_LONG).show();
                     }
+
+                    EventBus.getDefault().post(new EventOrderState(mOrder.user_id,"created"));
                     finish();
                 }else{
                     Toast.makeText(this, "No se ha elegido día de entrega",Toast.LENGTH_LONG).show();
@@ -424,4 +423,18 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
 
         return super.onKeyDown(keyCode, event);
     }
+
+  /*  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if (resultCode == -1) {
+                String returnedResult = data.getData().toString();
+              // mAdapter.notifyDataSetChanged();
+               mAdapter.clear();
+               listProducts();
+                // OR
+                // String returnedResult = data.getDataString();
+            }
+        }
+    }*/
 }

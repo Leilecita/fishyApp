@@ -5,10 +5,12 @@ public class CurrentValuesHelper {
 
     private static CurrentValuesHelper INSTANCE = new CurrentValuesHelper();
 
+    //OrdersFragment
     private String mLastDate;
     private String mLastTimeZone;
     private String mLastZone;
     private boolean mOnlyAddress;
+    //SummaryDay
     private String mSummaryDate;
 
     private CurrentValuesHelper(){

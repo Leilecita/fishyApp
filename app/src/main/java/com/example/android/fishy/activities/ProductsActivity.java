@@ -2,6 +2,8 @@ package com.example.android.fishy.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
@@ -62,7 +64,6 @@ public class ProductsActivity extends BaseActivity {
         });
 
         listProducts();
-
     }
 
     private void createProduct(){

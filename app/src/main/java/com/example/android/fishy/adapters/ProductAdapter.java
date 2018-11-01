@@ -3,6 +3,7 @@ package com.example.android.fishy.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.fishy.DialogHelper;
+import com.example.android.fishy.Events.EventOrderState;
+import com.example.android.fishy.Events.EventProductState;
 import com.example.android.fishy.R;
 import com.example.android.fishy.ValidatorHelper;
 import com.example.android.fishy.network.ApiClient;
@@ -23,10 +26,12 @@ import com.example.android.fishy.network.Error;
 import com.example.android.fishy.network.GenericCallback;
 import com.example.android.fishy.network.models.Product;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHolder> {
-
 
     private Context mContext;
 
@@ -38,7 +43,6 @@ public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHold
     public ProductAdapter(){
 
     }
-
 
     public List<Product> getListProduct(){
         return getList();
@@ -58,8 +62,6 @@ public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHold
             price= v.findViewById(R.id.price_product);
             stock= v.findViewById(R.id.stock_product);
             options=v.findViewById(R.id.options);
-
-
         }
     }
 
@@ -229,6 +231,7 @@ public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHold
                     ApiClient.get().putProduct(p, new GenericCallback<Product>() {
                         @Override
                         public void onSuccess(Product data) {
+                            EventBus.getDefault().post(new EventProductState(p.id,"edited",p.stock));
                             Toast.makeText(dialogView.getContext(), " El producto "+data.fish_name +" ha sido modificado ", Toast.LENGTH_LONG).show();
                         }
 

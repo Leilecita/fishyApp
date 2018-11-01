@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.android.fishy.CurrentValuesHelper;
 import com.example.android.fishy.CustomLoadingListItemCreator;
 import com.example.android.fishy.DialogHelper;
+import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.Interfaces.OnStartDragListener;
 import com.example.android.fishy.R;
 import com.example.android.fishy.SimpleItemTouchHelperCallback;
@@ -37,6 +38,9 @@ import com.example.android.fishy.network.models.reportsOrder.ReportOrder;
 import com.paginate.Paginate;
 import com.paginate.recycler.LoadingListItemSpanLookup;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -49,6 +53,8 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
     private RecyclerView.LayoutManager layoutManager;
     private View mRootView;
     private TextView mDeliver_date;
+    private TextView mZone;
+    private TextView mTime;
     private String dateToShow;
     private ItemTouchHelper mItemTouchHelper;
 
@@ -109,8 +115,6 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
         mDeliver_date= mRootView.findViewById(R.id.deliver_date);
 
-
-
         loadTextDate();
 
         ApiClient.get().getNeighborhoods(new GenericCallback<List<Neighborhood>>() {
@@ -126,6 +130,8 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
         implementsPaginate();
 
+        EventBus.getDefault().register(this);
+
         save= mRootView.findViewById(R.id.fab_save);
         save.setVisibility(View.INVISIBLE);
         save.setOnClickListener(new View.OnClickListener() {
@@ -137,8 +143,27 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
         return mRootView;
     }
-    private void savePriorities(){
 
+    @Subscribe
+    public void onEvent(EventOrderState event){
+        if(event.mState.equals("created")){
+            listOrders(mQuery,CurrentValuesHelper.get().getLastZone(),CurrentValuesHelper.get().getLastTimeZone());
+        }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    private void savePriorities(){
         List<ReportOrder> list= mAdapter.getList();
         for(int i=0; i<list.size();++i){
             ApiClient.get().updatePriority(list.get(i).order_id, i, new GenericCallback<Order>() {
@@ -180,6 +205,11 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
         adapter_time.setDropDownViewResource(R.layout.spinner_item);
         spinnerTime.setAdapter(adapter_time);
+
+        int spinnerPosition = adapter.getPosition(CurrentValuesHelper.get().getLastZone());
+        spinner.setSelection(spinnerPosition);
+        int spinnerPositionTime = adapter_time.getPosition(CurrentValuesHelper.get().getLastTimeZone());
+        spinnerTime.setSelection(spinnerPositionTime);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -414,64 +444,3 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
         return !hasMoreItems;
     }
 }
-
-
-/*
-
- timeZone ="Horario"
- Zone = "Todos"
- deliver_date = null
- query=""
-
-  LinearLayout linZone=mRootView.findViewById(R.id.lineZone);
-        LinearLayout linTime=mRootView.findViewById(R.id.lineTime);
-        final TextView zone=mRootView.findViewById(R.id.zone);
-        final TextView time=mRootView.findViewById(R.id.time);
-
-        linZone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                final String[] items = {
-                        "Playa Grande", "Moron", "Todos"
-                };
-                builder.setTitle("Seleccione zona");
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        String zoneSelected=items[item];
-                        zone.setText(zoneSelected);
-                        CurrentValuesHelper.get().setLastZone(zoneSelected);
-                        listOrderByZoneAndTime(zoneSelected, CurrentValuesHelper.get().getLastTimeZone());
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        });
-
-        linTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                final String[] items = {
-                        "Todos", "Mañana", "Mediodía","Tarde"
-                };
-                builder.setTitle("Seleccione horario");
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        String timeSelected=items[item];
-                        time.setText(timeSelected);
-                        CurrentValuesHelper.get().setLastTimeZone(timeSelected);
-                        listOrderByZoneAndTime(CurrentValuesHelper.get().getLastZone(),timeSelected);
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-
-        });
-
-
-
-
- */
