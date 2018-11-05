@@ -3,6 +3,7 @@ package com.example.android.fishy.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.fishy.DialogHelper;
+import com.example.android.fishy.Events.EventItemOrderState;
+import com.example.android.fishy.Events.EventProductState;
 import com.example.android.fishy.Interfaces.OnAddItemListener;
 import com.example.android.fishy.R;
 import com.example.android.fishy.ValidatorHelper;
@@ -23,6 +26,9 @@ import com.example.android.fishy.network.Error;
 import com.example.android.fishy.network.GenericCallback;
 import com.example.android.fishy.network.models.ItemOrder;
 import com.example.android.fishy.network.models.Product;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -35,21 +41,19 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
     }
 
     private Context mContext;
-    private boolean isUpdating;
 
     public ItemOrderAdapter(Context context, List<ItemOrder> items){
         setItems(items);
         mContext = context;
-        this.isUpdating=false;
     }
 
     public ItemOrderAdapter(){
 
     }
 
-    public void setIsUpdating(boolean value){
-        this.isUpdating=value;
-    }
+   // public void setIsUpdating(boolean value){
+    //    this.isUpdating=value;
+    //}
 
 
     public List<ItemOrder> getListItem(){
@@ -82,11 +86,37 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
         return vh;
     }
 
+   /* @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(EventItemOrderState event){
+        ItemOrder i= new ItemOrder(event.product_id,event.order_id,event.quantity);
+        i.id=event.mId;
+
+        pushItem(i);
+
+
+    }*/
+
     private void clearViewHolder(ItemOrderAdapter.ViewHolder vh){
         if(vh.name!=null)
             vh.name.setText(null);
         if(vh.cant!=null)
             vh.cant.setText(null);
+        if(vh.price!=null)
+            vh.price.setText(null);
+        if(vh.total_price!=null)
+            vh.total_price.setText(null);
 
     }
 
@@ -116,12 +146,10 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
                 holder.name.setText(data.fish_name);
 
                 Double cant=currentItem.quantity;
-
                 holder.cant.setText(getIntegerQuantity(cant));
-                String text="($"+String.valueOf(data.price)+")";
+                String text="("+getIntegerQuantity(data.price)+")";
                 holder.price.setText(text);
-
-                holder.total_price.setText("$"+String.valueOf(cant*data.price));
+                holder.total_price.setText("$"+getIntegerQuantity(cant*data.price));
 
             }
             @Override
@@ -133,18 +161,13 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 PopupMenu popup = new PopupMenu(mContext, holder.itemView);
-                popup.getMenuInflater().inflate(R.menu.menu_products, popup.getMenu());
+                popup.getMenuInflater().inflate(R.menu.menu_product_order, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.menu_edit:
-                                edithItem(currentItem,position,holder);
-                                return true;
                             case R.id.menu_delete:
-
                                     deleteItem(currentItem,position,holder);
                                 return true;
                             default:
@@ -153,8 +176,6 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
                     }
                 });
                 popup.show();
-
-
             }
         });
     }
@@ -182,11 +203,11 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
                ApiClient.get().deleteItemOrder(currentItem.id, new GenericCallback<Void>() {
                    @Override
                    public void onSuccess(Void data) {
+                       Toast.makeText(mContext,"El producto ha sido borrado",Toast.LENGTH_SHORT).show();
                        removeItem(position);
-                       if(onAddItemOrderLister!=null){
-                           onAddItemOrderLister.onAddItemToOrder();
+                      if(onAddItemOrderLister!=null){
+                           onAddItemOrderLister.onAddItemToOrder(0l,0l,0l,0d,false);
                        }
-
                    }
 
                    @Override
@@ -207,7 +228,8 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
 
     }
 
-    private void edithItem(final ItemOrder currentItem,final Integer position,ViewHolder holder ){
+    //hay que chequear la cantidad de stock que queda en el producto.
+  /*  private void edithItem(final ItemOrder currentItem,final Integer position,ViewHolder holder ){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
@@ -244,9 +266,11 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
                         ApiClient.get().putItemOrder(currentItem, new GenericCallback<ItemOrder>() {
                             @Override
                             public void onSuccess(ItemOrder data) {
+
+
                                 updateItem(position,currentItem);
                                 if(onAddItemOrderLister!=null){
-                                    onAddItemOrderLister.onAddItemToOrder();
+                                    onAddItemOrderLister.onAddItemToOrder(0l,0l,0l,0d,false);
                                 }
                             }
                             @Override
@@ -271,6 +295,7 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
             }
         });
         dialog.show();
-    }
+    }*/
+
 
 }

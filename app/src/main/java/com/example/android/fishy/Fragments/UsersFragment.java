@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.fishy.CurrentValuesHelper;
 import com.example.android.fishy.CustomLoadingListItemCreator;
 import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.R;
@@ -30,7 +31,7 @@ import java.util.List;
 import java.util.UUID;
 
 import android.support.v7.widget.SearchView;
-
+import android.widget.Toast;
 
 
 public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
@@ -55,6 +56,11 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
 
     public int getVisibility(){
         return 0;
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 
     public UsersFragment() {

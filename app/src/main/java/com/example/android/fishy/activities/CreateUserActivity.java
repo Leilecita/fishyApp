@@ -219,7 +219,7 @@ public class CreateUserActivity extends BaseActivity{
                         }catch (Exception e){
                         }
                     }
-
+                    Toast.makeText(this,"Creando nuevo usuario, aguarde un momento",Toast.LENGTH_LONG).show();
                     ApiClient.get().postUser(newUser, new GenericCallback<User>() {
                         @Override
                         public void onSuccess(User data) {
@@ -232,6 +232,7 @@ public class CreateUserActivity extends BaseActivity{
                             DialogHelper.get().showMessage("Error","Error al crear el usuario",CreateUserActivity.this);
                         }
                     });
+                    //finish();
                     return true;
                 }else{
 

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.fishy.CurrentValuesHelper;
-import com.example.android.fishy.Events.EventReloadSummaryDay;
+import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.R;
 import com.example.android.fishy.adapters.ItemSummaryAdapter;
 import com.example.android.fishy.network.ApiClient;
@@ -63,6 +63,10 @@ public class SummaryDayFragment extends BaseFragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onRefresh() {
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -107,13 +111,21 @@ public class SummaryDayFragment extends BaseFragment {
         getValuesDay();
     }
 
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        loadSummaryDay();
+    }
+
     @Subscribe
-    public void onEvent(EventReloadSummaryDay event){
-        if(event.getMessage().equals(CurrentValuesHelper.get().getSummaryDate())){
+    public void onEvent(EventOrderState event){
+        if(event.getDate().equals(CurrentValuesHelper.get().getSummaryDate())){
             loadSummaryDay();
-            Toast.makeText(getContext(), event.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), event.getState(), Toast.LENGTH_SHORT).show();
         }
     }
+
 
     @Override
     public void onStart() {
@@ -125,8 +137,9 @@ public class SummaryDayFragment extends BaseFragment {
 
     @Override
     public void onStop() {
-        super.onStop();
+
         EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     private void getValuesDay(){
@@ -146,10 +159,7 @@ public class SummaryDayFragment extends BaseFragment {
 
                 }
             });
-
         }
-
-
     }
 
     private void selectDate(){

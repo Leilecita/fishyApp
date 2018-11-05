@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.android.fishy.CurrentValuesHelper;
+import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.Fragments.BaseFragment;
 import com.example.android.fishy.R;
 import com.example.android.fishy.adapters.PageAdapter;
@@ -16,6 +18,10 @@ import android.support.design.widget.TabLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 
 public class MainActivity extends BaseActivity {
@@ -64,6 +70,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
+
     @Override
     public int getLayoutRes() {
         return R.layout.activity_main;
@@ -107,6 +114,15 @@ public class MainActivity extends BaseActivity {
                     }
                 });
             }
+    }
+
+
+    public void refreshFragment(){
+        int position = mTabLayout.getSelectedTabPosition();
+        Fragment f = mAdapter.getItem(position);
+        if( f instanceof BaseFragment){
+            ((BaseFragment)f).onRefresh();
+        }
     }
 
     public void setVisibilityButton(){

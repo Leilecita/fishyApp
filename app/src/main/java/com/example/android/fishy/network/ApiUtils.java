@@ -8,10 +8,13 @@ public class ApiUtils {
 
         private ApiUtils() {}
 
-      //  public static final String BASE_URL = "http://192.168.0.87/fishyserver/";
-        public static final String BASE_URL = "http://192.168.0.7/fishyserver/";
+        //public static final String BASE_URL = "http://192.168.0.97/fishyserver/";
+       // public static final String BASE_URL = "http://192.168.0.7/fishyserver/";
+    public static final String BASE_URL = "http://fishy.abarbieri.com.ar/";
 
-        public static APIService getAPIService() {
+
+
+    public static APIService getAPIService() {
             return RetrofitClient.getClient(BASE_URL).create(APIService.class);
         }
 

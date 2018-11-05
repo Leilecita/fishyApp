@@ -63,7 +63,7 @@
                 android:layout_marginLeft="8dp"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
-                android:src="@drawable/fishy_rosa"
+                android:src="@drawable/fishy_azul"
                 />
 
 

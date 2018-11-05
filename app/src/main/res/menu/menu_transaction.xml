@@ -6,8 +6,6 @@
 
         android:title="Entregar"
         android:icon="@android:drawable/ic_menu_delete"/>
-    <item android:id="@+id/menu_edit2"
-        android:title="Entregsssar"
-        android:icon="@android:drawable/ic_menu_delete"/>
+
 
 </menu>

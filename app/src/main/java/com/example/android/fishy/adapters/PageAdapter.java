@@ -30,6 +30,8 @@ public class PageAdapter extends FragmentPagerAdapter {
             mFragments.add(new UsersFragment());
             mFragments.add(new OrdersFragment());
             mFragments.add(new SummaryDayFragment());
+
+
            // mFragments.add(new PreimpresoFragment().setChangeListener(this));
            // mFragments.add(new MistakeFragment());
         }

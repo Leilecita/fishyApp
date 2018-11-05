@@ -92,7 +92,7 @@ public class ProductsActivity extends BaseActivity {
                 if(!priceProduct.matches("") && !stockProduct.matches("") && !nameProduct.matches("")){
                     if(ValidatorHelper.get().isTypeDouble(priceProduct) && ValidatorHelper.get().isTypeInteger(stockProduct)){
 
-                        Product newProduct= new Product(nameProduct,Double.valueOf(priceProduct),Integer.valueOf(stockProduct));
+                        Product newProduct= new Product(nameProduct,Double.valueOf(priceProduct),Double.valueOf(stockProduct));
                         ApiClient.get().postProduct(newProduct, new GenericCallback<Product>() {
                             @Override
                             public void onSuccess(Product data) {

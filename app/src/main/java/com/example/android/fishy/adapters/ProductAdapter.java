@@ -217,8 +217,8 @@ public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHold
                 }
 
                 if(!productStock.matches("")) {
-                    if (ValidatorHelper.get().isTypeInteger(productStock)) {
-                        p.setStock(Integer.valueOf(productStock));
+                    if (ValidatorHelper.get().isTypeDouble(productStock)) {
+                        p.setStock(Double.valueOf(productStock));
                     }else {
                         isDataValid=false;
                         Toast.makeText(dialogView.getContext(), " Tipo de stock no valido ", Toast.LENGTH_LONG).show();

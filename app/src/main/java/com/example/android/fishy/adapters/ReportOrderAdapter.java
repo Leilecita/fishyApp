@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.example.android.fishy.CurrentValuesHelper;
 import com.example.android.fishy.DialogHelper;
 import com.example.android.fishy.Events.EventOrderState;
-import com.example.android.fishy.Events.EventReloadSummaryDay;
 import com.example.android.fishy.Interfaces.ItemTouchHelperAdapter;
 import com.example.android.fishy.Interfaces.OnStartDragListener;
 import com.example.android.fishy.R;
@@ -156,11 +155,11 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         final ReportOrder r= getItem(position);
 
         holder.address.setText(r.getUser_address());
-        holder.priority.setText(String.valueOf(r.priority));
+       // holder.priority.setText(String.valueOf(r.priority));
         if(r.state.equals("pendiente")){
-            holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.pendient_red));
+            holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.pendient_rose));
         }else if (r.state.equals("entregado")){
-            holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.done_green));
+            holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.done_blu));
         }else{
             holder.state.setTextColor(mContext.getResources().getColor(R.color.borrador));
         }
@@ -178,6 +177,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         }
 
         if(mOnlyAdress){
+            holder.priority.setText(String.valueOf(r.priority));
             holder.itemView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -188,6 +188,9 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                 }
             });
         }else{
+            if(r.order_obs!=null)
+                holder.priority.setText(r.order_obs);
+
             holder.name.setText(r.getUser_name());
             holder.amount.setText(String.valueOf(r.total_amount));
             holder.listItemsOrder.setOnClickListener(new View.OnClickListener() {
@@ -244,7 +247,9 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                 r.state=data.state;
                 updateItem(position,r);
 
-                EventBus.getDefault().post(new EventReloadSummaryDay(CurrentValuesHelper.get().getLastDate()));
+                EventBus.getDefault().post(new EventOrderState(data.id,"finish",r.deliver_date));
+
+               // EventBus.getDefault().post(new EventReloadSummaryDay(CurrentValuesHelper.get().getLastDate()));
             }
 
             @Override
@@ -279,7 +284,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                     @Override
                     public void onSuccess(Void data) {
                         removeItem(position);
-                        EventBus.getDefault().post(new EventOrderState(r.user_id,"deleted"));
+                        EventBus.getDefault().post(new EventOrderState(r.user_id,"deleted",r.deliver_date));
                     }
                     @Override
                     public void onError(Error error) {
@@ -384,45 +389,3 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         dialog.show();
     }
 }
-/*
-*
-*   private void setPriority(final ReportOrder r, final Integer position, final ViewHolder holder){
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View dialogView = inflater.inflate(R.layout.dialog_priority, null);
-        builder.setView(dialogView);
-        final EditText priority=  dialogView.findViewById(R.id.priority);
-
-        priority.setHint(String.valueOf(r.priority));
-
-        final AlertDialog dialog = builder.create();
-
-        final TextView cancel=  dialogView.findViewById(R.id.cancel);
-        final Button ok=  dialogView.findViewById(R.id.ok);
-
-        ok.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                ApiClient.get().updatePriority(r.order_id,Integer.valueOf(priority.getText().toString()), new GenericCallback<Order>() {
-                    @Override
-                    public void onSuccess(Order data) {
-                        holder.priority.setText(String.valueOf(data.priority));
-                        r.priority=data.priority;
-                        updateItem(position,r);
-                        dialog.dismiss();
-                    }
-                    @Override
-                    public void onError(Error error) {
-                    }
-                });
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-*
-* */

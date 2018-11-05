@@ -3,11 +3,11 @@ package com.example.android.fishy.Events;
 public class EventProductState {
 
     public Long mIdProduct;
-    public Integer mStock;
+    public Double mStock;
     public String mState; //created / deleted / edited
 
-    public EventProductState(Long message, String state, Integer stock) {
-        mIdProduct = message;
+    public EventProductState(Long id, String state, Double stock) {
+        mIdProduct = id;
         mState=state;
         mStock=stock;
     }
@@ -20,7 +20,7 @@ public class EventProductState {
         return mState;
     }
 
-    public Integer getStock() {
+    public Double getStock() {
         return mStock;
     }
 }

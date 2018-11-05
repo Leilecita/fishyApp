@@ -2,6 +2,7 @@ package com.example.android.fishy.activities;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,16 +15,22 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.fishy.DialogHelper;
+import com.example.android.fishy.Events.EventItemOrderState;
 import com.example.android.fishy.Events.EventOrderState;
+import com.example.android.fishy.Events.EventProductState;
 import com.example.android.fishy.Interfaces.OnAddItemListener;
 import com.example.android.fishy.R;
 import com.example.android.fishy.adapters.ItemOrderAdapter;
 import com.example.android.fishy.adapters.ProductOrderAdapter;
+import com.example.android.fishy.adapters.ReportItemOrderAdapter;
 import com.example.android.fishy.network.ApiClient;
 import com.example.android.fishy.network.Error;
 import com.example.android.fishy.network.GenericCallback;
@@ -32,9 +39,11 @@ import com.example.android.fishy.network.models.ItemOrder;
 import com.example.android.fishy.network.models.Order;
 import com.example.android.fishy.network.models.Product;
 import com.example.android.fishy.network.models.User;
+import com.example.android.fishy.network.models.reportsOrder.ReportItemOrder;
 import com.example.android.fishy.network.models.reportsOrder.ReportOrder;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,15 +54,16 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
     String mDeliverDate;
     String mDeliveryTime;
     Order mOrder;
+    String mObservation_order;
 
     TextView deliverDate;
     TextView deliveryTime;
     TextView userName;
 
+    ImageView observation_order;
+
     TextView totalAmount;
     boolean mEdithOrder;
-
-    List<ItemOrder> listItemsToEdith;
 
     public static void start(Context mContext, User user){
         Intent i=new Intent(mContext, CreateOrderActivity.class);
@@ -68,6 +78,7 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
         i.putExtra("ORDERID",reportOrder.order_id);
         i.putExtra("DELIVERDATE",reportOrder.deliver_date);
         i.putExtra("USERNAME",reportOrder.name);
+
         mContext.startActivity(i);
     }
 
@@ -89,10 +100,13 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
         super.onCreate(savedInstanceState);
         showBackArrow();
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         mEdithOrder=false;
         mOrder=null;
         mDeliverDate=null;
         mDeliveryTime=null;
+        mObservation_order="";
 
         mRecyclerView = this.findViewById(R.id.list_products);
         gridlayoutmanager=new GridLayoutManager(this,3);
@@ -112,10 +126,9 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
         userName= findViewById(R.id.name);
         deliverDate=findViewById(R.id.deliver_date);
         deliveryTime=findViewById(R.id.delivery_time);
+        observation_order=findViewById(R.id.obs);
 
         initActivity();
-        // createOrder();
-
 
         deliverDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,8 +142,58 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
                 selectDeliveryTime();
             }
         });
-
+        observation_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setObservation();
+            }
+        });
     }
+    private void setObservation(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.dialog_create_observation, null);
+        builder.setView(dialogView);
+
+        final TextView obs=  dialogView.findViewById(R.id.obs);
+        if(mEdithOrder){
+            obs.setHint(mObservation_order);
+        }
+        final TextView cancel=  dialogView.findViewById(R.id.cancel);
+        final Button ok=  dialogView.findViewById(R.id.ok);
+        final AlertDialog dialog = builder.create();
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if(mEdithOrder){
+                    mOrder.observation=obs.getText().toString();
+                    ApiClient.get().putOrder(mOrder, new GenericCallback<Order>() {
+                        @Override
+                        public void onSuccess(Order data) {
+
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+
+                        }
+                    });
+                }else{
+                    mObservation_order=obs.getText().toString();
+                }
+
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
 
     private void selectDeliveryTime(){
 
@@ -150,25 +213,6 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
         alert.show();
     }
 
-    private void editItems(){
-
-        List<ItemOrder> list =mItemAdapter.getListItem();
-        for (int i =0; i < list.size();++i){
-            ApiClient.get().putItemOrder(list.get(i), new GenericCallback<ItemOrder>() {
-                @Override
-                public void onSuccess(ItemOrder data) {
-
-                }
-
-                @Override
-                public void onError(Error error) {
-
-                }
-            });
-        }
-
-    }
-
     private void initActivity(){
         Long order_id= getIntent().getLongExtra("ORDERID",-1);
         if(order_id != -1){ //esta editando
@@ -179,9 +223,9 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
                 @Override
                 public void onSuccess(Order data) {
                     mOrder=data;
-                    mItemAdapter.setIsUpdating(true);
-                    onAddItemToOrder();
+                    reloadItems();
                     listProducts();
+                    mObservation_order=data.observation;
                     deliverDate.setText(mDeliverDate);
                     userName.setText(getIntent().getStringExtra("USERNAME"));
                 }
@@ -216,11 +260,21 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
 
     }
 
-    public void onAddItemToOrder(){
-
+    private void reloadItems(){
         mItemAdapter.clear();
         getAmount();
         listItems();
+    }
+
+    public void onAddItemToOrder(Long id,Long product_id,Long order_id, Double quantity,boolean create){
+
+        if(create){
+            ItemOrder i=new ItemOrder(product_id,order_id,quantity);
+            i.id=id;
+            mItemAdapter.pushItem(i);
+
+        }
+        getAmount();
     }
 
     //todo borrar todos los pedidos con ordern nro mIdOrder
@@ -232,7 +286,7 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
             ApiClient.get().deleteOrder(mOrder.id, new GenericCallback<Void>() {
                 @Override
                 public void onSuccess(Void data) {
-                    EventBus.getDefault().post(new EventOrderState(mOrder.user_id,"deleted"));
+                    EventBus.getDefault().post(new EventOrderState(mOrder.user_id,"deleted",mOrder.deliver_date));
                 }
 
                 @Override
@@ -240,7 +294,6 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
                     DialogHelper.get().showMessage("Error","No se ha podido cancelar el pedido",getBaseContext());
                 }
             });
-
         }
 
 
@@ -255,9 +308,7 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
             public void onSuccess(Order data) {
                 mOrder=data;
                 listProducts();
-
             }
-
             @Override
             public void onError(Error error) {
 
@@ -266,7 +317,7 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
     }
 
     private void listProducts(){
-        ApiClient.get().getProducts(new GenericCallback<List<Product>>() {
+        ApiClient.get().getAliveProducts("alive",new GenericCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> data) {
                 mAdapter.setOrderId(mOrder.id);
@@ -286,10 +337,7 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
            ApiClient.get().getItemsOrderByOrderId(mOrder.id, new GenericCallback<List<ItemOrder>>() {
                @Override
                public void onSuccess(List<ItemOrder> data) {
-
                    mItemAdapter.setItems(data);
-                   //si quiero editar
-                   listItemsToEdith=data;
                }
 
                @Override
@@ -340,10 +388,12 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
                 mOrder.delivery_time="Horario";
             }
 
+            mOrder.observation=mObservation_order;
+
             ApiClient.get().putOrder(mOrder, new GenericCallback<Order>() {
                 @Override
                 public void onSuccess(Order data) {
-                    Toast.makeText(CreateOrderActivity.this,"Fecha de entrega: "+mDeliverDate,Toast.LENGTH_LONG).show();
+                   // Toast.makeText(CreateOrderActivity.this,"Fecha de entrega: "+mDeliverDate,Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -356,8 +406,12 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_create, menu);
-        return true;
+        if(!mEdithOrder){
+            getMenuInflater().inflate(R.menu.menu_create, menu);
+            return true;
+        }
+       return true;
+
     }
 
     @Override
@@ -366,21 +420,26 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
             case R.id.action_save:
                 if(mDeliverDate!=null){
                     putDeliverDate();
+                    EventBus.getDefault().post(new EventOrderState(mOrder.user_id,"created",mOrder.deliver_date));
                     if(!mEdithOrder){
-                        Toast.makeText(CreateOrderActivity.this,"El pedido ha sido creado para "+getIntent().getStringExtra("NAME"),Toast.LENGTH_LONG).show();
+                        Toast.makeText(CreateOrderActivity.this,"El pedido ha sido creado para "+getIntent().getStringExtra("NAME"),Toast.LENGTH_SHORT).show();
                     }else{
-                        editItems();
                         Toast.makeText(CreateOrderActivity.this,"El pedido ha sido actualizado ",Toast.LENGTH_LONG).show();
                     }
 
-                    EventBus.getDefault().post(new EventOrderState(mOrder.user_id,"created"));
                     finish();
                 }else{
                     Toast.makeText(this, "No se ha elegido día de entrega",Toast.LENGTH_LONG).show();
                 }
                 return true;
             case android.R.id.home:
+                if(!mEdithOrder){
                     showDialogCancelOrder();
+                }else{
+                    //EventBus.getDefault().post(new EventOrderState(mOrder.user_id,"edited",mOrder.deliver_date));
+                    finish();
+                }
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -402,7 +461,6 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
             public void onClick(View view) {
                 deleteOrderAndAllItems();
                 finish();
-               // NavUtils.navigateUpFromSameTask(CreateOrderActivity.this);
                 dialog.dismiss();
             }
         });
@@ -417,24 +475,13 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-           showDialogCancelOrder();
+            if(!mEdithOrder){
+                showDialogCancelOrder();
+                return true;
+            }
             return true;
         }
-
         return super.onKeyDown(keyCode, event);
     }
 
-  /*  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == 1) {
-            if (resultCode == -1) {
-                String returnedResult = data.getData().toString();
-              // mAdapter.notifyDataSetChanged();
-               mAdapter.clear();
-               listProducts();
-                // OR
-                // String returnedResult = data.getDataString();
-            }
-        }
-    }*/
 }

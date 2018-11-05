@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.fishy.DialogHelper;
+import com.example.android.fishy.Events.EventItemOrderState;
+import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.Events.EventProductState;
 import com.example.android.fishy.Interfaces.OnAddItemListener;
 import com.example.android.fishy.R;
@@ -53,12 +55,19 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
 
     private Context mContext;
     private Long mOrderId;
+  //  private boolean isEdting;
 
     public ProductOrderAdapter(Context context, List<Product> products){
         setItems(products);
         mContext = context;
         mOrderId=90L;
+       // isEdting=false;
+
     }
+
+   /* public void setIsEditing(boolean edit){
+        this.isEdting=edit;
+    }*/
 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -147,10 +156,10 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
         });
     }
 
+
     private void createItemOrder(final Product p){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View dialogView = inflater.inflate(R.layout.dialog_set_quantity, null);
         builder.setView(dialogView);
@@ -177,31 +186,28 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
                     if(p.stock>= Double.valueOf(fishQuantity)){
 
                         ItemOrder itemOrder=new ItemOrder(p.id,mOrderId,Double.valueOf(fishQuantity));
-                        ApiClient.get().postItemOrder(itemOrder, new GenericCallback<ItemOrder>() {
-                            @Override
-                            public void onSuccess(ItemOrder data) {
-                                if(onAddItemOrderLister!=null){
-                                    onAddItemOrderLister.onAddItemToOrder();
-                                }
-                            }
+                            ApiClient.get().postItemOrder(itemOrder, new GenericCallback<ItemOrder>() {
+                                @Override
+                                public void onSuccess(ItemOrder data) {
 
-                            @Override
-                            public void onError(Error error) {
-                                DialogHelper.get().showMessage(p.fish_name,"Error al cargar el producto",mContext);
-                            }
-                        });
+                                    Toast.makeText(mContext, "Se ha agregado el producto "+name.getText().toString(),Toast.LENGTH_SHORT).show();
+                                    //EventBus.getDefault().post(new EventItemOrderState(data.id,data.product_id,data.quantity,data.order_id));
+                                    if(onAddItemOrderLister!=null){
+                                        onAddItemOrderLister.onAddItemToOrder(data.id,data.product_id,data.order_id,data.quantity,true);
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Error error) {
+                                    DialogHelper.get().showMessage(p.fish_name,"Error al cargar el producto",mContext);
+                                }
+                            });
+
 
                         dialog.dismiss();
-
-
                     }else{
-                        //dialog.dismiss();
                         loadStock(p.fish_name);
-                       // DialogHelper.get().showMessage(p.fish_name,"No hay stock disponible para este producto",mContext);
-
                     }
-
-
                 }else{
 
                     Toast.makeText(mContext,"Dato inválido",Toast.LENGTH_LONG).show();

@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.fishy.CurrentValuesHelper;
 import com.example.android.fishy.CustomLoadingListItemCreator;
@@ -40,6 +41,7 @@ import com.paginate.recycler.LoadingListItemSpanLookup;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,8 +55,6 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
     private RecyclerView.LayoutManager layoutManager;
     private View mRootView;
     private TextView mDeliver_date;
-    private TextView mZone;
-    private TextView mTime;
     private String dateToShow;
     private ItemTouchHelper mItemTouchHelper;
 
@@ -83,6 +83,11 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
     public OrdersFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onRefresh() {
+        clearView();
     }
 
     @Override
@@ -130,8 +135,6 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
         implementsPaginate();
 
-        EventBus.getDefault().register(this);
-
         save= mRootView.findViewById(R.id.fab_save);
         save.setVisibility(View.INVISIBLE);
         save.setOnClickListener(new View.OnClickListener() {
@@ -144,24 +147,6 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
         return mRootView;
     }
 
-    @Subscribe
-    public void onEvent(EventOrderState event){
-        if(event.mState.equals("created")){
-            listOrders(mQuery,CurrentValuesHelper.get().getLastZone(),CurrentValuesHelper.get().getLastTimeZone());
-        }
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
 
     private void savePriorities(){
         List<ReportOrder> list= mAdapter.getList();
@@ -302,7 +287,6 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
         final String newToken = UUID.randomUUID().toString();
         this.token =  newToken;
         if(CurrentValuesHelper.get().getLastDate()!=null){
-
             ApiClient.get().getOrders(mCurrentPage,CurrentValuesHelper.get().getLastDate(),zone, time,
                     query, new GenericCallback<List<ReportOrder>>() {
                         @Override
@@ -311,7 +295,6 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
                             if(token.equals(newToken)){
                                 Log.e("TOKEN", "Llega token: " + newToken);
                                 if (query == mQuery) {
-
                                     if (data.size() == 0) {
                                         hasMoreItems = false;
                                     }else{
@@ -336,7 +319,7 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
         }
 
     }
-  /*  @Override
+    @Override
     public void onResume() {
         super.onResume();
         System.out.println("OnResume");
@@ -348,12 +331,6 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
             listOrders("",CurrentValuesHelper.get().getLastZone(),CurrentValuesHelper.get().getLastTimeZone());
         }
 
-    }*/
-
-    private void print(){
-        for(int i=0; i<mAdapter.getList().size();++i){
-            System.out.println(mAdapter.getList().get(i).name+" "+i);
-        }
     }
 
 

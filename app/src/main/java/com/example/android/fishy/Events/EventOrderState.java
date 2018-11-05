@@ -3,10 +3,12 @@ package com.example.android.fishy.Events;
 public class EventOrderState {
     public Long mIdUser;
     public String mState; //created or deleted
+    public String mDate;
 
-    public EventOrderState(Long message,String state) {
-        mIdUser = message;
+    public EventOrderState(Long id,String state,String date) {
+        mIdUser = id;
         mState=state;
+        mDate=date;
     }
 
     public Long getIdUser() {
@@ -15,5 +17,8 @@ public class EventOrderState {
 
     public String getState() {
         return mState;
+    }
+    public String getDate() {
+        return mDate;
     }
 }

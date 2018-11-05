@@ -132,14 +132,13 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         final User currentUser=getItem(position);
 
         if(currentUser.pendient_orders >0){
-            holder.create.setImageResource(R.drawable.fishy_azul);
+            holder.create.setImageResource(R.drawable.fishy_rosa);
         }
 
         if(currentUser.image_url==null){
             Glide.with(mContext).load(R.drawable.person_color).into(holder.photo);
         }else{
             Glide.with(mContext).load(ApiUtils.getImageUrl(currentUser.image_url)).into(holder.photo);
-            //System.out.println("carga foto, :"+currentUser.getName());
         }
 
         holder.text_name.setText(currentUser.name);
