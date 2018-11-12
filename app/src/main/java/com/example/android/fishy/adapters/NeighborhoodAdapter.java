@@ -10,8 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,14 +30,25 @@ import java.util.List;
 public class NeighborhoodAdapter extends BaseAdapter<Neighborhood,NeighborhoodAdapter.ViewHolder> {
 
     private Context mContext;
+    private boolean isChecked;
+    private Integer posChecked;
 
     public NeighborhoodAdapter(Context context, List<Neighborhood> neighborhoods) {
         setItems(neighborhoods);
         mContext = context;
+        isChecked=false;
+        posChecked=null;
     }
 
     public NeighborhoodAdapter() {
 
+    }
+
+    public Integer getPosChecked(){
+        return posChecked;
+    }
+    public boolean isChecked(){
+        return isChecked;
     }
 
     public List<Neighborhood> getList() {
@@ -44,12 +58,14 @@ public class NeighborhoodAdapter extends BaseAdapter<Neighborhood,NeighborhoodAd
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
         public ImageView options;
+        public CheckBox select;
 
 
         public ViewHolder(View v) {
             super(v);
             name = v.findViewById(R.id.name);
             options = v.findViewById(R.id.options);
+            select = v.findViewById(R.id.checkbox);
         }
     }
 
@@ -73,6 +89,24 @@ public class NeighborhoodAdapter extends BaseAdapter<Neighborhood,NeighborhoodAd
         clearViewHolder(holder);
 
         final Neighborhood currentNeigh = getItem(position);
+        holder.select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isChecked){
+                    holder.select.setChecked(true);
+                    isChecked=true;
+                    posChecked=position;
+                }else if (position==posChecked){
+                    holder.select.setChecked(false);
+                    isChecked=false;
+                    posChecked=null;
+                }else if(isChecked && position!=posChecked){
+                    holder.select.setChecked(false);
+                }
+            }
+        });
+
+
         holder.name.setText(currentNeigh.name);
         holder.options.setOnClickListener(new View.OnClickListener() {
             @Override

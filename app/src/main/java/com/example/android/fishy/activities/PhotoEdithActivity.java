@@ -3,6 +3,7 @@ package com.example.android.fishy.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -99,13 +100,14 @@ public class PhotoEdithActivity extends BaseActivity {
                     } catch (Exception e) {
                     }
 
+                    final ProgressDialog progress = ProgressDialog.show(this, "Creando usuario",
+                            "Aguarde un momento", true);
                     ApiClient.get().putUser(mCurrentUser, new GenericCallback<User>() {
                         @Override
                         public void onSuccess(User data) {
-                            Toast.makeText(PhotoEdithActivity.this, "La foto ha sido modificada con exito", Toast.LENGTH_SHORT).show();
-
                             Glide.with(getBaseContext()).load(ApiUtils.getImageUrl(data.getImageUrl())).into(mImageView);
                             finish();
+                            progress.dismiss();
                         }
 
                         @Override

@@ -73,26 +73,24 @@ public class UserHistoryOrders extends BaseActivity implements Paginate.Callback
 
         mRecyclerView.setAdapter(mAdapter);
 
-
-        loadingInProgress=false;
-        mCurrentPage=0;
-        hasMoreItems = true;
-
-        paginate= Paginate.with(mRecyclerView, this)
-                .setLoadingTriggerThreshold(2)
-                .addLoadingListItem(true)
-                .setLoadingListItemCreator(new CustomLoadingListItemCreator())
-                .setLoadingListItemSpanSizeLookup(new LoadingListItemSpanLookup() {
-                    @Override
-                    public int getSpanSize() {
-                        return 0;
-                    }
-                })
-                .build();
-
-        //implementsPaginate();
+        implementsPaginate();
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("OnResume");
+        if(!isLoading()) {
+            mCurrentPage = 0;
+            mAdapter.clear();
+            hasMoreItems=true;
+            listHistoryUser();
+
+        }
+
+    }
+
 
     private void listHistoryUser(){
 

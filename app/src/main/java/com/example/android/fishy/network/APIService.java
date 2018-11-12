@@ -9,6 +9,7 @@ import com.example.android.fishy.network.models.reportsOrder.SummaryDay;
 import com.example.android.fishy.network.models.User;
 import com.example.android.fishy.network.models.reportsOrder.ReportOrder;
 import com.example.android.fishy.network.models.reportsOrder.ValuesDay;
+import com.example.android.fishy.network.models.reportsOrder.ValuesOrderReport;
 
 import java.util.List;
 
@@ -31,6 +32,12 @@ public interface APIService {
 
     @GET("orders.php")
     Observable<Response<Order>>  finishOrder(@Query("method") String method, @Query("order_id") Long order_id);
+
+    @GET("orders.php")
+    Observable<Response<ValuesOrderReport>>  getValuesOrdersReport(@Query("method") String method, @Query("deliver_date") String date);
+
+    @GET("orders.php")
+    Observable<Response<ValuesOrderReport>>  getTotalOrdersPendient(@Query("method") String method);
 
     @GET("orders.php")
     Observable<Response<List<ReportOrder>>>  searchOrders(@Query("method") String method, @Query("deliver_date") String date, @Query("query") String query);

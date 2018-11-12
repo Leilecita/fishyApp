@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -91,6 +92,7 @@ public class CreateUserActivity extends BaseActivity{
 
         neig=findViewById(R.id.nei);
         validateNeighbor=false;
+        mNeighborhood=null;
 
         CardView takePhoto= findViewById(R.id.select_photo);
         takePhoto.setOnClickListener(new View.OnClickListener() {
@@ -103,13 +105,13 @@ public class CreateUserActivity extends BaseActivity{
         mAddNeighborhood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    startActivity(new Intent(CreateUserActivity.this, NeighborhoodActivity.class));
+                    //startActivity(new Intent(CreateUserActivity.this, NeighborhoodActivity.class));
+                Intent i = new Intent(CreateUserActivity.this, NeighborhoodActivity.class);
+                startActivityForResult(i, 1);
             }
         });
 
         listNeighborhoods();
-
-
     }
 
     private void listNeighborhoods(){
@@ -124,18 +126,15 @@ public class CreateUserActivity extends BaseActivity{
                 neig.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View view, boolean b) {
-                        if (!b) {
-                            String val = neig.getText() + "";
-
-                            if(listneighborhoods.contains(val)){
-                                validateNeighbor=true;
-
-                            }else{
-                                validateNeighbor=false;
-                                neig.setError("Barrio inválido");
+                            if (!b) {
+                                String val = neig.getText() + "";
+                                if(listneighborhoods.contains(val)){
+                                    validateNeighbor=true;
+                                }else{
+                                    validateNeighbor=false;
+                                    neig.setError("Barrio inválido");
+                                }
                             }
-                        }else{
-                        }
                     }
                 });
             }
@@ -176,6 +175,27 @@ public class CreateUserActivity extends BaseActivity{
             */
             image_path = result.getUri().getPath();
             mImageView.setImageBitmap(BitmapFactory.decodeFile(image_path));
+        }
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String result=data.getStringExtra("result");
+                mNeighborhood=result;
+                neig.setText(result);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+            reloadInfo();
+        }
+    }
+    private void reloadInfo(){
+        mUserPhone.setText(mUserPhone.getText().toString());
+        mUserAddress.setText(mUserAddress.getText().toString());
+        mUserName.setText(mUserName.getText().toString());
+        if(mNeighborhood!=null){
+            neig.setText(mNeighborhood);
+            validateNeighbor=true;
         }
     }
 
@@ -219,12 +239,14 @@ public class CreateUserActivity extends BaseActivity{
                         }catch (Exception e){
                         }
                     }
-                    Toast.makeText(this,"Creando nuevo usuario, aguarde un momento",Toast.LENGTH_LONG).show();
+                    final ProgressDialog progress = ProgressDialog.show(this, "Creando usuario",
+                            "Aguarde un momento", true);
                     ApiClient.get().postUser(newUser, new GenericCallback<User>() {
                         @Override
                         public void onSuccess(User data) {
-                            Toast.makeText(CreateUserActivity.this,"El usuario ha sido creado con exito",Toast.LENGTH_SHORT).show();
                             finish();
+                            progress.dismiss();
+
                         }
 
                         @Override
@@ -232,7 +254,6 @@ public class CreateUserActivity extends BaseActivity{
                             DialogHelper.get().showMessage("Error","Error al crear el usuario",CreateUserActivity.this);
                         }
                     });
-                    //finish();
                     return true;
                 }else{
 
@@ -274,4 +295,6 @@ public class CreateUserActivity extends BaseActivity{
         }
       return listN;
     }
+
+
 }

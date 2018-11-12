@@ -43,13 +43,6 @@ public class SummaryDayFragment extends BaseFragment {
     private TextView mSumDone;
     private TextView mSumPendient;
 
-    //pagination
-    private boolean loadingInProgress;
-    private Integer mCurrentPage;
-    private Paginate paginate;
-    private boolean hasMoreItems;
-    private String mQuery = "";
-    private String token = "";
 
     public void onClickButton(){  }
     public int getIconButton(){
@@ -66,6 +59,9 @@ public class SummaryDayFragment extends BaseFragment {
     @Override
     public void onRefresh() {
 
+    }
+    public String getHint() {
+        return "hola";
     }
 
     @Override
@@ -99,10 +95,8 @@ public class SummaryDayFragment extends BaseFragment {
             }
         });
 
-
         EventBus.getDefault().register(this);
 
-       // implementsPaginate();
         return mRootView;
     }
 

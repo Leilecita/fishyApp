@@ -3,9 +3,13 @@ package com.example.android.fishy.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.print.pdf.PrintedPdfDocument;
 import android.support.annotation.RequiresApi;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.fishy.CurrentValuesHelper;
 import com.example.android.fishy.DialogHelper;
@@ -35,11 +40,18 @@ import com.example.android.fishy.network.models.reportsOrder.ReportOrder;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdapter.ViewHolder> implements ItemTouchHelperAdapter {
-
 
     private Context mContext;
     private boolean mOnlyAdress;
@@ -69,6 +81,9 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         public TextView priority;
         public ImageView options;
         public ImageView stateImage;
+        public CardView cardView;
+
+        public TextView time;
 
         public ViewHolder(View v){
             super(v);
@@ -82,8 +97,11 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             stateImage= v.findViewById(R.id.stateImage);
             options= v.findViewById(R.id.options);
             priority= v.findViewById(R.id.priority);
+            time=v.findViewById(R.id.time);
+            cardView=v.findViewById(R.id.card_view);
         }
     }
+
 
     @Override
     public ReportOrderAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
@@ -92,7 +110,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         if(mOnlyAdress){
              v = LayoutInflater.from(mContext).inflate(R.layout.car_item_address,parent,false);
         }else{
-             v = LayoutInflater.from(mContext).inflate(R.layout.card_item_order,parent,false);
+             v = LayoutInflater.from(mContext).inflate(R.layout.card_item_order2,parent,false);
 
         }
       //  View v = LayoutInflater.from(mContext).inflate(R.layout.card_item_order,parent,false);
@@ -121,14 +139,12 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
+            ReportOrder repOrder= getList().get(fromPosition);
+            ReportOrder newOrder= repOrder;
 
-        ReportOrder repOrder= getList().get(fromPosition);
-        ReportOrder newOrder= repOrder;
-
-        getList().remove(fromPosition);
-        getList().add(toPosition,newOrder);
-        notifyItemMoved(fromPosition,toPosition);
-
+            getList().remove(fromPosition);
+            getList().add(toPosition,newOrder);
+            notifyItemMoved(fromPosition,toPosition);
 
         return true;
     }
@@ -155,17 +171,16 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         final ReportOrder r= getItem(position);
 
         holder.address.setText(r.getUser_address());
-       // holder.priority.setText(String.valueOf(r.priority));
+
         if(r.state.equals("pendiente")){
-            holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.pendient_rose));
+            holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.pendient_dor));
         }else if (r.state.equals("entregado")){
-            holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.done_blu));
+            holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.done_doble));
         }else{
+            holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.borrador2));
             holder.state.setTextColor(mContext.getResources().getColor(R.color.borrador));
         }
-        if(mHistoryuser){
-            holder.priority.setText(r.deliver_date);
-        }
+
         if(!mOnlyAdress){
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -177,6 +192,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         }
 
         if(mOnlyAdress){
+            holder.time.setText(r.order_obs);
             holder.priority.setText(String.valueOf(r.priority));
             holder.itemView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -235,20 +251,19 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                 }
             });
         }
+        if(mHistoryuser){
+            holder.priority.setText(r.deliver_date);
+        }
     }
 
 
     private void finishOrder(final ReportOrder r, final Integer position){
-
-
         ApiClient.get().finishOrder(r.order_id, new GenericCallback<Order>() {
             @Override
             public void onSuccess(Order data) {
                 r.state=data.state;
                 updateItem(position,r);
-
                 EventBus.getDefault().post(new EventOrderState(data.id,"finish",r.deliver_date));
-
                // EventBus.getDefault().post(new EventReloadSummaryDay(CurrentValuesHelper.get().getLastDate()));
             }
 
@@ -307,15 +322,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
     }
 
-    private void sendWhatsapp(String text, String phone){
-        Uri uri = Uri.parse("smsto:" + phone);
-            Intent i = new Intent(Intent.ACTION_SENDTO, uri);
-            i.setPackage("com.whatsapp");
-            i.putExtra(Intent.EXTRA_TEXT,text);
-            //i.setType("text/plain");
-            //i.setPackage("com.whatsapp");
-            mContext.startActivity(Intent.createChooser(i, ""));
-    }
+
 
     private void showOrderInfo(final ReportOrder r,final Integer position){
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -331,7 +338,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         name.setText(r.getUser_name());
         zone.setText(r.neighborhood);
         delivery_date.setText(r.deliver_date);
-        created.setText("crated");
+        created.setText(serverToUserFormatted(r.order_created));
 
 
         final AlertDialog dialog = builder.create();
@@ -347,6 +354,8 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         dialog.show();
 
     }
+
+
     private void startEdithOrderActivity(ReportOrder reportorder){
         CreateOrderActivity.startEdithOrder(mContext,reportorder);
     }
@@ -387,5 +396,65 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             }
         });
         dialog.show();
+    }
+
+
+    private String generateText(ArrayList<String> list){
+        StringBuffer cadena = new StringBuffer();
+        for (int x=0;x<list.size();x++){
+            cadena =cadena.append(list.get(x));
+        }
+        return cadena.toString();
+    }
+
+
+    private void sendWhatsappWithReportOrder(String text, String phone){
+
+        Uri uri = Uri.parse("smsto:" + phone);
+        Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+        i.setPackage("com.whatsapp");
+        i.putExtra(Intent.EXTRA_TEXT,text);
+        //i.setType("application/pdf");
+        mContext.startActivity(Intent.createChooser(i, ""));
+    }
+
+    private void sendWhatsapp(String text, String phone){
+
+
+        Uri uri = Uri.parse("smsto:" + phone);
+        Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+        i.setPackage("com.whatsapp");
+        i.putExtra(Intent.EXTRA_TEXT,text);
+        //i.setType("application/pdf");
+        mContext.startActivity(Intent.createChooser(i, ""));
+    }
+
+    public String serverToUserFormatted(String date){
+
+        try {
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            format1.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date date1 = format1.parse(date);
+            format1.setTimeZone(TimeZone.getDefault());
+            return changeFormatDate(format1.format(date1));
+        }catch (ParseException e){
+
+        }
+        return "";
+    }
+
+    public String changeFormatDate(String date){
+        try {
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date1 = format1.parse(date);
+            SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+            String stringdate2 = format2.format(date1);
+            return stringdate2;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "dd/MM/yyyy";
     }
 }

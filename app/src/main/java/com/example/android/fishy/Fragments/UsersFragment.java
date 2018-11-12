@@ -23,6 +23,7 @@ import com.example.android.fishy.network.ApiClient;
 import com.example.android.fishy.network.Error;
 import com.example.android.fishy.network.GenericCallback;
 import com.example.android.fishy.network.models.User;
+import com.example.android.fishy.network.models.reportsOrder.ValuesOrderReport;
 import com.paginate.Paginate;
 import com.paginate.recycler.LoadingListItemSpanLookup;
 
@@ -31,6 +32,8 @@ import java.util.List;
 import java.util.UUID;
 
 import android.support.v7.widget.SearchView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -40,6 +43,7 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
     private UserAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private View mRootView;
+    private TextView pendients;
 
     //pagination
     private boolean loadingInProgress;
@@ -56,6 +60,14 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
 
     public int getVisibility(){
         return 0;
+    }
+
+    public String getHint() {
+        return "hola";
+    }
+
+    public void onClickAction(){
+
     }
 
     @Override
@@ -82,8 +94,16 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
         mRecyclerView.setAdapter(mAdapter);
         setHasOptionsMenu(true);
 
-        SearchView searchView= mRootView.findViewById(R.id.searchView);
+        pendients=mRootView.findViewById(R.id.pendients);
 
+
+      final SearchView searchView= mRootView.findViewById(R.id.searchView);
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchView.setIconified(false);
+            }
+        });
          //searchView.setActivated(true);
         //searchView.onActionViewExpanded();
        searchView.setQueryHint("Buscar");
@@ -104,7 +124,23 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
        });
 
         implementsPaginate();
+        loadCantOrdersPendient();
+
         return mRootView;
+    }
+
+    private void loadCantOrdersPendient(){
+          ApiClient.get().getTotalOrdersPendients(new GenericCallback<ValuesOrderReport>() {
+            @Override
+            public void onSuccess(ValuesOrderReport data) {
+                pendients.setText(String.valueOf(data.pendients));
+            }
+
+            @Override
+            public void onError(Error error) {
+
+            }
+        });
     }
 
     @Override
@@ -116,6 +152,7 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
             mAdapter.clear();
             hasMoreItems=true;
             listUsers("");
+            loadCantOrdersPendient();
         }
 
     }

@@ -109,11 +109,13 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
         mObservation_order="";
 
         mRecyclerView = this.findViewById(R.id.list_products);
-        gridlayoutmanager=new GridLayoutManager(this,3);
-        mRecyclerView.setLayoutManager(gridlayoutmanager);
         mAdapter = new ProductOrderAdapter(this, new ArrayList<Product>());
         mRecyclerView.setAdapter(mAdapter);
+        gridlayoutmanager=new GridLayoutManager(this,3);
+        mRecyclerView.setLayoutManager(gridlayoutmanager);
+
         mAdapter.setOnAddItemListener(this);
+
 
         mItemRecyclerView = this.findViewById(R.id.list_items);
         layoutManagerItem = new LinearLayoutManager(this);
@@ -436,6 +438,7 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
                 if(!mEdithOrder){
                     showDialogCancelOrder();
                 }else{
+                    putDeliverDate();
                     //EventBus.getDefault().post(new EventOrderState(mOrder.user_id,"edited",mOrder.deliver_date));
                     finish();
                 }

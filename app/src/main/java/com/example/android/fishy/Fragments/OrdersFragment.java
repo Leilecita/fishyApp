@@ -36,6 +36,7 @@ import com.example.android.fishy.network.GenericCallback;
 import com.example.android.fishy.network.models.Neighborhood;
 import com.example.android.fishy.network.models.Order;
 import com.example.android.fishy.network.models.reportsOrder.ReportOrder;
+import com.example.android.fishy.network.models.reportsOrder.ValuesOrderReport;
 import com.paginate.Paginate;
 import com.paginate.recycler.LoadingListItemSpanLookup;
 
@@ -68,6 +69,10 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
     private String mQuery = "";
     private String token = "";
 
+    TextView pendients_order;
+    TextView sends_order;
+
+   // private boolean mOnlyaddress;
 
     public void onClickButton(){
         changeView();
@@ -79,6 +84,11 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
     public int getVisibility(){
         return 0;
+    }
+
+
+    public String getHint() {
+        return "holaadasd";
     }
 
     public OrdersFragment() {
@@ -107,6 +117,9 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
         final Spinner spinner = mRootView.findViewById(R.id.spinner_zone);
         final Spinner spinnerTime = mRootView.findViewById(R.id.spinner_time);
+         pendients_order = mRootView.findViewById(R.id.pendients);
+         sends_order = mRootView.findViewById(R.id.sends);
+
 
         registerForContextMenu(mRecyclerView);
         setHasOptionsMenu(true);
@@ -135,6 +148,8 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
         implementsPaginate();
 
+        loadValuesPendientsAndSend();
+
         save= mRootView.findViewById(R.id.fab_save);
         save.setVisibility(View.INVISIBLE);
         save.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +162,25 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
         return mRootView;
     }
 
+    private void loadValuesPendientsAndSend(){
+        if(CurrentValuesHelper.get().getLastDate()!=null){
+
+            ApiClient.get().getValuesOrderReport(CurrentValuesHelper.get().getLastDate(), new GenericCallback<ValuesOrderReport>() {
+                @Override
+                public void onSuccess(ValuesOrderReport data) {
+
+                    pendients_order.setText(String.valueOf(data.pendients));
+                    sends_order.setText(String.valueOf(data.sends));
+                }
+
+                @Override
+                public void onError(Error error) {
+                    DialogHelper.get().showMessage("Error","no se pudo cargar valores",getActivity());
+                }
+            });
+        }
+
+    }
 
     private void savePriorities(){
         List<ReportOrder> list= mAdapter.getList();
@@ -175,7 +209,7 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
     private void createSpinner(final Spinner spinner, final Spinner spinnerTime,List<String> data){
 
         List<String> spinner_time = new ArrayList<>();
-        spinner_time.add("Horario");
+        spinner_time.add("Todos los horarios");
         spinner_time.add("Mañana");
         spinner_time.add("Mediodía");
         spinner_time.add("Tarde");
@@ -195,6 +229,7 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
         spinner.setSelection(spinnerPosition);
         int spinnerPositionTime = adapter_time.getPosition(CurrentValuesHelper.get().getLastTimeZone());
         spinnerTime.setSelection(spinnerPositionTime);
+
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -226,7 +261,7 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
     private List<String> createArray(List<Neighborhood> list){
         List<String> listN=new ArrayList<>();
-        listN.add("Zona");
+        listN.add("Todas las zonas");
         for(int i=0; i < list.size();++i){
             if(list.get(i) != null && list.get(i).name != null){
                 listN.add(list.get(i).getName());
@@ -239,10 +274,12 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
         clearView();
         if(mAdapter.getOnlyAddress()){
             mAdapter.setOnlyAddress(false);
+           // mOnlyaddress=false;
             save.setVisibility(View.INVISIBLE);
             mRecyclerView.setAdapter(mAdapter);
         }else{
             mAdapter.setOnlyAddress(true);
+           // mOnlyaddress=true;
             save.setVisibility(View.VISIBLE);
             mRecyclerView.setAdapter(mAdapter);
         }
@@ -275,6 +312,7 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
                         clearView();
                         listOrders(mQuery,CurrentValuesHelper.get().getLastZone(),CurrentValuesHelper.get().getLastTimeZone());
+                        loadValuesPendientsAndSend();
 
                     }
                 }, mYear, mMonth, mDay);
@@ -322,12 +360,16 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
     @Override
     public void onResume() {
         super.onResume();
+        boolean onlyAddress=mAdapter.getOnlyAddress();
         System.out.println("OnResume");
+        System.out.println(onlyAddress);
         if(!isLoading()) {
             mCurrentPage = 0;
             mAdapter.clear();
+            mAdapter.setOnlyAddress(onlyAddress);
             hasMoreItems=true;
             dateToShow=CurrentValuesHelper.get().getLastDate();
+            loadValuesPendientsAndSend();
             listOrders("",CurrentValuesHelper.get().getLastZone(),CurrentValuesHelper.get().getLastTimeZone());
         }
 

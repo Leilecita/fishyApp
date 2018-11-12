@@ -30,6 +30,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="4dp"
             android:orientation="vertical">
 
 
@@ -52,10 +53,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Abadejo"
-                        android:padding="4dp"
+                        android:padding="2dp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
-                        android:textSize="16sp" />
+                        android:textSize="17sp" />
 
 
 
@@ -82,9 +83,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Precio"
+                    android:text="Precio:"
                     android:textStyle="italic"
-                    android:padding="4dp"
+                    android:padding="2dp"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
 
@@ -94,9 +95,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="12"
-                    android:textStyle="italic"
-                    android:textColor="#009688"
-                    android:textSize="16sp" />
+                    android:paddingLeft="4dp"
+                    android:textColor="@color/FishyLetraDark"
+                    android:textSize="17sp" />
 
                 <TextView
                     android:layout_width="30dp"
@@ -107,9 +108,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text=" Stock"
+                    android:text=" Stock:"
                     android:textStyle="italic"
-                    android:padding="4dp"
+                    android:padding="2dp"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
 
@@ -118,10 +119,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textStyle="italic"
                     android:text="34"
-                    android:textColor="#009688"
-                    android:textSize="16sp" />
+                    android:paddingLeft="4dp"
+                    android:textColor="@color/FishyLetraDark"
+                    android:textSize="17sp" />
 
 
             </LinearLayout>

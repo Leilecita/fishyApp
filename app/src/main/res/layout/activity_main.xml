@@ -54,3 +54,20 @@ android:background="#c2dbfd">
 
 </LinearLayout>
 
+<!--
+ <TextView
+            android:id="@+id/input"
+            android:layout_height="35dp"
+            android:paddingLeft="8dp"
+            style="@style/Widget.Design.TextInputLayout"
+            android:background="@drawable/rec_find"
+            android:layout_width="match_parent"
+            android:hint="Ingrese día de entrega"
+            android:textColor="@color/word"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_margin="8dp"
+            android:inputType="textCapWords" />
+
+
+-->

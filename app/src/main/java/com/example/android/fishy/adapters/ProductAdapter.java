@@ -94,8 +94,8 @@ public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHold
         final Product currentProduct=getItem(position);
 
         holder.name.setText(currentProduct.getFish_name());
-        holder.price.setText(String.valueOf(currentProduct.price));
-        holder.stock.setText(String.valueOf(currentProduct.stock));
+        holder.price.setText("$"+String.valueOf(currentProduct.price));
+        holder.stock.setText(getIntegerQuantity(currentProduct.stock));
 
         holder.options.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,7 +140,7 @@ public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHold
         final Button ok = dialogView.findViewById(R.id.ok);
 
         name.setText(p.fish_name);
-        price.setText(String.valueOf(p.getPrice()));
+        price.setText(getIntegerQuantity(p.price));
         final AlertDialog dialog = builder.create();
 
         ok.setOnClickListener(new View.OnClickListener() {
@@ -187,9 +187,9 @@ public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHold
 
         edit_name.setHint(p.getFish_name());
         edit_name.setHintTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
-        edit_price.setHint(String.valueOf(p.getPrice()));
+        edit_price.setHint(getIntegerQuantity(p.getPrice()));
         edit_price.setHintTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
-        edit_stock.setHint(String.valueOf(p.getStock()));
+        edit_stock.setHint(getIntegerQuantity(p.getStock()));
         edit_stock.setHintTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
 
         final AlertDialog dialog = builder.create();
@@ -255,6 +255,18 @@ public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHold
         });
         dialog.show();
     }
+    private String getIntegerQuantity(Double val){
+        String[] arr=String.valueOf(val).split("\\.");
+        int[] intArr=new int[2];
+        intArr[0]=Integer.parseInt(arr[0]);
+        intArr[1]=Integer.parseInt(arr[1]);
 
+        if(intArr[1] == 0){
+            return String.valueOf(intArr[0]);
+        }else{
+            return String.valueOf(val);
+        }
+
+    }
 
 }

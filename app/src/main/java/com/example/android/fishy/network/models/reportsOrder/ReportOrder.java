@@ -8,6 +8,7 @@ public class ReportOrder {
     public Long user_id;
     public String name;
     public String order_obs;
+    public String order_created;
     public String address;
     public String neighborhood;
     public String phone;
@@ -25,9 +26,10 @@ public class ReportOrder {
         return address;
     }
 
-    public ReportOrder(String order_obs,Long order_id,Long user_id,String name, String address ,String neighbor,String phone,String deliver_date,Double total_amount, ArrayList<ReportItemOrder> reports,String state,Integer priority){
+    public ReportOrder(String order_created,String order_obs,Long order_id,Long user_id,String name, String address ,String neighbor,String phone,String deliver_date,Double total_amount, ArrayList<ReportItemOrder> reports,String state,Integer priority){
         this.order_id=order_id;
         this.order_obs=order_obs;
+        this.order_created=order_created;
         this.user_id=user_id;
         this.total_amount=total_amount;
         this.name=name;

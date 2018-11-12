@@ -18,6 +18,7 @@ import android.support.design.widget.TabLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,6 +30,7 @@ public class MainActivity extends BaseActivity {
     TabLayout mTabLayout;
 
     FloatingActionButton button;
+    TextView input;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +45,12 @@ public class MainActivity extends BaseActivity {
         mTabLayout.setSelectedTabIndicatorHeight(10);
 
         button= findViewById(R.id.fab_agregarTod);
+       // input=findViewById(R.id.input);
 
         actionFloatingButton();
         setImageButton();
         setVisibilityButton();
+        //setInputType();
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -59,6 +63,7 @@ public class MainActivity extends BaseActivity {
                 setImageButton();
                 actionFloatingButton();
                 setVisibilityButton();
+          //      setInputType();
 
             }
 
@@ -124,6 +129,32 @@ public class MainActivity extends BaseActivity {
             ((BaseFragment)f).onRefresh();
         }
     }
+
+ /*   public void onClickAction(){
+        int position = mTabLayout.getSelectedTabPosition();
+        final Fragment f = mAdapter.getItem(position);
+
+        if(f instanceof BaseFragment){
+            input.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((BaseFragment)f).onClickAction();
+                }
+            });
+        }
+
+    }*/
+
+   /* public void setInputType(){
+        int position = mTabLayout.getSelectedTabPosition();
+        Fragment f = mAdapter.getItem(position);
+
+        if( f instanceof BaseFragment){
+            input.setHint(((BaseFragment)f).getHint());
+
+        }
+
+    }*/
 
     public void setVisibilityButton(){
         int position = mTabLayout.getSelectedTabPosition();

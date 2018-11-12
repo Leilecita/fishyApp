@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.fishy.Interfaces.OnFloatingButton;
+import com.example.android.fishy.Interfaces.OnInputBar;
 import com.example.android.fishy.Interfaces.Refreshable;
 import com.example.android.fishy.Interfaces.Searcheable;
 import com.example.android.fishy.R;

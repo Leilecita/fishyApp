@@ -12,6 +12,7 @@ import com.example.android.fishy.network.models.User;
 
 import com.example.android.fishy.network.models.reportsOrder.ReportOrder;
 import com.example.android.fishy.network.models.reportsOrder.ValuesDay;
+import com.example.android.fishy.network.models.reportsOrder.ValuesOrderReport;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -39,6 +40,14 @@ public class ApiClient {
 
     public void finishOrder(Long order_id,GenericCallback<Order> callback){
         handleRequest( ApiUtils.getAPIService().finishOrder("finish", order_id), callback);
+    }
+
+    public void getValuesOrderReport(String deliver_date,GenericCallback<ValuesOrderReport> callback){
+        handleRequest( ApiUtils.getAPIService().getValuesOrdersReport("getOrdersValues", deliver_date), callback);
+    }
+
+    public void getTotalOrdersPendients(GenericCallback<ValuesOrderReport> callback){
+        handleRequest( ApiUtils.getAPIService().getTotalOrdersPendient("getTotalOrdersPendient"), callback);
     }
 
     public void getOrders(Integer page,String deliver_date,String zone,String time,String query,GenericCallback<List<ReportOrder>> callback){

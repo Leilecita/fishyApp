@@ -40,6 +40,8 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by leila on 19/7/18.
  */
@@ -94,8 +96,9 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder  {
         public TextView text_name;
-        public ImageView create;
+        public CircleImageView create;
         public ImageView photo;
+        public ImageView note;
 
 
         public ViewHolder(View v){
@@ -103,6 +106,8 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
             text_name= v.findViewById(R.id.text_name);
             create= v.findViewById(R.id.text_add);
             photo=v.findViewById(R.id.photo_user);
+            note=v.findViewById(R.id.note);
+
 
         }
     }
@@ -121,6 +126,13 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
     private void clearViewHolder(UserAdapter.ViewHolder vh){
         if(vh.text_name!=null)
             vh.text_name.setText(null);
+        if(vh.create!=null){
+            vh.create.setImageResource(android.R.color.transparent);
+            vh.create.setBorderWidth(0);
+            vh.create.setBorderColor(mContext.getResources().getColor(R.color.white));
+        }
+        if(vh.note!=null)
+            vh.note.setImageResource(android.R.color.transparent);
 
     }
 
@@ -132,7 +144,14 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         final User currentUser=getItem(position);
 
         if(currentUser.pendient_orders >0){
-            holder.create.setImageResource(R.drawable.fishy_rosa);
+            holder.create.setBorderWidth(4);
+            holder.note.setImageResource(R.drawable.prueba3);
+            holder.create.setBorderColor(mContext.getResources().getColor(R.color.FishyLetra));
+           // holder.create.setImageResource(R.drawable.fishy_santi2);
+            Glide.with(mContext).load(R.drawable.fishy_santi2).into(holder.create);
+        }else{
+           // holder.create.setImageResource(R.drawable.fishy_santi);
+            Glide.with(mContext).load(R.drawable.fishy_santi).into(holder.create);
         }
 
         if(currentUser.image_url==null){
