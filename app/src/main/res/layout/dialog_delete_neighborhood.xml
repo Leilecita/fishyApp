@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:text="Producto"
+            android:text="Barrio"
             android:textSize="18sp"
             android:textColor="@color/title_dialog_helper"
             android:gravity="center"

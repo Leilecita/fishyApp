@@ -94,6 +94,7 @@ public class CreateUserActivity extends BaseActivity{
         validateNeighbor=false;
         mNeighborhood=null;
 
+
         CardView takePhoto= findViewById(R.id.select_photo);
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +116,7 @@ public class CreateUserActivity extends BaseActivity{
     }
 
     private void listNeighborhoods(){
+        neig.setError(null);
         ApiClient.get().getNeighborhoods(new GenericCallback<List<Neighborhood>>() {
             @Override
             public void onSuccess(List<Neighborhood> data) {
@@ -190,6 +192,7 @@ public class CreateUserActivity extends BaseActivity{
         }
     }
     private void reloadInfo(){
+        listNeighborhoods();
         mUserPhone.setText(mUserPhone.getText().toString());
         mUserAddress.setText(mUserAddress.getText().toString());
         mUserName.setText(mUserName.getText().toString());

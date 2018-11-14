@@ -98,6 +98,8 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
         mOrderId=orderId;
     }
 
+    public Long getOrderId(){return mOrderId;}
+
     public ProductOrderAdapter(){
 
     }

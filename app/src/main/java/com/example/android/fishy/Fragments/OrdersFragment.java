@@ -1,8 +1,10 @@
 package com.example.android.fishy.Fragments;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,12 +22,10 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.fishy.CurrentValuesHelper;
 import com.example.android.fishy.CustomLoadingListItemCreator;
 import com.example.android.fishy.DialogHelper;
-import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.Interfaces.OnStartDragListener;
 import com.example.android.fishy.R;
 import com.example.android.fishy.SimpleItemTouchHelperCallback;
@@ -49,7 +49,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
-public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,OnStartDragListener{
+import pub.devrel.easypermissions.EasyPermissions;
+
+public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,OnStartDragListener, EasyPermissions.PermissionCallbacks{
 
     private RecyclerView mRecyclerView;
     private ReportOrderAdapter mAdapter;
@@ -360,6 +362,7 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
     @Override
     public void onResume() {
         super.onResume();
+        checkPermissions();
         boolean onlyAddress=mAdapter.getOnlyAddress();
         System.out.println("OnResume");
         System.out.println(onlyAddress);
@@ -461,5 +464,34 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
     @Override
     public boolean hasLoadedAllItems() {
         return !hasMoreItems;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+
+
+    private final static int RC_WRITE_PERMISSIONS = 132;
+    private void checkPermissions(){
+        if (!EasyPermissions.hasPermissions(getContext(), Manifest.permission.READ_SMS)) {
+            // Request one permission
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_storage_permission),
+                    RC_WRITE_PERMISSIONS, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        Log.d("PERMS", "onPermissionsGranted:" + requestCode + ":" + perms.size());
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        Log.d("PERMS", "onPermissionsDenied:" + requestCode + ":" + perms.size());
     }
 }

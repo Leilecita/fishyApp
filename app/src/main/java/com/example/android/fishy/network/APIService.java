@@ -34,6 +34,9 @@ public interface APIService {
     Observable<Response<Order>>  finishOrder(@Query("method") String method, @Query("order_id") Long order_id);
 
     @GET("orders.php")
+    Observable<Response<Order>>  getPdf(@Query("method") String method, @Query("order_id") Long order_id);
+
+    @GET("orders.php")
     Observable<Response<ValuesOrderReport>>  getValuesOrdersReport(@Query("method") String method, @Query("deliver_date") String date);
 
     @GET("orders.php")
@@ -58,6 +61,9 @@ public interface APIService {
 
     @GET("products.php")
     Observable<Response<List<Product>>> getAliveProducts(@Query("state") String state);
+
+    @GET("products.php")
+    Observable<Response<List<Product>>> getAliveProductsByPage(@Query("page") Integer page,@Query("state") String state);
 
     @GET("products.php")
     Observable<Response<Product>> getProduct(@Query("id") Long id);
@@ -145,6 +151,9 @@ public interface APIService {
 
     @GET("neighborhoods.php")
     Observable<Response<List<Neighborhood>>> getNeighborhoods();
+
+    @GET("neighborhoods.php")
+    Observable<Response<List<Neighborhood>>> getNeighborhoodsByPage(@Query("page") Integer page);
 
     @GET("neighborhoods.php")
     Observable<Response<Neighborhood>> existNeighborhood(@Query("name") String name);

@@ -1,5 +1,4 @@
 package com.example.android.fishy.adapters;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,10 +20,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.android.fishy.CurrentValuesHelper;
 import com.example.android.fishy.DialogHelper;
+import com.example.android.fishy.DownloadTask;
 import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.Interfaces.ItemTouchHelperAdapter;
 import com.example.android.fishy.Interfaces.OnStartDragListener;
@@ -50,6 +48,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+
+
+import java.io.File;
+import java.io.IOException;
+
+
+import android.content.ActivityNotFoundException;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.PermissionRequest;
+
 
 public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdapter.ViewHolder> implements ItemTouchHelperAdapter {
 
@@ -136,7 +145,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
        // notifyItemRemoved(position);
     }
 
-
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
             ReportOrder repOrder= getList().get(fromPosition);
@@ -208,7 +216,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                 holder.priority.setText(r.order_obs);
 
             holder.name.setText(r.getUser_name());
-            holder.amount.setText(String.valueOf(r.total_amount));
+            holder.amount.setText(String.valueOf(round(r.total_amount,2)));
             holder.listItemsOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -258,20 +266,22 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
 
     private void finishOrder(final ReportOrder r, final Integer position){
-        ApiClient.get().finishOrder(r.order_id, new GenericCallback<Order>() {
+
+
+       downloadPDF();
+      /*  ApiClient.get().finishOrder(r.order_id, new GenericCallback<Order>() {
             @Override
             public void onSuccess(Order data) {
                 r.state=data.state;
                 updateItem(position,r);
                 EventBus.getDefault().post(new EventOrderState(data.id,"finish",r.deliver_date));
-               // EventBus.getDefault().post(new EventReloadSummaryDay(CurrentValuesHelper.get().getLastDate()));
             }
 
             @Override
             public void onError(Error error) {
                 DialogHelper.get().showMessage("Error","No se pudo finalizar el pedido",mContext);
             }
-        });
+        });*/
 
     }
     private void deleteOrder(final ReportOrder r, final Integer position){
@@ -306,7 +316,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                         DialogHelper.get().showMessage("Error","No se pudo eliminar el pedido",mContext);
                     }
                 });
-
                 dialog.dismiss();
             }
         });
@@ -318,10 +327,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             }
         });
         dialog.show();
-
-
     }
-
 
 
     private void showOrderInfo(final ReportOrder r,final Integer position){
@@ -340,7 +346,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         delivery_date.setText(r.deliver_date);
         created.setText(serverToUserFormatted(r.order_created));
 
-
         final AlertDialog dialog = builder.create();
 
         deleteOrder.setOnClickListener(new View.OnClickListener() {
@@ -350,9 +355,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                 deleteOrder(r,position);
             }
         });
-
         dialog.show();
-
     }
 
 
@@ -360,7 +363,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         CreateOrderActivity.startEdithOrder(mContext,reportorder);
     }
     private void showItemsList(final ReportOrder r){
-
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View dialogView = inflater.inflate(R.layout.dialog_show_items, null);
@@ -369,13 +371,13 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
         RecyclerView recycler= dialogView.findViewById(R.id.list_items);
         ReportItemOrderAdapter adapter= new ReportItemOrderAdapter(mContext,new ArrayList<ReportItemOrder>());
-        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(mContext);;
+        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(mContext);
         recycler.setLayoutManager(layoutManager);
 
         recycler.setAdapter(adapter);
         adapter.setItems(r.items);
         TextView amount= dialogView.findViewById(R.id.amount);
-        amount.setText(String.valueOf(r.total_amount));
+        amount.setText(String.valueOf(round(r.total_amount,2)));
         name.setText(r.getUser_name());
 
         final TextView cancel=  dialogView.findViewById(R.id.cancel);
@@ -398,6 +400,16 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         dialog.show();
     }
 
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        System.out.println(String.valueOf((double) tmp / factor));
+        return (double) tmp / factor;
+    }
+
 
     private String generateText(ArrayList<String> list){
         StringBuffer cadena = new StringBuffer();
@@ -408,15 +420,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
     }
 
 
-    private void sendWhatsappWithReportOrder(String text, String phone){
 
-        Uri uri = Uri.parse("smsto:" + phone);
-        Intent i = new Intent(Intent.ACTION_SENDTO, uri);
-        i.setPackage("com.whatsapp");
-        i.putExtra(Intent.EXTRA_TEXT,text);
-        //i.setType("application/pdf");
-        mContext.startActivity(Intent.createChooser(i, ""));
-    }
 
     private void sendWhatsapp(String text, String phone){
 
@@ -443,6 +447,35 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         return "";
     }
 
+
+    public void downloadPDF()
+    {
+        String URL= "http://192.168.0.14/fishyserver/orders.php?method=generatePdf";
+       // new DownloadFile().execute(URL, "maven.pdf");
+        //String URL= "http://localhost/fishyserver/pdfs/salida.pdf";
+        new DownloadTask(mContext, URL);
+    }
+
+    public void sharePdf(){
+
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setData(Uri.parse("mailto:"));
+        //String[] to = direccionesEmail;
+        //String[] cc = copias;
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, "");
+        emailIntent.putExtra(Intent.EXTRA_CC, "");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+        emailIntent.setType("message/rfc822");
+        mContext.startActivity(Intent.createChooser(emailIntent, "Email "));
+
+     /*   File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/example.pdf");
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(file), "application/pdf");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        mContext.startActivity(intent);*/
+    }
+
     public String changeFormatDate(String date){
         try {
             SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -457,4 +490,5 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         }
         return "dd/MM/yyyy";
     }
+
 }

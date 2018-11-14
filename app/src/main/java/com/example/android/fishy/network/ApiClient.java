@@ -42,6 +42,10 @@ public class ApiClient {
         handleRequest( ApiUtils.getAPIService().finishOrder("finish", order_id), callback);
     }
 
+    public void generatePdf(Long order_id,GenericCallback<Order> callback){
+        handleRequest( ApiUtils.getAPIService().finishOrder("generatePdf", order_id), callback);
+    }
+
     public void getValuesOrderReport(String deliver_date,GenericCallback<ValuesOrderReport> callback){
         handleRequest( ApiUtils.getAPIService().getValuesOrdersReport("getOrdersValues", deliver_date), callback);
     }
@@ -89,6 +93,10 @@ public class ApiClient {
 
     public void getAliveProducts(String state,final GenericCallback<List<Product>> callback){
         handleRequest( ApiUtils.getAPIService().getAliveProducts(state), callback);
+    }
+
+    public void getAliveProductsByPage(Integer page,String state,final GenericCallback<List<Product>> callback){
+        handleRequest( ApiUtils.getAPIService().getAliveProductsByPage(page,state), callback);
     }
 
     public void getProduct(Long id,final GenericCallback<Product> callback){
@@ -183,6 +191,10 @@ public class ApiClient {
 
     public void getNeighborhoods(final GenericCallback<List<Neighborhood>> callback){
         handleRequest( ApiUtils.getAPIService().getNeighborhoods(), callback);
+    }
+
+    public void getNeighborhoodsByPage(Integer page,final GenericCallback<List<Neighborhood>> callback){
+        handleRequest( ApiUtils.getAPIService().getNeighborhoodsByPage(page), callback);
     }
 
     public void existNeighborhood(String name, final GenericCallback<Neighborhood> callback){

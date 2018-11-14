@@ -143,9 +143,9 @@ public class SummaryDayFragment extends BaseFragment {
             ApiClient.get().getValuesDay(date, new GenericCallback<ValuesDay>() {
                 @Override
                 public void onSuccess(ValuesDay data) {
-                    mSumDone.setText(String.valueOf(data.sumDone));
-                    mSumPendient.setText(String.valueOf(data.sumPendient));
-                    mSumTot.setText(String.valueOf(data.sumTot));
+                    mSumDone.setText(String.valueOf(round(data.sumDone,1)));
+                    mSumPendient.setText(String.valueOf(round(data.sumPendient,1)));
+                    mSumTot.setText(String.valueOf(round(data.sumTot,1)));
                 }
 
                 @Override
@@ -209,6 +209,16 @@ public class SummaryDayFragment extends BaseFragment {
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         searchItem.setVisible(false);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        System.out.println(String.valueOf((double) tmp / factor));
+        return (double) tmp / factor;
     }
 
 }

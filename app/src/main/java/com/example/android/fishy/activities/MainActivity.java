@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.android.fishy.CurrentValuesHelper;
+import com.example.android.fishy.DownloadTask;
 import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.Fragments.BaseFragment;
 import com.example.android.fishy.R;
@@ -42,7 +43,7 @@ public class MainActivity extends BaseActivity {
 
         mTabLayout =  findViewById(R.id.tabs);
         mTabLayout.setupWithViewPager(viewPager);
-        mTabLayout.setSelectedTabIndicatorHeight(10);
+        //mTabLayout.setSelectedTabIndicatorHeight(10);
 
         button= findViewById(R.id.fab_agregarTod);
        // input=findViewById(R.id.input);

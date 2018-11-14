@@ -29,14 +29,14 @@
 
                     <TextView
                         android:id="@+id/cant"
-                        android:layout_width="30sp"
+                        android:layout_width="28sp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="0"
                         android:textStyle="italic"
                         android:padding="2dp"
                         android:textColor="@android:color/black"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/name_product"
@@ -44,19 +44,20 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="Abadejo "
+                        android:text=" "
                         android:textColor="@android:color/black"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/price"
                         android:layout_width="match_parent"
                         android:layout_weight="2"
                         android:layout_height="wrap_content"
-                        android:text="($10)"
+                        android:text=""
                         android:layout_gravity="center"
+                        android:gravity="center_horizontal"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
 
 
                     <TextView
@@ -67,8 +68,7 @@
                         android:gravity="end"
                         android:id="@+id/total_amount"
                         android:inputType="numberDecimal"
-                        android:text=""
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:layout_marginRight="4dp"
                         android:textColor="@android:color/black"
                         />

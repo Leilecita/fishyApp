@@ -97,7 +97,7 @@ public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHold
         holder.price.setText("$"+String.valueOf(currentProduct.price));
         holder.stock.setText(getIntegerQuantity(currentProduct.stock));
 
-        holder.options.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PopupMenu popup = new PopupMenu(mContext, holder.options);
@@ -123,7 +123,6 @@ public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHold
                 popup.show();
             }
         });
-
     }
 
     private void deleteProduct(final Product p,final int position){

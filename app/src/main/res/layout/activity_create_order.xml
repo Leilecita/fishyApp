@@ -73,7 +73,7 @@
             card_view:cardCornerRadius="4dp"
             card_view:cardMaxElevation="4dp"
             card_view:cardElevation="2dp"
-            card_view:contentPadding="8dp"
+            card_view:contentPadding="4dp"
             >
             <RelativeLayout
                 android:layout_width="wrap_content"

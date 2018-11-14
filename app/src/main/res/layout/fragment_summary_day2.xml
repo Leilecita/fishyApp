@@ -27,7 +27,7 @@
             android:id="@+id/deliver_date"
 
             android:layout_height="35dp"
-            android:paddingLeft="8dp"
+            android:paddingLeft="6dp"
             style="@style/Widget.Design.TextInputLayout"
             android:background="@drawable/rec_find"
             android:layout_width="match_parent"
@@ -37,7 +37,8 @@
             android:textColor="@color/word"
             android:gravity="center_vertical"
             android:layout_margin="6dp"
-            android:textSize="16sp"
+            android:textSize="14sp"
+            android:padding="6dp"
             android:inputType="textCapWords" />
 
 

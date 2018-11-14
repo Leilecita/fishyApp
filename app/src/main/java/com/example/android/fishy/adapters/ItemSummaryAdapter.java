@@ -34,27 +34,21 @@ public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapt
     public static class ViewHolder extends RecyclerView.ViewHolder  {
         TextView cant;
         TextView name_product;
-       // TextView price;
         TextView total_amount;
-
 
         public ViewHolder(View v){
             super(v);
             cant=v.findViewById(R.id.cant);
             name_product=v.findViewById(R.id.name_product);
-           // price=v.findViewById(R.id.price);
             total_amount=v.findViewById(R.id.total_amount);
-
         }
     }
 
     @Override
     public ItemSummaryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         // Create a new View
-
         View v = LayoutInflater.from(mContext).inflate(R.layout.item_day,parent,false);
         ViewHolder vh = new ViewHolder(v);
-
         return vh;
     }
 
@@ -64,10 +58,8 @@ public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapt
             vh.cant.setText(null);
         if(vh.name_product!=null)
             vh.name_product.setText(null);
-
         if(vh.total_amount!=null)
             vh.total_amount.setText(null);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -76,22 +68,26 @@ public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapt
         clearViewHolder(holder);
 
         final SummaryDay item= getItem(position);
-
-
         holder.cant.setText(getIntegerQuantity(item.totalQuantity));
-
-//        holder.price.setText(String.valueOf(item.price));
-        holder.total_amount.setText(String.valueOf(item.price*item.totalQuantity));
+        holder.total_amount.setText(String.valueOf(round(item.price*item.totalQuantity,2)));
         holder.name_product.setText(item.nameProduct);
-
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-
                 return false;
             }
         });
 
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        System.out.println(String.valueOf((double) tmp / factor));
+        return (double) tmp / factor;
     }
 
     private String getIntegerQuantity(Double val){

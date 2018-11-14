@@ -1,6 +1,9 @@
 package com.example.android.fishy;
+;
+import android.support.multidex.MultiDexApplication;
 
-import android.app.Application;
+public class FishyApp extends MultiDexApplication {
 
-public class FishyApp extends Application {
+
+
 }

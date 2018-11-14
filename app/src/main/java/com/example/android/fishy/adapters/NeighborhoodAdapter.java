@@ -121,10 +121,6 @@ public class NeighborhoodAdapter extends BaseAdapter<Neighborhood,NeighborhoodAd
                             case R.id.menu_delete:
                                 deleteNeighborhood(currentNeigh, position);
                                 return true;
-                            case R.id.menu_edit:
-                               // edithNeighborhood(currentNeigh, position, holder);
-
-                                return true;
                             default:
                                 return false;
                         }

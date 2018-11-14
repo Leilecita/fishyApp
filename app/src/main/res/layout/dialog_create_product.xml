@@ -61,7 +61,7 @@
 
                 <EditText
                     android:id="@+id/product_price"
-                    android:hint="Precio venta $  "
+                    android:hint="Precio venta $/kg   "
                     android:layout_width="match_parent"
                     style="@style/Widget.Design.TextInputLayout"
                     android:paddingLeft="8dp"

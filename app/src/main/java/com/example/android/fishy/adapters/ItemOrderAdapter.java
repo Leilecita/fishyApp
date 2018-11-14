@@ -31,6 +31,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
+import java.text.DecimalFormat;
 
 public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.ViewHolder> {
 
@@ -86,27 +87,6 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
         return vh;
     }
 
-   /* @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe
-    public void onEvent(EventItemOrderState event){
-        ItemOrder i= new ItemOrder(event.product_id,event.order_id,event.quantity);
-        i.id=event.mId;
-
-        pushItem(i);
-
-
-    }*/
 
     private void clearViewHolder(ItemOrderAdapter.ViewHolder vh){
         if(vh.name!=null)
@@ -131,8 +111,17 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
         }else{
             return String.valueOf(val);
         }
-
     }
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        System.out.println(String.valueOf((double) tmp / factor));
+        return (double) tmp / factor;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position){
@@ -147,9 +136,12 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
 
                 Double cant=currentItem.quantity;
                 holder.cant.setText(getIntegerQuantity(cant));
-                String text="("+getIntegerQuantity(data.price)+")";
+                String text="("+getIntegerQuantity(round(data.price,2))+")";
                 holder.price.setText(text);
-                holder.total_price.setText("$"+getIntegerQuantity(cant*data.price));
+               // holder.total_price.setText("$"+getIntegerQuantity(cant*data.price));
+
+                Double total=cant*data.price;
+                holder.total_price.setText("$"+getIntegerQuantity(roundTwoDecimals(total)));
 
             }
             @Override
@@ -178,6 +170,12 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
                 popup.show();
             }
         });
+    }
+
+    private double roundTwoDecimals(double d)
+    {
+        DecimalFormat twoDForm = new DecimalFormat("#.##");
+        return Double.valueOf(twoDForm.format(d));
     }
 
     private void deleteItem(final ItemOrder currentItem,final Integer position,ViewHolder holder ){
@@ -227,75 +225,4 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
         dialog.show();
 
     }
-
-    //hay que chequear la cantidad de stock que queda en el producto.
-  /*  private void edithItem(final ItemOrder currentItem,final Integer position,ViewHolder holder ){
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View dialogView = inflater.inflate(R.layout.dialog_set_quantity, null);
-        builder.setView(dialogView);
-
-        final TextView nameFish = dialogView.findViewById(R.id.fish_name);
-        final TextView quantity = dialogView.findViewById(R.id.quantity);
-        final TextView price = dialogView.findViewById(R.id.price);
-        final TextView cancel = dialogView.findViewById(R.id.cancel);
-        final Button ok = dialogView.findViewById(R.id.ok);
-
-        nameFish.setText(holder.name.getText().toString());
-        //quantity.setText(String.valueOf(currentItem.getQuantity()));
-        quantity.setText(getIntegerQuantity(currentItem.getQuantity()));
-        price.setText(holder.price.getText().toString());
-
-        final AlertDialog dialog = builder.create();
-
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String fishQuantity=quantity.getText().toString().trim();
-
-                if(!fishQuantity.matches("") && ValidatorHelper.get().isTypeDouble(fishQuantity)){
-
-                    currentItem.setQuantity(Double.valueOf(fishQuantity));
-
-                    if(isUpdating){
-                        updateItem(position,currentItem);
-
-                    }else{
-                        ApiClient.get().putItemOrder(currentItem, new GenericCallback<ItemOrder>() {
-                            @Override
-                            public void onSuccess(ItemOrder data) {
-
-
-                                updateItem(position,currentItem);
-                                if(onAddItemOrderLister!=null){
-                                    onAddItemOrderLister.onAddItemToOrder(0l,0l,0l,0d,false);
-                                }
-                            }
-                            @Override
-                            public void onError(Error error) {
-                                DialogHelper.get().showMessage("Error", "Error al modificar el item",mContext);
-                            }
-                        });
-
-                    }
-
-
-                    dialog.dismiss();
-                }else{
-                    Toast.makeText(mContext,"Dato inválido",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }*/
-
-
 }

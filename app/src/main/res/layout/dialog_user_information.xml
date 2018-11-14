@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="2"
                 android:padding="4dp"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/word"
                 android:text="Nombre "/>
@@ -55,7 +55,7 @@
                 android:layout_weight="1"
                 android:padding="4dp"
                 android:textColor="@color/word_info"
-                android:textSize="18dp"
+                android:textSize="16sp"
                 android:textStyle="italic"/>
         </LinearLayout>
         <LinearLayout
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="2"
                 android:padding="4dp"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/word"
                 android:text="Dirección "/>
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:textColor="@color/word_info"
-                android:textSize="18dp"
+                android:textSize="16sp"
                 android:textStyle="italic"/>
         </LinearLayout>
         <LinearLayout
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="2"
                 android:padding="4dp"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/word"
                 android:text="Zona "/>
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:textColor="@color/word_info"
-                android:textSize="18dp"
+                android:textSize="16sp"
                 android:textStyle="italic"/>
         </LinearLayout>
 
@@ -120,7 +120,7 @@
                 android:textStyle="bold"
                 android:text="Telefono "
                 android:textColor="@color/word"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
 
             <TextView
@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:textColor="@color/word_info"
-                android:textSize="18dp"
+                android:textSize="16sp"
                 android:textStyle="italic"/>
         </LinearLayout>
 

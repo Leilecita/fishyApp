@@ -69,9 +69,7 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         mContext = context;
         validateNeigh=false;
 
-
     }
-
 
     @Subscribe
     public void onEvent(EventOrderState event){
@@ -107,8 +105,6 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
             create= v.findViewById(R.id.text_add);
             photo=v.findViewById(R.id.photo_user);
             note=v.findViewById(R.id.note);
-
-
         }
     }
 
@@ -117,9 +113,6 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         // Create a new View
         View v = LayoutInflater.from(mContext).inflate(R.layout.card_item_user,parent,false);
         ViewHolder vh = new ViewHolder(v);
-
-
-
         return vh;
     }
 
@@ -175,8 +168,6 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
             }
         });
 
-
-
         holder.photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -203,8 +194,6 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
 
             }
         });
-
-
     }
 
     private void startCreateOrderActivity(User u){

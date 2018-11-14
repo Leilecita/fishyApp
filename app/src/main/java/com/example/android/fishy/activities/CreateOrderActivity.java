@@ -2,6 +2,7 @@ package com.example.android.fishy.activities;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.fishy.CustomLoadingListItemCreator;
 import com.example.android.fishy.DialogHelper;
 import com.example.android.fishy.Events.EventItemOrderState;
 import com.example.android.fishy.Events.EventOrderState;
@@ -41,15 +43,18 @@ import com.example.android.fishy.network.models.Product;
 import com.example.android.fishy.network.models.User;
 import com.example.android.fishy.network.models.reportsOrder.ReportItemOrder;
 import com.example.android.fishy.network.models.reportsOrder.ReportOrder;
+import com.paginate.Paginate;
+import com.paginate.recycler.LoadingListItemSpanLookup;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class CreateOrderActivity extends BaseActivity implements OnAddItemListener {
+public class CreateOrderActivity extends BaseActivity implements Paginate.Callbacks,OnAddItemListener {
 
     String mDeliverDate;
     String mDeliveryTime;
@@ -64,6 +69,12 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
 
     TextView totalAmount;
     boolean mEdithOrder;
+
+    //pagination
+    private boolean loadingInProgress;
+    private Integer mCurrentPage;
+    private Paginate paginate;
+    private boolean hasMoreItems;
 
     public static void start(Context mContext, User user){
         Intent i=new Intent(mContext, CreateOrderActivity.class);
@@ -94,6 +105,7 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
     private GridLayoutManager gridlayoutmanager;
 
     private RecyclerView.LayoutManager layoutManagerItem;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +141,7 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
         deliverDate=findViewById(R.id.deliver_date);
         deliveryTime=findViewById(R.id.delivery_time);
         observation_order=findViewById(R.id.obs);
+
 
         initActivity();
 
@@ -226,7 +239,10 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
                 public void onSuccess(Order data) {
                     mOrder=data;
                     reloadItems();
-                    listProducts();
+                    //listProducts();
+
+                    implementsPaginate();
+
                     mObservation_order=data.observation;
                     deliverDate.setText(mDeliverDate);
                     userName.setText(getIntent().getStringExtra("USERNAME"));
@@ -251,7 +267,7 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
         ApiClient.get().getAmountByOrder(mOrder.id, new GenericCallback<AmountResult>() {
             @Override
             public void onSuccess(AmountResult data) {
-                totalAmount.setText(String.valueOf(data.total));
+                totalAmount.setText(String.valueOf(round(data.total,2)));
             }
 
             @Override
@@ -261,6 +277,16 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
         });
 
     }
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        System.out.println(String.valueOf((double) tmp / factor));
+        return (double) tmp / factor;
+    }
+
 
     private void reloadItems(){
         mItemAdapter.clear();
@@ -284,11 +310,14 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
         if(!mEdithOrder){
             //si se cancela el pedido cuando se CREA la orden , se borra la orden y todos los items.
             //si se estaba editando no es necesario
-
+            final ProgressDialog progress = ProgressDialog.show(this, "Cancelando pedido",
+                    "Aguarde un momento", true);
             ApiClient.get().deleteOrder(mOrder.id, new GenericCallback<Void>() {
                 @Override
                 public void onSuccess(Void data) {
                     EventBus.getDefault().post(new EventOrderState(mOrder.user_id,"deleted",mOrder.deliver_date));
+                    finish();
+                    progress.dismiss();
                 }
 
                 @Override
@@ -309,7 +338,8 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
             @Override
             public void onSuccess(Order data) {
                 mOrder=data;
-                listProducts();
+                implementsPaginate();
+               // listProducts();
             }
             @Override
             public void onError(Error error) {
@@ -318,7 +348,33 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
         });
     }
 
-    private void listProducts(){
+    private void listProducts() {
+        loadingInProgress=true;
+        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive", new GenericCallback<List<Product>>() {
+            @Override
+            public void onSuccess(List<Product> data) {
+                    mAdapter.setOrderId(mOrder.id);
+                if (data.size() == 0) {
+                    hasMoreItems = false;
+                }else{
+                    int prevSize = mAdapter.getItemCount();
+                    mAdapter.pushList(data);
+                    mCurrentPage++;
+                    if(prevSize == 0){
+                        gridlayoutmanager.scrollToPosition(0);
+                    }
+                }
+                loadingInProgress = false;
+
+            }
+
+            @Override
+            public void onError(Error error) {
+                loadingInProgress = false;
+            }
+        });
+    }
+   /* private void listProducts(){
         ApiClient.get().getAliveProducts("alive",new GenericCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> data) {
@@ -331,7 +387,7 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
 
             }
         });
-    }
+    }*/
 
     private void listItems(){
 
@@ -462,8 +518,9 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 deleteOrderAndAllItems();
-                finish();
+               // finish();
                 dialog.dismiss();
             }
         });
@@ -485,6 +542,40 @@ public class CreateOrderActivity extends BaseActivity implements OnAddItemListen
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void implementsPaginate(){
+
+        loadingInProgress=false;
+        mCurrentPage=0;
+        hasMoreItems = true;
+
+        paginate= Paginate.with(mRecyclerView,this)
+                .setLoadingTriggerThreshold(2)
+                .addLoadingListItem(true)
+                .setLoadingListItemCreator(new CustomLoadingListItemCreator())
+                .setLoadingListItemSpanSizeLookup(new LoadingListItemSpanLookup() {
+                    @Override
+                    public int getSpanSize() {
+                        return 0;
+                    }
+                })
+                .build();
+    }
+
+    @Override
+    public void onLoadMore() {
+        listProducts();
+    }
+
+    @Override
+    public boolean isLoading() {
+        return loadingInProgress;
+    }
+
+    @Override
+    public boolean hasLoadedAllItems() {
+        return !hasMoreItems;
     }
 
 }

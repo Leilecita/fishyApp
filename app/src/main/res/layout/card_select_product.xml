@@ -5,7 +5,7 @@
     android:id="@+id/card_view"
     android:layout_margin="6dp"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="80dp"
     card_view:cardCornerRadius="4dp"
     card_view:cardMaxElevation="4dp"
     card_view:cardElevation="2dp"
@@ -28,9 +28,9 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="Abadejo "
-                        android:padding="4dp"
+                        android:padding="2dp"
                         android:textColor="#7F7359"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
 
                 </LinearLayout>
