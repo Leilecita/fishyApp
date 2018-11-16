@@ -162,7 +162,7 @@ public class SummaryDayFragment extends BaseFragment {
         int mYear = c.get(Calendar.YEAR); // current year
         int mMonth = c.get(Calendar.MONTH); // current month
         final int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
-        datePickerDialog = new DatePickerDialog(getContext(),
+        datePickerDialog = new DatePickerDialog(getContext(),R.style.datepicker,
                 new DatePickerDialog.OnDateSetListener() {
 
                     @Override

@@ -4,8 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="2dp"
-    android:paddingBottom="2dp"
+    android:paddingTop="1dp"
+    android:paddingBottom="1dp"
     android:paddingRight="4dp"
     android:orientation="horizontal">
 
@@ -20,9 +20,8 @@
                     android:text="Abadejo"
                     android:layout_gravity="center"
                     android:padding="2dp"
-                    android:layout_marginLeft="2dp"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="17sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                         android:id="@+id/cant"
@@ -36,7 +35,7 @@
 
                         android:padding="4dp"
                     android:textColor="@color/FishyLetraDark"
-                        android:textSize="17sp" />
+                        android:textSize="16sp" />
 
 
 
@@ -49,25 +48,9 @@
                     android:gravity="end"
                     android:id="@+id/total_amount"
                     android:text="022"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:layout_marginRight="2dp"
                     android:textColor="@color/FishyLetraDark"
                     />
 
 </LinearLayout>
-
-
-
-<!--
-  <TextView
-                    android:id="@+id/price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text=" 2.3"
-                    android:textSize="14sp"
-                    android:textColor="#7F7359"
-                    />
--->

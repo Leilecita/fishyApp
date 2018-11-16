@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="18dp"
+    android:layout_marginBottom="22dp"
     android:id="@+id/resume">
 
     <LinearLayout
@@ -62,7 +62,7 @@
     card_view:cardBackgroundColor="#DAB6AA"
     card_view:cardElevation="2dp"
     card_view:contentPadding="8dp"
-    android:layout_above="@id/ss"
+    android:layout_above="@+id/ss"
     >
 
     <RelativeLayout
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/line1"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
@@ -143,13 +143,13 @@
             android:paddingRight="4dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:paddingBottom="8dp"
+            android:paddingBottom="4dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:padding="2dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -159,7 +159,7 @@
                     android:text="Total del día"
                     android:textStyle="bold"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="18sp"
+                    android:textSize="17sp"
                     />
 
                 <TextView
@@ -169,7 +169,7 @@
                     android:id="@+id/sumTot"
                     android:textStyle="italic|bold"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="18sp"
+                    android:textSize="17sp"
                     />
 
 
@@ -178,7 +178,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:padding="2dp"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="match_parent"
@@ -187,7 +187,7 @@
                     android:text="Total restante"
                     android:textStyle="bold"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="18sp"
+                    android:textSize="17sp"
                     />
 
                 <TextView
@@ -197,7 +197,7 @@
                     android:id="@+id/sumPendient"
                     android:textStyle="italic|bold"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="18sp"
+                    android:textSize="17sp"
                     />
 
 
@@ -206,7 +206,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:padding="2dp"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="match_parent"
@@ -215,7 +215,7 @@
                     android:text="Total recaudado"
                     android:textStyle="bold"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="18sp"
+                    android:textSize="17sp"
                     />
 
                 <TextView
@@ -225,7 +225,7 @@
                     android:id="@+id/sumDone"
                     android:textColor="@color/FishyLetraDark"
                     android:textStyle="italic|bold"
-                    android:textSize="18sp"
+                    android:textSize="17sp"
                     />
 
 
@@ -237,11 +237,11 @@
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
-    <TextView
-        android:layout_width="wrap_content"
-        android:id="@+id/ss"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:textSize="22dp"
-        />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/ss"
+    android:textSize="15dp"
+    android:layout_alignParentBottom="true"
+    />
 </RelativeLayout>

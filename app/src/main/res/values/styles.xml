@@ -20,6 +20,14 @@
 
     </style>
 
+    etting the own color to pickerXHTML
+
+    <style name="datepicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">#ffff</item>
+        <item name="colorPrimaryDark">#ffff</item>
+        <item name="colorAccent">@color/colorDialogButton</item>
+    </style>
+
     <style name="ThemeOverlay" parent="Theme.AppCompat.NoActionBar">
         <!-- android:textColorPrimary is the  color of the title text
              in the Toolbar, in the Theme.AppCompat theme:  -->

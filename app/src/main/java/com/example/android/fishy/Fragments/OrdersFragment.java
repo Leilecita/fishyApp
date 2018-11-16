@@ -3,9 +3,13 @@ package com.example.android.fishy.Fragments;
 import android.Manifest;
 import android.app.DatePickerDialog;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ShareCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -27,6 +31,7 @@ import com.example.android.fishy.CurrentValuesHelper;
 import com.example.android.fishy.CustomLoadingListItemCreator;
 import com.example.android.fishy.DialogHelper;
 import com.example.android.fishy.Interfaces.OnStartDragListener;
+import com.example.android.fishy.Interfaces.OrderFragmentListener;
 import com.example.android.fishy.R;
 import com.example.android.fishy.SimpleItemTouchHelperCallback;
 import com.example.android.fishy.adapters.ReportOrderAdapter;
@@ -44,6 +49,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -51,7 +57,7 @@ import java.util.UUID;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,OnStartDragListener, EasyPermissions.PermissionCallbacks{
+public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,OnStartDragListener, EasyPermissions.PermissionCallbacks, OrderFragmentListener{
 
     private RecyclerView mRecyclerView;
     private ReportOrderAdapter mAdapter;
@@ -92,6 +98,12 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
     public String getHint() {
         return "holaadasd";
     }
+
+    public void refreshPendientOrders(){
+
+        loadValuesPendientsAndSend();
+    }
+
 
     public OrdersFragment() {
         // Required empty public constructor
@@ -294,7 +306,8 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
         int mYear = c.get(Calendar.YEAR); // current year
         int mMonth = c.get(Calendar.MONTH); // current month
         final int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
-        datePickerDialog = new DatePickerDialog(getContext(),
+
+        datePickerDialog = new DatePickerDialog(getContext(),R.style.datepicker,
                 new DatePickerDialog.OnDateSetListener() {
 
                     @Override
@@ -365,7 +378,6 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
         checkPermissions();
         boolean onlyAddress=mAdapter.getOnlyAddress();
         System.out.println("OnResume");
-        System.out.println(onlyAddress);
         if(!isLoading()) {
             mCurrentPage = 0;
             mAdapter.clear();
@@ -494,4 +506,5 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         Log.d("PERMS", "onPermissionsDenied:" + requestCode + ":" + perms.size());
     }
+
 }

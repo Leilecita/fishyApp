@@ -413,7 +413,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         int mYear = c.get(Calendar.YEAR); // current year
         int mMonth = c.get(Calendar.MONTH); // current month
         int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
-        datePickerDialog = new DatePickerDialog(CreateOrderActivity.this,
+        datePickerDialog = new DatePickerDialog(CreateOrderActivity.this,R.style.datepicker,
                 new DatePickerDialog.OnDateSetListener() {
 
                     @Override

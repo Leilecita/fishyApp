@@ -2,12 +2,11 @@ package com.example.android.fishy.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
-import android.print.pdf.PrintedPdfDocument;
+
 import android.support.annotation.RequiresApi;
+
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,12 +23,16 @@ import android.widget.TextView;
 import com.example.android.fishy.DialogHelper;
 import com.example.android.fishy.DownloadTask;
 import com.example.android.fishy.Events.EventOrderState;
+import com.example.android.fishy.Fragments.OrdersFragment;
 import com.example.android.fishy.Interfaces.ItemTouchHelperAdapter;
+import com.example.android.fishy.Interfaces.OnAddItemListener;
 import com.example.android.fishy.Interfaces.OnStartDragListener;
+import com.example.android.fishy.Interfaces.OrderFragmentListener;
 import com.example.android.fishy.R;
 
 import com.example.android.fishy.activities.CreateOrderActivity;
 import com.example.android.fishy.network.ApiClient;
+import com.example.android.fishy.network.ApiUtils;
 import com.example.android.fishy.network.Error;
 import com.example.android.fishy.network.GenericCallback;
 import com.example.android.fishy.network.models.Order;
@@ -66,6 +69,15 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
     private boolean mOnlyAdress;
     private boolean mHistoryuser;
     private  OnStartDragListener mDragStartListener;
+
+
+    private OrderFragmentListener onOrderFragmentLister= null;
+
+    public void setOnOrderFragmentLister(OrderFragmentListener lister){
+        onOrderFragmentLister=lister;
+    }
+
+
 
     public ReportOrderAdapter(Context context, List<ReportOrder> orders,OnStartDragListener dragListner){
         setItems(orders);
@@ -242,13 +254,16 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                 @Override
                 public void onClick(View view) {
                     PopupMenu popup = new PopupMenu(mContext, holder.options);
-                    popup.getMenuInflater().inflate(R.menu.menu_transaction, popup.getMenu());
+                    popup.getMenuInflater().inflate(R.menu.menu_report_order, popup.getMenu());
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
                                 case R.id.menu_edit:
                                     finishOrder(r,position);
+                                    return true;
+                                case R.id.menu_download:
+                                    downloadPDF(r.order_id,r.name,r.phone);
                                     return true;
                                 default:
                                     return false;
@@ -265,23 +280,26 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
     }
 
 
+
     private void finishOrder(final ReportOrder r, final Integer position){
 
-
-       downloadPDF();
-      /*  ApiClient.get().finishOrder(r.order_id, new GenericCallback<Order>() {
+        ApiClient.get().finishOrder(r.order_id, new GenericCallback<Order>() {
             @Override
             public void onSuccess(Order data) {
                 r.state=data.state;
                 updateItem(position,r);
                 EventBus.getDefault().post(new EventOrderState(data.id,"finish",r.deliver_date));
+
+                if(onOrderFragmentLister!=null){
+                    onOrderFragmentLister.refreshPendientOrders();
+                }
             }
 
             @Override
             public void onError(Error error) {
                 DialogHelper.get().showMessage("Error","No se pudo finalizar el pedido",mContext);
             }
-        });*/
+        });
 
     }
     private void deleteOrder(final ReportOrder r, final Integer position){
@@ -406,7 +424,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         long factor = (long) Math.pow(10, places);
         value = value * factor;
         long tmp = Math.round(value);
-        System.out.println(String.valueOf((double) tmp / factor));
         return (double) tmp / factor;
     }
 
@@ -448,33 +465,15 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
     }
 
 
-    public void downloadPDF()
+    public void downloadPDF(Long orderId,String name,String phone)
     {
-        String URL= "http://192.168.0.14/fishyserver/orders.php?method=generatePdf";
+       // String URL= "http://192.168.0.14/fishyserver/orders.php?method=generatePdf";
+        String URL= ApiUtils.BASE_URL + "orders.php?method=generatePdf&order_id="+orderId;
        // new DownloadFile().execute(URL, "maven.pdf");
         //String URL= "http://localhost/fishyserver/pdfs/salida.pdf";
-        new DownloadTask(mContext, URL);
+        new DownloadTask(mContext, URL,"Order-"+name+".pdf",phone);
     }
 
-    public void sharePdf(){
-
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setData(Uri.parse("mailto:"));
-        //String[] to = direccionesEmail;
-        //String[] cc = copias;
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, "");
-        emailIntent.putExtra(Intent.EXTRA_CC, "");
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "");
-        emailIntent.setType("message/rfc822");
-        mContext.startActivity(Intent.createChooser(emailIntent, "Email "));
-
-     /*   File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/example.pdf");
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(file), "application/pdf");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        mContext.startActivity(intent);*/
-    }
 
     public String changeFormatDate(String date){
         try {

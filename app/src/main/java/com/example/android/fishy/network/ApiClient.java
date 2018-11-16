@@ -42,9 +42,6 @@ public class ApiClient {
         handleRequest( ApiUtils.getAPIService().finishOrder("finish", order_id), callback);
     }
 
-    public void generatePdf(Long order_id,GenericCallback<Order> callback){
-        handleRequest( ApiUtils.getAPIService().finishOrder("generatePdf", order_id), callback);
-    }
 
     public void getValuesOrderReport(String deliver_date,GenericCallback<ValuesOrderReport> callback){
         handleRequest( ApiUtils.getAPIService().getValuesOrdersReport("getOrdersValues", deliver_date), callback);
@@ -66,9 +63,6 @@ public class ApiClient {
         handleRequest( ApiUtils.getAPIService().getValuesDay("summaryDayValues", deliver_date), callback);
     }
 
-   /* public void getOrdersByZoneAndTime(String deliver_date,String zone,String time,GenericCallback<List<ReportOrder>> callback){
-        handleRequest( ApiUtils.getAPIService().getOrdersByZoneAndTime("zoneAndTime", deliver_date,zone,time), callback);
-    }*/
 
     public void updatePriority(Long order_id,Integer priority,GenericCallback<Order> callback){
         handleRequest( ApiUtils.getAPIService().updatePriority("priority", order_id,priority), callback);

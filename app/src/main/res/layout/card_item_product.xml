@@ -65,7 +65,7 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="25dp"
                     android:layout_height="28dp"
                     android:layout_gravity="center_vertical"
                     android:id="@+id/options"
@@ -84,7 +84,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Precio:"
-                    android:textStyle="italic"
                     android:padding="2dp"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
@@ -96,8 +95,9 @@
                     android:layout_gravity="center"
                     android:text="12"
                     android:paddingLeft="4dp"
+                    android:textStyle="italic"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="17sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="30dp"
@@ -109,7 +109,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text=" Stock:"
-                    android:textStyle="italic"
                     android:padding="2dp"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
@@ -121,8 +120,9 @@
                     android:layout_gravity="center"
                     android:text="34"
                     android:paddingLeft="4dp"
+                    android:textStyle="italic"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="17sp" />
+                    android:textSize="16sp" />
 
 
             </LinearLayout>

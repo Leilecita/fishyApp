@@ -94,7 +94,9 @@ public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHold
         final Product currentProduct=getItem(position);
 
         holder.name.setText(currentProduct.getFish_name());
-        holder.price.setText("$"+String.valueOf(currentProduct.price));
+
+       // holder.price.setText("$"+String.valueOf(currentProduct.price));
+        holder.price.setText("$"+getIntegerQuantity(currentProduct.price));
         holder.stock.setText(getIntegerQuantity(currentProduct.stock));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
