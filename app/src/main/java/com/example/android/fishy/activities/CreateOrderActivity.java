@@ -1,5 +1,6 @@
 package com.example.android.fishy.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -29,6 +30,7 @@ import com.example.android.fishy.Events.EventItemOrderState;
 import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.Events.EventProductState;
 import com.example.android.fishy.Interfaces.OnAddItemListener;
+import com.example.android.fishy.Interfaces.OnStartActivity;
 import com.example.android.fishy.R;
 import com.example.android.fishy.adapters.ItemOrderAdapter;
 import com.example.android.fishy.adapters.ProductOrderAdapter;
@@ -54,7 +56,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class CreateOrderActivity extends BaseActivity implements Paginate.Callbacks,OnAddItemListener {
+public class CreateOrderActivity extends BaseActivity implements Paginate.Callbacks,OnAddItemListener,OnStartActivity {
 
     String mDeliverDate;
     String mDeliveryTime;
@@ -75,6 +77,27 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
     private Integer mCurrentPage;
     private Paginate paginate;
     private boolean hasMoreItems;
+
+    public void onStartProducts(Long id_product){
+        Intent intent = new Intent(this, ProductsActivity.class);
+        intent.putExtra("IDPRODUCT", id_product);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String result=data.getStringExtra("result");
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+                reloadProducts();
+            }
+        }
+    }
+
 
     public static void start(Context mContext, User user){
         Intent i=new Intent(mContext, CreateOrderActivity.class);
@@ -127,6 +150,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         mRecyclerView.setLayoutManager(gridlayoutmanager);
 
         mAdapter.setOnAddItemListener(this);
+        mAdapter.setOnStart(this);
 
 
         mItemRecyclerView = this.findViewById(R.id.list_items);
@@ -294,6 +318,16 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         listItems();
     }
 
+    public void reloadProducts(){
+        mCurrentPage=0;
+        mAdapter.clear();
+        loadingInProgress=false;
+        hasMoreItems = true;
+        listProducts();
+    }
+
+
+
     public void onAddItemToOrder(Long id,Long product_id,Long order_id, Double quantity,boolean create){
 
         if(create){
@@ -374,20 +408,6 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
             }
         });
     }
-   /* private void listProducts(){
-        ApiClient.get().getAliveProducts("alive",new GenericCallback<List<Product>>() {
-            @Override
-            public void onSuccess(List<Product> data) {
-                mAdapter.setOrderId(mOrder.id);
-                mAdapter.setItems(data);
-            }
-
-            @Override
-            public void onError(Error error) {
-
-            }
-        });
-    }*/
 
     private void listItems(){
 

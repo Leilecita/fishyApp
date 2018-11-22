@@ -97,6 +97,7 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         public CircleImageView create;
         public ImageView photo;
         public ImageView note;
+        public ImageView debt;
 
 
         public ViewHolder(View v){
@@ -105,6 +106,7 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
             create= v.findViewById(R.id.text_add);
             photo=v.findViewById(R.id.photo_user);
             note=v.findViewById(R.id.note);
+            debt=v.findViewById(R.id.debt);
         }
     }
 
@@ -126,6 +128,8 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         }
         if(vh.note!=null)
             vh.note.setImageResource(android.R.color.transparent);
+        if(vh.debt!=null)
+            vh.debt.setImageResource(android.R.color.transparent);
 
     }
 
@@ -167,6 +171,11 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
                 startCreateOrderActivity(currentUser);
             }
         });
+
+        if(currentUser.defaulter.equals("true")){
+            holder.debt.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money));
+        }
+
 
         holder.photo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -334,13 +343,13 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         final EditText phoneEdith=dialogView.findViewById(R.id.edith_phone);
         final AutoCompleteTextView neighborEdith=dialogView.findViewById(R.id.edith_neighborhood);
 
-        phoneEdith.setHint(userToEdith.getPhone());
-        phoneEdith.setHintTextColor(mContext.getResources().getColor(R.color.word_info));
-        addressEdith.setHint(userToEdith.getAddress());
-        addressEdith.setHintTextColor(mContext.getResources().getColor(R.color.word_info));
-        nameEdith.setHint(userToEdith.getName());
-        nameEdith.setHintTextColor(mContext.getResources().getColor(R.color.word_info));
 
+        phoneEdith.setText(userToEdith.getPhone());
+        phoneEdith.setTextColor(mContext.getResources().getColor(R.color.word_info));
+        addressEdith.setText(userToEdith.getAddress());
+        addressEdith.setTextColor(mContext.getResources().getColor(R.color.word_info));
+        nameEdith.setText(userToEdith.getName());
+        nameEdith.setTextColor(mContext.getResources().getColor(R.color.word_info));
         neighborEdith.setHint(userToEdith.getNeighborhood());
         neighborEdith.setHintTextColor(mContext.getResources().getColor(R.color.word_info));
 
@@ -363,15 +372,9 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
                 String phoneNew= phoneEdith.getText().toString().trim();
                 String neighborNew= neighborEdith.getText().toString().trim();
 
-                if(!nameNew.matches("")){
                     userToEdith.setName(nameNew);
-                }
-                if(!addressNew.matches("")){
                     userToEdith.setAddress(addressNew);
-                }
-                if(!phoneNew.matches("")){
                     userToEdith.setPhone(phoneNew);
-                }
                 if(!neighborNew.matches("")){
                     userToEdith.setNeighborhood(neighborNew);
                 }

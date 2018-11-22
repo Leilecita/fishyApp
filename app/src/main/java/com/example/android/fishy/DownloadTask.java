@@ -194,7 +194,7 @@ public class DownloadTask {
     public void sharePdfToSpecificNumber(File outputFile){
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + this.phone));
+            intent.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + "+549"+this.phone));
 
             //esto esta al pepe porque no lo archiva directamente
             Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, outputFile);

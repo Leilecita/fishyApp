@@ -42,6 +42,14 @@ public class ApiClient {
         handleRequest( ApiUtils.getAPIService().finishOrder("finish", order_id), callback);
     }
 
+    public void send_account(Long order_id,String state,GenericCallback<Order> callback){
+        handleRequest( ApiUtils.getAPIService().send_account("send_account", state,order_id), callback);
+    }
+
+    public void done_payment(Long order_id,String state,GenericCallback<Order> callback){
+        handleRequest( ApiUtils.getAPIService().done_payment("done_payment",state, order_id), callback);
+    }
+
 
     public void getValuesOrderReport(String deliver_date,GenericCallback<ValuesOrderReport> callback){
         handleRequest( ApiUtils.getAPIService().getValuesOrdersReport("getOrdersValues", deliver_date), callback);

@@ -186,12 +186,12 @@ public class ProductAdapter  extends BaseAdapter<Product,ProductAdapter.ViewHold
         final Button ok= dialogView.findViewById(R.id.ok);
 
 
-        edit_name.setHint(p.getFish_name());
-        edit_name.setHintTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
-        edit_price.setHint(getIntegerQuantity(p.getPrice()));
-        edit_price.setHintTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
-        edit_stock.setHint(getIntegerQuantity(p.getStock()));
-        edit_stock.setHintTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
+        edit_name.setText(p.getFish_name());
+        edit_name.setTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
+        edit_price.setText(getIntegerQuantity(p.getPrice()));
+        edit_price.setTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
+        edit_stock.setText(getIntegerQuantity(p.getStock()));
+        edit_stock.setTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
 
         final AlertDialog dialog = builder.create();
 

@@ -16,6 +16,7 @@ public class User {
     public String image_url;
     public Integer pendient_orders;
     public String created;
+    public String defaulter;
 
     public String imageData;
 
@@ -29,6 +30,7 @@ public class User {
         this.image_url=picpath;
         this.neighborhood=neighboor;
         this.pendient_orders=pendient_orders;
+        this.defaulter="false";
 
     }
     public String getImageUrl(){

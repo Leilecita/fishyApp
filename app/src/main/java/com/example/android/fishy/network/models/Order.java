@@ -10,6 +10,8 @@ public class Order {
     public Long user_id;
     public String deliver_date;
     public String delivery_time;
+    public String send_account;
+    public String defaulter;
     public String observation;
     public String state;
     public Integer priority;
@@ -21,6 +23,10 @@ public class Order {
         this.observation=observation;
         this.state=state;
         this.delivery_time=delivery_time;
+        this.send_account="false";
+        this.defaulter="false";
+        this.delivery_time=delivery_time;
+
     }
 
     public Long getUser_id() {

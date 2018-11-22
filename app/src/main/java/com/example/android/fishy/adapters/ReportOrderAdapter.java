@@ -26,6 +26,7 @@ import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.Fragments.OrdersFragment;
 import com.example.android.fishy.Interfaces.ItemTouchHelperAdapter;
 import com.example.android.fishy.Interfaces.OnAddItemListener;
+import com.example.android.fishy.Interfaces.OnStartActivity;
 import com.example.android.fishy.Interfaces.OnStartDragListener;
 import com.example.android.fishy.Interfaces.OrderFragmentListener;
 import com.example.android.fishy.R;
@@ -73,11 +74,10 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
     private OrderFragmentListener onOrderFragmentLister= null;
 
+
     public void setOnOrderFragmentLister(OrderFragmentListener lister){
         onOrderFragmentLister=lister;
     }
-
-
 
     public ReportOrderAdapter(Context context, List<ReportOrder> orders,OnStartDragListener dragListner){
         setItems(orders);
@@ -94,9 +94,12 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
     public static class ViewHolder extends RecyclerView.ViewHolder  {
         public TextView name;
         public TextView address;
+        public TextView horario;
         public TextView amount;
         public ImageView listItemsOrder;
         public ImageView phone;
+        public ImageView factura;
+        public ImageView money;
         public ImageView mens;
         public TextView state;
         public TextView priority;
@@ -112,6 +115,9 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             address= v.findViewById(R.id.user_address);
             amount= v.findViewById(R.id.amount_order);
             listItemsOrder= v.findViewById(R.id.list);
+            horario= v.findViewById(R.id.horario);
+            factura= v.findViewById(R.id.factura);
+            money= v.findViewById(R.id.money);
             phone= v.findViewById(R.id.phone);
             mens= v.findViewById(R.id.mens);
             state= v.findViewById(R.id.state);
@@ -181,6 +187,11 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                 vh.amount.setText(null);
             if(vh.name!=null)
                 vh.name.setText(null);
+
+            if(vh.money!=null)
+                vh.money.setImageResource(android.R.color.transparent);
+            if(vh.factura!=null)
+                vh.factura.setImageResource(android.R.color.transparent);
         }
     }
 
@@ -189,6 +200,8 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         clearViewHolder(holder);
         final ReportOrder r= getItem(position);
+
+        System.out.println("ORDEN "+r.state +" "+r.name);
 
         holder.address.setText(r.getUser_address());
 
@@ -201,6 +214,22 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             holder.state.setTextColor(mContext.getResources().getColor(R.color.borrador));
         }
 
+        if(!r.delivery_time.equals("Horario")){
+            holder.horario.setText(r.delivery_time);
+        }
+
+        if(r.send_account.equals("true")){
+            holder.factura.setImageDrawable(mContext.getResources().getDrawable(R.drawable.factura));
+        }else{
+            holder.factura.setImageDrawable(mContext.getResources().getDrawable(R.drawable.factura_dor));
+        }
+
+        if(r.defaulter.equals("true")){
+            holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money_roj));
+        }else{
+            holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money_dor));
+        }
+
         if(!mOnlyAdress){
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -209,11 +238,25 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                     return false;
                 }
             });
+
+            holder.factura.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDialogFactura(r,position);
+                }
+            });
+
+            holder.money.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDialogMoney(r,position);
+                }
+            });
         }
 
         if(mOnlyAdress){
             holder.time.setText(r.order_obs);
-            holder.priority.setText(String.valueOf(r.priority));
+           // holder.priority.setText(String.valueOf(r.priority));
             holder.itemView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -225,7 +268,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             });
         }else{
             if(r.order_obs!=null)
-                holder.priority.setText(r.order_obs);
+               // holder.priority.setText(r.order_obs);
 
             holder.name.setText(r.getUser_name());
             holder.amount.setText(String.valueOf(round(r.total_amount,2)));
@@ -328,6 +371,9 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                     public void onSuccess(Void data) {
                         removeItem(position);
                         EventBus.getDefault().post(new EventOrderState(r.user_id,"deleted",r.deliver_date));
+                        if(onOrderFragmentLister!=null){
+                            onOrderFragmentLister.refreshPendientOrders();
+                        }
                     }
                     @Override
                     public void onError(Error error) {
@@ -472,6 +518,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
        // new DownloadFile().execute(URL, "maven.pdf");
         //String URL= "http://localhost/fishyserver/pdfs/salida.pdf";
         new DownloadTask(mContext, URL,"Order-"+name+".pdf",phone);
+
     }
 
 
@@ -490,4 +537,114 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         return "dd/MM/yyyy";
     }
 
+    private void showDialogFactura(final ReportOrder r,final Integer pos){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.dialog_factura, null);
+        builder.setView(dialogView);
+
+        final TextView cancel=  dialogView.findViewById(R.id.cancel);
+        final TextView text=  dialogView.findViewById(R.id.text);
+        final TextView title=  dialogView.findViewById(R.id.title);
+        final Button ok=  dialogView.findViewById(R.id.ok);
+        text.setText("¿Se ha entregado la factura?");
+        title.setText("FACTURA");
+
+        final AlertDialog dialog = builder.create();
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                ApiClient.get().send_account(r.order_id, "true", new GenericCallback<Order>() {
+                    @Override
+                    public void onSuccess(Order data) {
+                        r.send_account="true";
+                        updateItem(pos,r);
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+
+                    }
+                });
+
+                dialog.dismiss();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ApiClient.get().send_account(r.order_id, "false", new GenericCallback<Order>() {
+                    @Override
+                    public void onSuccess(Order data) {
+                        r.send_account="false";
+                        updateItem(pos,r);
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+
+                    }
+                });
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+
+    private void showDialogMoney(final ReportOrder r,final Integer pos){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.dialog_factura, null);
+        builder.setView(dialogView);
+
+        final TextView cancel=  dialogView.findViewById(R.id.cancel);
+        final TextView text=  dialogView.findViewById(R.id.text);
+        final TextView title=  dialogView.findViewById(R.id.title);
+        final Button ok=  dialogView.findViewById(R.id.ok);
+
+        text.setText("¿Adeuda el pago?");
+        title.setText("PAGO");
+
+        final AlertDialog dialog = builder.create();
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                ApiClient.get().done_payment(r.order_id, "true", new GenericCallback<Order>() {
+                    @Override
+                    public void onSuccess(Order data) {
+                        r.defaulter="true";
+                        updateItem(pos,r);
+                    }
+                    @Override
+                    public void onError(Error error) {
+                        DialogHelper.get().showMessage("Error", "No se pudo realizar el movimiento",mContext);
+                    }
+                });
+                dialog.dismiss();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ApiClient.get().done_payment(r.order_id, "false", new GenericCallback<Order>() {
+                    @Override
+                    public void onSuccess(Order data) {
+                        r.defaulter="false";
+                        updateItem(pos,r);
+                    }
+                    @Override
+                    public void onError(Error error) {
+                        DialogHelper.get().showMessage("Error", "No se pudo realizar el movimiento",mContext);
+                    }
+                });
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.android.fishy.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -65,6 +66,7 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
         mAdapter = new ProductAdapter(this, new ArrayList<Product>());
         mRecyclerView.setAdapter(mAdapter);
         //registerForContextMenu(mRecyclerView);
+
 
         FloatingActionButton addProduct= findViewById(R.id.add_product);
         addProduct.setOnClickListener(new View.OnClickListener() {
@@ -223,6 +225,9 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED, returnIntent);
                 finish();
                 return true;
         }

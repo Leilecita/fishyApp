@@ -24,6 +24,7 @@ import com.example.android.fishy.Events.EventItemOrderState;
 import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.Events.EventProductState;
 import com.example.android.fishy.Interfaces.OnAddItemListener;
+import com.example.android.fishy.Interfaces.OnStartActivity;
 import com.example.android.fishy.R;
 
 import com.example.android.fishy.ValidatorHelper;
@@ -49,8 +50,14 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
 
     private OnAddItemListener onAddItemOrderLister = null;
 
+    private OnStartActivity onStart= null;
+
     public void setOnAddItemListener(OnAddItemListener lister){
         onAddItemOrderLister = lister;
+    }
+
+    public void setOnStart(OnStartActivity lister){
+        onStart=lister;
     }
 
     private Context mContext;
@@ -208,7 +215,8 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
 
                         dialog.dismiss();
                     }else{
-                        loadStock(p.fish_name);
+                        dialog.dismiss();
+                        loadStock(p.fish_name,p.id);
                     }
                 }else{
 
@@ -227,7 +235,7 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
 
     }
 
-    private void loadStock(String fish_name){
+    private void loadStock(String fish_name,final Long id_product){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -251,20 +259,22 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                startProductsActivity();
+                startProductsActivity(id_product);
             }
         });
         dialog.show();
     }
 
-    private void startProductsActivity(){
+    private void startProductsActivity(Long id_product){
 
-        Intent intent = new Intent(mContext, ProductsActivity.class);
-        ((Activity) mContext).startActivityForResult(intent, 1);
+        if(onStart!=null){
+            onStart.onStartProducts(id_product);
+        }
+
+      //  Intent intent = new Intent(mContext, ProductsActivity.class);
+       // ((Activity) mContext).startActivityForResult(intent, 1);
 
     }
-
-
 
 
 }

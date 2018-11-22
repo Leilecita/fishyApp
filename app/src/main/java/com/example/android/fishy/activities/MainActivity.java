@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
 
         mTabLayout =  findViewById(R.id.tabs);
         mTabLayout.setupWithViewPager(viewPager);
-        //mTabLayout.setSelectedTabIndicatorHeight(10);
+        mTabLayout.setSelectedTabIndicatorHeight(10);
 
         button= findViewById(R.id.fab_agregarTod);
        // input=findViewById(R.id.input);

@@ -8,9 +8,9 @@ public class ApiUtils {
 
         private ApiUtils() {}
 
-        //public static final String BASE_URL = "http://192.168.0.87/fishyserver/";
+        public static final String BASE_URL = "http://192.168.0.87/fishyserver/";
        // public static final String BASE_URL = "http://192.168.0.14/fishyserver/";
-         public static final String BASE_URL = "http://fishy.abarbieri.com.ar/";
+        // public static final String BASE_URL = "http://fishy.abarbieri.com.ar/";
 
 
 

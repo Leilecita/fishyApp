@@ -167,6 +167,7 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
             public void onSuccess(List<User> data) {
                 if(token.equals(newToken)){
                     Log.e("TOKEN", "Llega token: " + newToken);
+                    System.out.println("IMPRIME"+mCurrentPage+" data size "+data.size());
                     if (query == mQuery) {
 
                         if (data.size() == 0) {

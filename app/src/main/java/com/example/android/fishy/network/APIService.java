@@ -34,6 +34,12 @@ public interface APIService {
     Observable<Response<Order>>  finishOrder(@Query("method") String method, @Query("order_id") Long order_id);
 
     @GET("orders.php")
+    Observable<Response<Order>>  send_account(@Query("method") String method,@Query("state") String state, @Query("order_id") Long order_id);
+
+    @GET("orders.php")
+    Observable<Response<Order>>  done_payment(@Query("method") String method,@Query("state") String state, @Query("order_id") Long order_id);
+
+    @GET("orders.php")
     Observable<Response<ValuesOrderReport>>  getValuesOrdersReport(@Query("method") String method, @Query("deliver_date") String date);
 
     @GET("orders.php")

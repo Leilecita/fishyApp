@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.fishy.CurrentValuesHelper;
 import com.example.android.fishy.CustomLoadingListItemCreator;
@@ -202,8 +203,9 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
             ApiClient.get().updatePriority(list.get(i).order_id, i, new GenericCallback<Order>() {
                 @Override
                 public void onSuccess(Order data) {
-                    clearView();
-                    listOrders(mQuery,CurrentValuesHelper.get().getLastZone(),CurrentValuesHelper.get().getLastTimeZone());
+                    //clearView();
+                    //listOrders(mQuery,CurrentValuesHelper.get().getLastZone(),CurrentValuesHelper.get().getLastTimeZone());
+                    Toast.makeText(getContext(),"El orden ha sido guardado",Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -286,6 +288,8 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
     private void changeView(){
         clearView();
+        System.out.println("changeview");
+
         if(mAdapter.getOnlyAddress()){
             mAdapter.setOnlyAddress(false);
            // mOnlyaddress=false;
@@ -346,6 +350,7 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
                         public void onSuccess(List<ReportOrder> data) {
 
                             if(token.equals(newToken)){
+                                System.out.println("IMPRIME"+mCurrentPage+" data size "+data.size());
                                 Log.e("TOKEN", "Llega token: " + newToken);
                                 if (query == mQuery) {
                                     if (data.size() == 0) {

@@ -27,6 +27,25 @@
             android:layout_alignParentRight="true"
             android:layout_margin="4dp"
             android:src="@drawable/pendien_dor_dark"/>
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:id="@+id/factura"
+            android:layout_toLeftOf="@id/stateImage"
+
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/factura_dor"/>
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:id="@+id/money"
+            android:layout_toLeftOf="@id/factura"
+            android:layout_margin="4dp"
+            android:src="@drawable/money_dor"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -59,7 +78,8 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/user_address"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Aristobulo del valle 3020"
@@ -67,6 +87,19 @@
                 android:textStyle="italic"
                 android:textColor="@color/FishyLetra"
                 android:textSize="16sp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:id="@+id/horario"
+                android:textColor="@color/FishyLetra"
+                android:textStyle="italic"
+                android:text=""
+                android:layout_gravity="center_vertical"
+                android:textSize="15sp"
+                />
 
         </LinearLayout>
         <LinearLayout
@@ -169,6 +202,8 @@
                 android:layout_height="25dp"
                 android:src="@drawable/phone_white"
                 />
+
+
 
             <ImageView
                 android:layout_width="match_parent"
