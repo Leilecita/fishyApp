@@ -206,6 +206,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
             public void onClick(View view) {
                 if(mEdithOrder){
                     mOrder.observation=obs.getText().toString();
+                    mObservation_order=obs.getText().toString();
                     ApiClient.get().putOrder(mOrder, new GenericCallback<Order>() {
                         @Override
                         public void onSuccess(Order data) {
@@ -214,7 +215,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
 
                         @Override
                         public void onError(Error error) {
-
+                            DialogHelper.get().showMessage("Error","No se pudo cargar la información",getBaseContext());
                         }
                     });
                 }else{
@@ -459,7 +460,10 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
     private void putDeliverDate(){
         if(mOrder!=null){
             mOrder.setDeliver_date(mDeliverDate);
-            mOrder.state="pendiente";
+            if(!mEdithOrder){
+                mOrder.state="pendiente";
+            }
+
             if(mDeliveryTime!= null){
                 mOrder.delivery_time=mDeliveryTime;
             }else{
@@ -515,7 +519,6 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
                     showDialogCancelOrder();
                 }else{
                     putDeliverDate();
-                    //EventBus.getDefault().post(new EventOrderState(mOrder.user_id,"edited",mOrder.deliver_date));
                     finish();
                 }
 

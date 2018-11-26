@@ -87,11 +87,7 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
     public void onClickButton(){
         if(mAdapter != null){
             changeView();
-
-        }else{
-            Toast.makeText(getContext(),"adapter nulo",Toast.LENGTH_LONG).show();
         }
-
     }
 
     public int getIconButton(){
