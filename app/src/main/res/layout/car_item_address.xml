@@ -9,12 +9,15 @@
     card_view:cardCornerRadius="4dp"
     card_view:cardMaxElevation="4dp"
     card_view:cardElevation="2dp"
-    card_view:contentPadding="8dp"
+    card_view:contentPadding="4dp"
+
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         >
 
         <LinearLayout
@@ -37,24 +40,6 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:id="@+id/money"
-                android:layout_margin="4dp"
-                android:src="@drawable/money_dor"/>
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:id="@+id/factura"
-
-                android:padding="2dp"
-                android:layout_margin="4dp"
-                android:src="@drawable/factura_dor"/>
 
             <ImageView
                 android:layout_width="25dp"
@@ -84,9 +69,22 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:id="@+id/line23"
+            android:paddingLeft="2dp"
             android:layout_below="@+id/line2"
 
             android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/neighborhood"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=""
+                android:textStyle="italic"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/time"
                 android:layout_width="match_parent"
@@ -115,7 +113,9 @@
         </LinearLayout>
 
 
+
     </RelativeLayout>
+
 
 </android.support.v7.widget.CardView>
 <!--

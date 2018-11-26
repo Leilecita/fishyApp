@@ -3,6 +3,7 @@ package com.example.android.fishy.Fragments;
 import android.Manifest;
 import android.app.DatePickerDialog;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -84,7 +85,13 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
    // private boolean mOnlyaddress;
 
     public void onClickButton(){
-        changeView();
+        if(mAdapter != null){
+            changeView();
+
+        }else{
+            Toast.makeText(getContext(),"adapter nulo",Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public int getIconButton(){
@@ -132,19 +139,23 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
         final Spinner spinner = mRootView.findViewById(R.id.spinner_zone);
         final Spinner spinnerTime = mRootView.findViewById(R.id.spinner_time);
-         pendients_order = mRootView.findViewById(R.id.pendients);
-         sends_order = mRootView.findViewById(R.id.sends);
+        pendients_order = mRootView.findViewById(R.id.pendients);
+        sends_order = mRootView.findViewById(R.id.sends);
 
 
         registerForContextMenu(mRecyclerView);
         setHasOptionsMenu(true);
+
+        mAdapter.setOnOrderFragmentLister(this);
 
         ItemTouchHelper.Callback callback =
                 new SimpleItemTouchHelperCallback(mAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
 
+
         mRecyclerView.setAdapter(mAdapter);
+
 
         mDeliver_date= mRootView.findViewById(R.id.deliver_date);
 
@@ -158,21 +169,13 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
             @Override
             public void onError(Error error) {
+               // DialogHelper.get().showMessage("Error","No se pudieron cargar los barrios",getContext());
             }
         });
 
         implementsPaginate();
 
         loadValuesPendientsAndSend();
-
-        save= mRootView.findViewById(R.id.fab_save);
-        save.setVisibility(View.INVISIBLE);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                savePriorities();
-            }
-        });
 
         return mRootView;
     }
@@ -194,26 +197,18 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
                 }
             });
         }
-
     }
 
-    private void savePriorities(){
-        List<ReportOrder> list= mAdapter.getList();
-        for(int i=0; i<list.size();++i){
-            ApiClient.get().updatePriority(list.get(i).order_id, i, new GenericCallback<Order>() {
-                @Override
-                public void onSuccess(Order data) {
-                    //clearView();
-                    //listOrders(mQuery,CurrentValuesHelper.get().getLastZone(),CurrentValuesHelper.get().getLastTimeZone());
-                    Toast.makeText(getContext(),"El orden ha sido guardado",Toast.LENGTH_SHORT).show();
-                }
 
-                @Override
-                public void onError(Error error) {
-                    DialogHelper.get().showMessage("Error","No se han podido actualizar",getContext());
-                }
-            });
+    private String generateText(List<ReportOrder> list2){
+
+        //List<ReportOrder> list2= mAdapter.getList();
+        StringBuffer cadena = new StringBuffer();
+        for (int x=0;x<list2.size();x++){
+            cadena =cadena.append(list2.get(x).order_id+":"+x+";");
         }
+        cadena.append("}");
+        return cadena.toString();
     }
 
     private void clearView(){
@@ -292,13 +287,11 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
 
         if(mAdapter.getOnlyAddress()){
             mAdapter.setOnlyAddress(false);
-           // mOnlyaddress=false;
-            save.setVisibility(View.INVISIBLE);
+           // save.setVisibility(View.INVISIBLE);
             mRecyclerView.setAdapter(mAdapter);
         }else{
             mAdapter.setOnlyAddress(true);
-           // mOnlyaddress=true;
-            save.setVisibility(View.VISIBLE);
+           // save.setVisibility(View.VISIBLE);
             mRecyclerView.setAdapter(mAdapter);
         }
         listOrders(mQuery,CurrentValuesHelper.get().getLastZone(), CurrentValuesHelper.get().getLastTimeZone());

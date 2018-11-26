@@ -2,11 +2,13 @@ package com.example.android.fishy.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 
 import android.support.annotation.RequiresApi;
 
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +27,7 @@ import com.example.android.fishy.DownloadTask;
 import com.example.android.fishy.Events.EventOrderState;
 import com.example.android.fishy.Fragments.OrdersFragment;
 import com.example.android.fishy.Interfaces.ItemTouchHelperAdapter;
+import com.example.android.fishy.Interfaces.ItemTouchHelperViewHolder;
 import com.example.android.fishy.Interfaces.OnAddItemListener;
 import com.example.android.fishy.Interfaces.OnStartActivity;
 import com.example.android.fishy.Interfaces.OnStartDragListener;
@@ -49,6 +52,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -59,6 +63,7 @@ import java.io.IOException;
 
 
 import android.content.ActivityNotFoundException;
+import android.widget.Toast;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.PermissionRequest;
@@ -70,6 +75,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
     private boolean mOnlyAdress;
     private boolean mHistoryuser;
     private  OnStartDragListener mDragStartListener;
+
 
 
     private OrderFragmentListener onOrderFragmentLister= null;
@@ -102,10 +108,12 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         public ImageView money;
         public ImageView mens;
         public TextView state;
+        public TextView neighborhood;
         public TextView priority;
         public ImageView options;
         public ImageView stateImage;
         public CardView cardView;
+
 
         public TextView time;
 
@@ -121,11 +129,13 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             phone= v.findViewById(R.id.phone);
             mens= v.findViewById(R.id.mens);
             state= v.findViewById(R.id.state);
+            neighborhood= v.findViewById(R.id.neighborhood);
             stateImage= v.findViewById(R.id.stateImage);
             options= v.findViewById(R.id.options);
             priority= v.findViewById(R.id.priority);
             time=v.findViewById(R.id.time);
             cardView=v.findViewById(R.id.card_view);
+
         }
     }
 
@@ -165,6 +175,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
+
             ReportOrder repOrder= getList().get(fromPosition);
             ReportOrder newOrder= repOrder;
 
@@ -172,9 +183,60 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             getList().add(toPosition,newOrder);
             notifyItemMoved(fromPosition,toPosition);
 
+            System.out.println("fromposition "+fromPosition +" "+repOrder.address);
+            System.out.println("toposition "+toPosition +" "+newOrder.address);
+
+            System.out.println("el q queda "+getList().get(fromPosition).address );
+
+            savepriority(newOrder.order_id,toPosition);
+            savepriority(getList().get(fromPosition).order_id,fromPosition);
+
+
         return true;
     }
 
+   /* @Override
+    public void onItemSelected() {
+        //.setBackgroundColor(Color.LTGRAY);
+    }
+
+    @Override
+    public void onItemClear() {
+        //mCardView.setBackgroundColor(0);
+    }*/
+
+   /* @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(getList(), i, i + 1);
+
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(getList(), i, i - 1);
+
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }*/
+
+    private void savepriority(Long order_id, Integer position){
+
+        ApiClient.get().updatePriority(order_id, position, new GenericCallback<Order>() {
+            @Override
+            public void onSuccess(Order data) {
+
+                // Toast.makeText(mContext,"El orden ha sido guardado",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Error error) {
+                DialogHelper.get().showMessage("Error","No se han podido actualizar",mContext);
+            }
+        });
+    }
 
     private void clearViewHolder(ReportOrderAdapter.ViewHolder vh){
 
@@ -188,10 +250,10 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             if(vh.name!=null)
                 vh.name.setText(null);
 
-            if(vh.money!=null)
+          /*  if(vh.money!=null)
                 vh.money.setImageResource(android.R.color.transparent);
             if(vh.factura!=null)
-                vh.factura.setImageResource(android.R.color.transparent);
+                vh.factura.setImageResource(android.R.color.transparent);*/
         }
     }
 
@@ -200,8 +262,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         clearViewHolder(holder);
         final ReportOrder r= getItem(position);
-
-        System.out.println("ORDEN "+r.state +" "+r.name);
 
         holder.address.setText(r.getUser_address());
 
@@ -218,19 +278,20 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             holder.horario.setText(r.delivery_time);
         }
 
-        if(r.send_account.equals("true")){
-            holder.factura.setImageDrawable(mContext.getResources().getDrawable(R.drawable.factura));
-        }else{
-            holder.factura.setImageDrawable(mContext.getResources().getDrawable(R.drawable.factura_dor));
-        }
 
-        if(r.defaulter.equals("true")){
-            holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money_roj));
-        }else{
-            holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money_dor));
-        }
 
         if(!mOnlyAdress){
+            if(r.send_account.equals("true")){
+                holder.factura.setImageDrawable(mContext.getResources().getDrawable(R.drawable.factura));
+            }else{
+                holder.factura.setImageDrawable(mContext.getResources().getDrawable(R.drawable.factura_dor));
+            }
+
+            if(r.defaulter.equals("true")){
+                holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money_roj));
+            }else{
+                holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money_dor));
+            }
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -255,8 +316,9 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         }
 
         if(mOnlyAdress){
+            holder.neighborhood.setText(r.neighborhood);
             holder.time.setText(r.order_obs);
-           // holder.priority.setText(String.valueOf(r.priority));
+            holder.priority.setText(String.valueOf(r.priority));
             holder.itemView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -268,7 +330,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             });
         }else{
             if(r.order_obs!=null)
-               // holder.priority.setText(r.order_obs);
+                holder.priority.setText(r.order_obs);
 
             holder.name.setText(r.getUser_name());
             holder.amount.setText(String.valueOf(round(r.total_amount,2)));
@@ -370,10 +432,10 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                     @Override
                     public void onSuccess(Void data) {
                         removeItem(position);
-                        EventBus.getDefault().post(new EventOrderState(r.user_id,"deleted",r.deliver_date));
                         if(onOrderFragmentLister!=null){
                             onOrderFragmentLister.refreshPendientOrders();
                         }
+                        EventBus.getDefault().post(new EventOrderState(r.user_id,"deleted",r.deliver_date));
                     }
                     @Override
                     public void onError(Error error) {

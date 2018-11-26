@@ -125,25 +125,13 @@ public class ApiClient {
         handleRequest( ApiUtils.getAPIService().getItemsOrderByOrderId(orderId), callback);
     }
 
-    public void getItemOrder(Long id,final GenericCallback<ItemOrder> callback){
-        handleRequest( ApiUtils.getAPIService().getItemOrder(id), callback);
-    }
-
     public void postItemOrder(ItemOrder itemOrder,GenericCallback<ItemOrder> callback){
         handleRequest( ApiUtils.getAPIService().postItemOrder(itemOrder), callback);
     }
 
-    public void putItemOrder(ItemOrder itemOrder,GenericCallback<ItemOrder> callback){
-        handleRequest( ApiUtils.getAPIService().putItemOrder(itemOrder), callback);
-    }
 
     public void deleteItemOrder(Long id, final GenericCallback<Void> callback){
         handleDeleteRequest( ApiUtils.getAPIService().deleteItemOrder(id), callback);
-    }
-
-
-    public void getOrders(final GenericCallback<List<Order>> callback){
-        handleRequest( ApiUtils.getAPIService().getOrders(), callback);
     }
 
     public void getOrder(Long id,final GenericCallback<Order> callback){

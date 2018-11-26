@@ -20,7 +20,7 @@
 
 
         <ImageView
-            android:layout_width="25dp"
+            android:layout_width="30dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
             android:id="@+id/stateImage"
@@ -28,7 +28,7 @@
             android:layout_margin="4dp"
             android:src="@drawable/pendien_dor_dark"/>
         <ImageView
-            android:layout_width="25dp"
+            android:layout_width="30dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
             android:id="@+id/factura"
@@ -39,7 +39,7 @@
             android:layout_margin="4dp"
             android:src="@drawable/factura_dor"/>
         <ImageView
-            android:layout_width="25dp"
+            android:layout_width="30dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
             android:id="@+id/money"

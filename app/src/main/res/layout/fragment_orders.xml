@@ -182,7 +182,13 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
+
+
+
+
+</RelativeLayout>
+<!--
+ <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:id="@+id/fab_save"
         android:layout_height="wrap_content"
@@ -194,7 +200,4 @@
         app:fabSize="mini"
         android:src="@drawable/save"
         />
-
-
-
-</RelativeLayout>
+-->

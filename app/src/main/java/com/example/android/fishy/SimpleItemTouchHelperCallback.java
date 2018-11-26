@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.example.android.fishy.Interfaces.ItemTouchHelperAdapter;
+import com.example.android.fishy.Interfaces.ItemTouchHelperViewHolder;
 
 public class SimpleItemTouchHelperCallback  extends ItemTouchHelper.Callback {
 
@@ -56,5 +57,31 @@ public class SimpleItemTouchHelperCallback  extends ItemTouchHelper.Callback {
             viewHolder.itemView.setAlpha(alpha);
         }
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+    }
+
+    @Override
+    public void onSelectedChanged(RecyclerView.ViewHolder viewHolder,
+                                  int actionState) {
+        // We only want the active item
+        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+            if (viewHolder instanceof ItemTouchHelperViewHolder) {
+                ItemTouchHelperViewHolder itemViewHolder =
+                        (ItemTouchHelperViewHolder) viewHolder;
+                itemViewHolder.onItemSelected();
+            }
+        }
+
+        super.onSelectedChanged(viewHolder, actionState);
+    }
+    @Override
+    public void clearView(RecyclerView recyclerView,
+                          RecyclerView.ViewHolder viewHolder) {
+        super.clearView(recyclerView, viewHolder);
+
+        if (viewHolder instanceof ItemTouchHelperViewHolder) {
+            ItemTouchHelperViewHolder itemViewHolder =
+                    (ItemTouchHelperViewHolder) viewHolder;
+            itemViewHolder.onItemClear();
+        }
     }
 }
