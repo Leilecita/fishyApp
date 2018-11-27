@@ -8,16 +8,19 @@ import android.os.Build;
 
 import android.support.annotation.RequiresApi;
 
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -77,7 +80,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
     private  OnStartDragListener mDragStartListener;
 
 
-
     private OrderFragmentListener onOrderFragmentLister= null;
 
 
@@ -97,7 +99,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder  {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
         public TextView name;
         public TextView address;
         public TextView horario;
@@ -113,7 +115,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         public ImageView options;
         public ImageView stateImage;
         public CardView cardView;
-
 
         public TextView time;
 
@@ -136,6 +137,16 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             time=v.findViewById(R.id.time);
             cardView=v.findViewById(R.id.card_view);
 
+        }
+
+        @Override
+        public void onItemSelected() {
+            itemView.setAlpha(0.7f);
+        }
+
+        @Override
+        public void onItemClear() {
+            itemView.setAlpha(1f);
         }
     }
 
@@ -168,6 +179,9 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
     public boolean getOnlyAddress(){return this.mOnlyAdress;}
 
     @Override
+    public boolean isDragEnabled(){return getOnlyAddress();}
+
+    @Override
     public void onItemDismiss(int position) {
       //  removeItem(position);
        // notifyItemRemoved(position);
@@ -183,11 +197,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             getList().add(toPosition,newOrder);
             notifyItemMoved(fromPosition,toPosition);
 
-            System.out.println("fromposition "+fromPosition +" "+repOrder.address);
-            System.out.println("toposition "+toPosition +" "+newOrder.address);
-
-            System.out.println("el q queda "+getList().get(fromPosition).address );
-
             savepriority(newOrder.order_id,toPosition);
             savepriority(getList().get(fromPosition).order_id,fromPosition);
 
@@ -195,32 +204,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         return true;
     }
 
-   /* @Override
-    public void onItemSelected() {
-        //.setBackgroundColor(Color.LTGRAY);
-    }
 
-    @Override
-    public void onItemClear() {
-        //mCardView.setBackgroundColor(0);
-    }*/
-
-   /* @Override
-    public boolean onItemMove(int fromPosition, int toPosition) {
-        if (fromPosition < toPosition) {
-            for (int i = fromPosition; i < toPosition; i++) {
-                Collections.swap(getList(), i, i + 1);
-
-            }
-        } else {
-            for (int i = fromPosition; i > toPosition; i--) {
-                Collections.swap(getList(), i, i - 1);
-
-            }
-        }
-        notifyItemMoved(fromPosition, toPosition);
-        return true;
-    }*/
 
     private void savepriority(Long order_id, Integer position){
 
@@ -250,10 +234,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             if(vh.name!=null)
                 vh.name.setText(null);
 
-          /*  if(vh.money!=null)
-                vh.money.setImageResource(android.R.color.transparent);
-            if(vh.factura!=null)
-                vh.factura.setImageResource(android.R.color.transparent);*/
         }
     }
 
@@ -360,6 +340,14 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                 public void onClick(View view) {
                     PopupMenu popup = new PopupMenu(mContext, holder.options);
                     popup.getMenuInflater().inflate(R.menu.menu_report_order, popup.getMenu());
+
+                    Menu menuOpts = popup.getMenu();
+                    if(r.state.equals("pendiente")){
+                        menuOpts.getItem(0).setTitle("Entregado");
+                    }else if(r.state.equals("entregado")){
+                        menuOpts.getItem(0).setTitle("No entregado");
+                    }
+
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
                         public boolean onMenuItemClick(MenuItem item) {
@@ -660,12 +648,13 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View dialogView = inflater.inflate(R.layout.dialog_factura, null);
+        final View dialogView = inflater.inflate(R.layout.dialog_defaulter, null);
         builder.setView(dialogView);
 
         final TextView cancel=  dialogView.findViewById(R.id.cancel);
         final TextView text=  dialogView.findViewById(R.id.text);
         final TextView title=  dialogView.findViewById(R.id.title);
+        //final EditText amount=  dialogView.findViewById(R.id.amount);
         final Button ok=  dialogView.findViewById(R.id.ok);
 
         text.setText("¿Adeuda el pago?");
