@@ -105,6 +105,7 @@ public class ApiClient {
         handleRequest( ApiUtils.getAPIService().getProduct(id), callback);
     }
 
+
     public void postProduct(Product product,GenericCallback<Product> callback){
         handleRequest( ApiUtils.getAPIService().postProduct(product), callback);
     }

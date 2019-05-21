@@ -149,9 +149,7 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
 
-
         mRecyclerView.setAdapter(mAdapter);
-
 
         mDeliver_date= mRootView.findViewById(R.id.deliver_date);
 

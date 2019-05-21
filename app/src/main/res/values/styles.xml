@@ -20,7 +20,7 @@
 
     </style>
 
-    etting the own color to pickerXHTML
+
 
     <style name="datepicker" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">#ffff</item>
