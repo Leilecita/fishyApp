@@ -11,6 +11,11 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_statistics"
+        android:title="Estadísticas"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_search"
         android:layout_width="match_parent"
         android:icon="@drawable/searchwhite2"

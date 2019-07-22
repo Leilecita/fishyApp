@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.fishy">
+    package="com.leila.android.fishy">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -17,19 +17,19 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_lei"
+        android:icon="@mipmap/ic_launcher_rosario_round"
         android:label="@string/app_name"
 
-        android:roundIcon="@mipmap/ic_launcher_lei"
+        android:roundIcon="@mipmap/ic_launcher_rosario"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".FishyApp"
+        android:name="com.leila.android.fishy.FishyApp"
         >
 
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.android.fishy"
+            android:authorities="com.leila.android.fishy"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -43,7 +43,7 @@
 
             android:theme="@style/Base.Theme.AppCompat"/>
 
-        <activity android:name=".activities.MainActivity">
+        <activity android:name="com.leila.android.fishy.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,29 +56,45 @@
 
         </activity>
         <activity
-            android:name=".activities.CreateUserActivity"
-            android:parentActivityName=".activities.MainActivity"
+            android:name="com.leila.android.fishy.activities.CreateUserActivity"
+            android:parentActivityName="com.leila.android.fishy.activities.MainActivity"
             />
         <activity
-            android:name=".activities.NeighborhoodActivity"
-            android:parentActivityName=".activities.CreateUserActivity"
+            android:name="com.leila.android.fishy.activities.NeighborhoodActivity"
+            android:parentActivityName="com.leila.android.fishy.activities.CreateUserActivity"
             />
         <activity
-            android:name=".activities.ProductsActivity"
-            android:parentActivityName=".activities.MainActivity"
+            android:name="com.leila.android.fishy.activities.ProductsActivity"
+            android:parentActivityName="com.leila.android.fishy.activities.MainActivity"
             />
         <activity
-            android:name=".activities.CreateOrderActivity"
-            android:parentActivityName=".activities.OrderActivity"
+            android:name="com.leila.android.fishy.activities.CreateOrderActivity"
+            android:parentActivityName="com.leila.android.fishy.activities.OrderActivity"
             />
         <activity
-            android:name=".activities.UserHistoryOrders"
-            android:parentActivityName=".activities.MainActivity"
+            android:name="com.leila.android.fishy.activities.UserHistoryOrders"
+            android:parentActivityName="com.leila.android.fishy.activities.MainActivity"
             />
         <activity
-            android:name=".activities.PhotoEdithActivity"
-            android:parentActivityName=".activities.MainActivity"
+            android:name="com.leila.android.fishy.activities.PhotoEdithActivity"
+            android:parentActivityName="com.leila.android.fishy.activities.MainActivity"
+            />
+        <activity
+            android:name="com.leila.android.fishy.activities.StatisticsActivity"
+            android:parentActivityName="com.leila.android.fishy.activities.MainActivity"
             />
     </application>
 
 </manifest>
+
+<!--
+
+ android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_lei"
+        android:label="@string/app_name"
+
+        android:roundIcon="@mipmap/ic_launcher_lei"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:name=".FishyApp"
+-->

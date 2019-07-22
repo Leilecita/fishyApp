@@ -39,6 +39,7 @@
 
         <!-- Aca se meten las vistas que le pases en el getLayoutRes a las BaseActivity
           -->
+
     </FrameLayout>
 
 

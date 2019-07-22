@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/month"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/word"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp"
+            android:textSize="16sp"
+            android:text="100"
+            />
+
+        <TextView
+            android:id="@+id/quantity_delivery_orders"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/word"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:textSize="16sp"
+            android:text="100"
+            />
+
+        <TextView
+            android:id="@+id/total_amount"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/word"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:textSize="16sp"
+            android:text="100"
+            />
+
+        <TextView
+            android:id="@+id/fish_ranking"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/word"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:textSize="16sp"
+            android:text="100"
+            />
+
+        <TextView
+            android:id="@+id/client_ranking"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/word"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:textSize="16sp"
+            android:text="100"
+            />
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/divisor"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_below="@+id/months"
+        android:layout_height="1dp"
+        style="@style/DivisorCategoryStyle"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_rank_clients"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            card_view:cardCornerRadius="4dp"
+            card_view:cardMaxElevation="4dp"
+            card_view:cardElevation="2dp"
+            card_view:contentPaddingLeft="16dp"
+            card_view:contentPaddingRight="16dp"
+            card_view:contentPaddingTop="16dp"
+            card_view:contentPaddingBottom="16dp"
+            android:visibility="gone"
+
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/listClients"
+                android:layout_height="100dp">
+
+
+
+            </android.support.v7.widget.RecyclerView>
+
+
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_rank_fish"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            card_view:cardCornerRadius="4dp"
+            card_view:cardMaxElevation="4dp"
+            card_view:cardElevation="2dp"
+            card_view:contentPaddingLeft="16dp"
+            card_view:contentPaddingRight="16dp"
+            card_view:contentPaddingTop="16dp"
+            card_view:contentPaddingBottom="16dp"
+            android:visibility="gone"
+
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/listFish"
+                android:layout_height="100dp">
+
+
+
+            </android.support.v7.widget.RecyclerView>
+
+
+
+
+        </android.support.v7.widget.CardView>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
