@@ -8,12 +8,12 @@ public class ApiUtils {
 
         private ApiUtils() {}
 
-       public static final String BASE_URL = "http://192.168.0.87/fishyserver/";
-       //public static final String BASE_URL = "http://192.168.88.6/fishyserver/";
-        //public static final String BASE_URL = "http://192.168.0.11/fishyserver/";
+       //public static fin al String BASE_URL = "http://192.168.0.87/fishyserver/";
+       public static final String BASE_URL = "http://192.168.88.9/fishyserver/";
+       // public static final String BASE_URL = "http://192.168.0.10/fishyserver/";
 
     //FISHY MARDEL
-       //  public static final String BASE_URL = "http://fishy.abarbieri.com.ar/";
+        // public static final String BASE_URL = "http://fishy.abarbieri.com.ar/";
 
     //FISHY ROSARIO
         // public static final String BASE_URL = "http://fishydev.abarbieri.com.ar/";

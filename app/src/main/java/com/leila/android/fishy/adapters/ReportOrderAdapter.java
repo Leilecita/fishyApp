@@ -228,7 +228,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.done_doble));
         }else{
             holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.borrador2));
-            holder.state.setTextColor(mContext.getResources().getColor(R.color.borrador));
+            //holder.state.setTextColor(mContext.getResources().getColor(R.color.borrador));
         }
 
         if(!r.delivery_time.equals("Horario")){

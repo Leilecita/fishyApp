@@ -360,7 +360,8 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
 
     private void createOrder(){
         Long userid= getIntent().getLongExtra("ID",-1);
-        Order order=new Order(userid,"","","borrador","");
+        //Order order=new Order(userid,"","","borrador","");
+        Order order=new Order(userid,"","","pendiente","");
 
         ApiClient.get().postOrder(order, new GenericCallback<Order>() {
             @Override
