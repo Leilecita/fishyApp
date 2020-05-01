@@ -35,6 +35,7 @@ public class ApiClient {
         return INSTANCE;
     }
 
+
     public void getAmountByOrder(Long order_id,GenericCallback<AmountResult> callback){
         handleRequest( ApiUtils.getAPIService().getAmountByOrder("amount", order_id), callback);
     }

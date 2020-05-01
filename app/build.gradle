@@ -9,7 +9,8 @@ android {
 
     defaultConfig {
         multiDexEnabled true
-        applicationId "com.leila.android.fishy"
+        //applicationId "com.leila.android.fishy"
+        applicationId "com.leila.android.fishymardel"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 2

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import com.leila.android.fishy.Fragments.BaseFragment;
 import com.leila.android.fishy.R;
 import com.leila.android.fishy.adapters.PageAdapter;
+import com.leila.android.fishy.network.ApiClient;
 
 import android.support.design.widget.TabLayout;
 import android.view.Menu;
@@ -35,6 +36,8 @@ public class MainActivity extends BaseActivity {
         mTabLayout =  findViewById(R.id.tabs);
         mTabLayout.setupWithViewPager(viewPager);
         mTabLayout.setSelectedTabIndicatorHeight(10);
+
+
 
         button= findViewById(R.id.fab_agregarTod);
        // input=findViewById(R.id.input);

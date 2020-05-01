@@ -104,8 +104,6 @@ public class StatisticsActivity extends BaseActivity {
         });
 
 
-
-
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View view, int newState) {
