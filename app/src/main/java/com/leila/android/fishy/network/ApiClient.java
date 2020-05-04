@@ -6,7 +6,10 @@ import com.leila.android.fishy.network.models.AmountResult;
 import com.leila.android.fishy.network.models.ItemOrder;
 import com.leila.android.fishy.network.models.Neighborhood;
 import com.leila.android.fishy.network.models.Order;
+import com.leila.android.fishy.network.models.Outcome;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.network.models.ReportOutcome;
+import com.leila.android.fishy.network.models.ReportProduct;
 import com.leila.android.fishy.network.models.reportsOrder.SummaryDay;
 import com.leila.android.fishy.network.models.User;
 
@@ -95,16 +98,18 @@ public class ApiClient {
     }
 
 
-    public void getProducts(final GenericCallback<List<Product>> callback){
+  /*  public void getProducts(final GenericCallback<List<Product>> callback){
         handleRequest( ApiUtils.getAPIService().getProducts(), callback);
     }
 
     public void getAliveProducts(String state,final GenericCallback<List<Product>> callback){
         handleRequest( ApiUtils.getAPIService().getAliveProducts(state), callback);
-    }
+    }*/
 
-    public void getAliveProductsByPage(Integer page,String state,final GenericCallback<List<Product>> callback){
-        handleRequest( ApiUtils.getAPIService().getAliveProductsByPage(page,state), callback);
+    //PRODUCTS
+
+    public void getAliveProductsByPage(Integer page,String state,final GenericCallback<List<ReportProduct>> callback){
+        handleRequest( ApiUtils.getAPIService().getAliveProductsByPage("getProducts",page,state), callback);
     }
 
     public void getProduct(Long id,final GenericCallback<Product> callback){
@@ -124,6 +129,9 @@ public class ApiClient {
         handleDeleteRequest( ApiUtils.getAPIService().deleteProduct(id), callback);
     }
 
+
+    //ITEMS_ORDER
+
     public void getItemsOrder(final GenericCallback<List<ItemOrder>> callback){
         handleRequest( ApiUtils.getAPIService().getItemsOrder(), callback);
     }
@@ -141,6 +149,8 @@ public class ApiClient {
         handleDeleteRequest( ApiUtils.getAPIService().deleteItemOrder(id), callback);
     }
 
+    //ORDER
+
     public void getOrder(Long id,final GenericCallback<Order> callback){
         handleRequest( ApiUtils.getAPIService().getOrder(id), callback);
     }
@@ -156,6 +166,8 @@ public class ApiClient {
     public void deleteOrder(Long id, final GenericCallback<Void> callback){
         handleDeleteRequest( ApiUtils.getAPIService().deleteOrder(id), callback);
     }
+
+    //USERS
 
     public void getUser(Long id,final GenericCallback<User> callback){
         handleRequest( ApiUtils.getAPIService().getUser(id), callback);
@@ -186,6 +198,8 @@ public class ApiClient {
         handleDeleteRequest( ApiUtils.getAPIService().deleteUser(id), callback);
     }
 
+    //NEIGHBORHOOD
+
     public void getNeighborhoods(final GenericCallback<List<Neighborhood>> callback){
         handleRequest( ApiUtils.getAPIService().getNeighborhoods(), callback);
     }
@@ -208,6 +222,25 @@ public class ApiClient {
 
     public void putNeighborhood(Neighborhood n,GenericCallback<Neighborhood> callback){
         handleRequest( ApiUtils.getAPIService().putNeighborhood(n), callback);
+    }
+
+
+    //OUTCOMES
+
+    public void getOutcomes(Integer page, final GenericCallback<List<ReportOutcome>> callback){
+        handleRequest( ApiUtils.getAPIService().getOutcomes("getOutcomes",page), callback);
+    }
+
+    public void postOutcome(Outcome outcome,GenericCallback<Outcome> callback){
+        handleRequest( ApiUtils.getAPIService().postOutcome(outcome), callback);
+    }
+
+    public void deleteOutcome(Long id, final GenericCallback<Void> callback){
+        handleDeleteRequest( ApiUtils.getAPIService().deleteOutcome(id), callback);
+    }
+
+    public void putOutcome(Outcome o,GenericCallback<Outcome> callback){
+        handleRequest( ApiUtils.getAPIService().putOutcome(o), callback);
     }
 
 

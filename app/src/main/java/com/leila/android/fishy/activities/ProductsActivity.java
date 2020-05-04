@@ -25,6 +25,7 @@ import com.leila.android.fishy.network.ApiClient;
 import com.leila.android.fishy.network.Error;
 import com.leila.android.fishy.network.GenericCallback;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.network.models.ReportProduct;
 import com.paginate.Paginate;
 import com.paginate.recycler.LoadingListItemSpanLookup;
 
@@ -56,7 +57,7 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
         mRecyclerView = this.findViewById(R.id.list_products);
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new ProductAdapter(this, new ArrayList<Product>());
+        mAdapter = new ProductAdapter(this, new ArrayList<ReportProduct>());
         mRecyclerView.setAdapter(mAdapter);
         //registerForContextMenu(mRecyclerView);
 
@@ -108,7 +109,15 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
                         ApiClient.get().postProduct(newProduct, new GenericCallback<Product>() {
                             @Override
                             public void onSuccess(Product data) {
-                                mAdapter.pushItem(data);
+
+                                ReportProduct r=new ReportProduct();
+                                r.stock= data.stock;
+                                r.price=data.price;
+                                r.fish_name=data.fish_name;
+                                r.id=data.id;
+                                r.load_both_stocks="false";
+
+                                mAdapter.pushItem(r);
                                 Toast.makeText(dialogView.getContext(),"Se ha creado el producto "+data.fish_name, Toast.LENGTH_LONG).show();
                             }
 
@@ -156,9 +165,9 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
 
     private void listProducts() {
         loadingInProgress=true;
-        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive", new GenericCallback<List<Product>>() {
+        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive", new GenericCallback<List<ReportProduct>>() {
             @Override
-            public void onSuccess(List<Product> data) {
+            public void onSuccess(List<ReportProduct> data) {
 
                 if (data.size() == 0) {
                     hasMoreItems = false;

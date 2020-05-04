@@ -38,6 +38,7 @@ import com.leila.android.fishy.network.models.AmountResult;
 import com.leila.android.fishy.network.models.ItemOrder;
 import com.leila.android.fishy.network.models.Order;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.network.models.ReportProduct;
 import com.leila.android.fishy.network.models.User;
 import com.leila.android.fishy.network.models.reportsOrder.ReportOrder;
 import com.paginate.Paginate;
@@ -137,7 +138,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         mObservation_order="";
 
         mRecyclerView = this.findViewById(R.id.list_products);
-        mAdapter = new ProductOrderAdapter(this, new ArrayList<Product>());
+        mAdapter = new ProductOrderAdapter(this, new ArrayList<ReportProduct>());
         mRecyclerView.setAdapter(mAdapter);
         gridlayoutmanager=new GridLayoutManager(this,3);
         mRecyclerView.setLayoutManager(gridlayoutmanager);
@@ -379,9 +380,9 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
 
     private void listProducts() {
         loadingInProgress=true;
-        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive", new GenericCallback<List<Product>>() {
+        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive", new GenericCallback<List<ReportProduct>>() {
             @Override
-            public void onSuccess(List<Product> data) {
+            public void onSuccess(List<ReportProduct> data) {
                     mAdapter.setOrderId(mOrder.id);
                 if (data.size() == 0) {
                     hasMoreItems = false;

@@ -1,0 +1,135 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view_mistake"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardElevation="2dp"
+    card_view:cardMaxElevation="4dp"
+    android:backgroundTint="#ededed"
+    card_view:contentPadding="10dp"
+
+
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="Gasto"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textColor="@color/title_dialog_helper"
+            android:textStyle="bold"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_height="33dp"
+                android:paddingLeft="8dp"
+                android:layout_width="match_parent"
+                android:textColor="#5c5c5c"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:hint="10-10-2020"
+                android:background="@drawable/rec_text_edit"
+                android:inputType="textCapWords" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_height="33dp"
+                android:paddingLeft="8dp"
+                style="@style/Widget.Design.TextInputLayout"
+                android:layout_width="match_parent"
+                android:textColor="#5c5c5c"
+                android:textSize="16sp"
+                android:hint="Detalle"
+                android:background="@drawable/rec_text_edit"
+                android:inputType="textCapWords" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/value"
+                    android:hint="Monto  "
+                    android:layout_width="130dp"
+                    style="@style/Widget.Design.TextInputLayout"
+                    android:paddingLeft="8dp"
+                    android:textColor="#5c5c5c"
+                    android:layout_height="33dp"
+                    android:textSize="16sp"
+                    android:background="@drawable/rec_text_edit"
+                    />
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/cancel"
+                android:layout_weight="1"
+                android:text="CANCELAR"
+                android:gravity="center"
+                android:textColor="@color/colorDialogButton"
+                android:textStyle="bold"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:id="@+id/ok"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:textColor="#ffff"
+                android:padding="4dp"
+                android:background="@color/colorDialogButton"
+                android:text="guardar"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

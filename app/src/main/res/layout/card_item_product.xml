@@ -18,9 +18,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:padding="4dp"
+            android:layout_marginRight="4dp"
             android:src="@drawable/fish"
             android:layout_gravity="center_vertical"
             android:id="@+id/image_pre"
@@ -58,6 +59,32 @@
                         android:textColor="@android:color/black"
                         android:textSize="17sp" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:id="@+id/load_both"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:id="@+id/rosario"
+                            android:src="@mipmap/ic_launcher_rosario"
+                            />
+
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="8dp"
+                            android:id="@+id/mardel"
+                            android:src="@mipmap/ic_launcher_lei"
+                            />
+
+                    </LinearLayout>
+
 
 
 
@@ -75,54 +102,66 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Precio:"
-                    android:padding="2dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/price_product"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="12"
-                    android:paddingLeft="4dp"
-                    android:textStyle="italic"
-                    android:textColor="@color/FishyLetraDark"
-                    android:textSize="15sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Precio:"
+                        android:padding="2dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/price_product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="12123"
+                        android:paddingLeft="4dp"
+                        android:textStyle="italic"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text=" Stock:"
-                    android:padding="2dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1.2"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text=" Stock total:"
+                        android:padding="2dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/stock_product"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="34"
-                    android:paddingLeft="4dp"
-                    android:textStyle="italic"
-                    android:textColor="@color/FishyLetraDark"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/stock_product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="34"
+                        android:paddingLeft="4dp"
+                        android:textStyle="italic"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+
+
 
 
             </LinearLayout>

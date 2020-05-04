@@ -8,5 +8,10 @@ public class ReportProduct {
     public Double price;
     public Double stock;
 
+
+    //el otro stock, mardel o rosario
+    public Double stock2;
+    public String serverStock2;
+
     public ReportProduct(){}
 }

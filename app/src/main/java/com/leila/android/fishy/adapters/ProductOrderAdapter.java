@@ -26,6 +26,7 @@ import com.leila.android.fishy.network.Error;
 import com.leila.android.fishy.network.GenericCallback;
 import com.leila.android.fishy.network.models.ItemOrder;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.network.models.ReportProduct;
 
 import java.util.List;
 import android.view.WindowManager.LayoutParams;
@@ -33,7 +34,7 @@ import android.view.WindowManager.LayoutParams;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapter.ViewHolder> {
+public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrderAdapter.ViewHolder> {
 
     private OnAddItemListener onAddItemOrderLister = null;
 
@@ -51,7 +52,7 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
     private Long mOrderId;
   //  private boolean isEdting;
 
-    public ProductOrderAdapter(Context context, List<Product> products){
+    public ProductOrderAdapter(Context context, List<ReportProduct> products){
         setItems(products);
         mContext = context;
         mOrderId=90L;
@@ -59,9 +60,6 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
 
     }
 
-   /* public void setIsEditing(boolean edit){
-        this.isEdting=edit;
-    }*/
 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -99,7 +97,7 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
     }
 
 
-    public List<Product> getListProduct(){
+    public List<ReportProduct> getListProduct(){
         return getList();
     }
 
@@ -141,9 +139,9 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
     public void onBindViewHolder(final ViewHolder holder, final int position){
         clearViewHolder(holder);
 
-        final Product currentProduct=getItem(position);
+        final ReportProduct currentProduct=getItem(position);
 
-        holder.name.setText(currentProduct.getFish_name());
+        holder.name.setText(currentProduct.fish_name);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,7 +151,7 @@ public class ProductOrderAdapter  extends BaseAdapter<Product,ProductOrderAdapte
     }
 
 
-    private void createItemOrder(final Product p){
+    private void createItemOrder(final ReportProduct p){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -4,7 +4,10 @@ import com.leila.android.fishy.network.models.AmountResult;
 import com.leila.android.fishy.network.models.ItemOrder;
 import com.leila.android.fishy.network.models.Neighborhood;
 import com.leila.android.fishy.network.models.Order;
+import com.leila.android.fishy.network.models.Outcome;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.network.models.ReportOutcome;
+import com.leila.android.fishy.network.models.ReportProduct;
 import com.leila.android.fishy.network.models.reportsOrder.SummaryDay;
 import com.leila.android.fishy.network.models.User;
 import com.leila.android.fishy.network.models.reportsOrder.ReportOrder;
@@ -62,15 +65,19 @@ public interface APIService {
 
     @GET("orders.php")
     Observable<Response<Order>>  updatePriority(@Query("method") String method, @Query("order_id") Long order_id, @Query("priority") Integer priority);
-
+/*
     @GET("products.php")
     Observable<Response<List<Product>>> getProducts();
 
     @GET("products.php")
     Observable<Response<List<Product>>> getAliveProducts(@Query("state") String state);
 
+*/
+
+    //PRODUCTS
+
     @GET("products.php")
-    Observable<Response<List<Product>>> getAliveProductsByPage(@Query("page") Integer page,@Query("state") String state);
+    Observable<Response<List<ReportProduct>>> getAliveProductsByPage(@Query("method") String method, @Query("page") Integer page, @Query("state") String state);
 
     @GET("products.php")
     Observable<Response<Product>> getProduct(@Query("id") Long id);
@@ -84,6 +91,7 @@ public interface APIService {
     @DELETE("products.php")
     Observable<ResponseBody>  deleteProduct(@Query("id") Long id);
 
+    //ITEMS_ORDER
 
     @GET("items_order.php")
     Observable<Response<List<ItemOrder>>> getItemsOrder();
@@ -173,4 +181,19 @@ public interface APIService {
 
     @DELETE("neighborhoods.php")
     Observable<ResponseBody>  deleteNeighborhood(@Query("id") Long id);
+
+    //outcomes
+
+    @GET("outcomes.php")
+    Observable<Response<List<ReportOutcome>>> getOutcomes(@Query("method") String method,@Query("page") Integer page);
+
+    @POST("outcomes.php")
+    Observable<Response<Outcome>> postOutcome(@Body Outcome outcome);
+
+    @PUT("outcomes.php")
+    Observable<Response<Outcome>> putOutcome(@Body Outcome outcome);
+
+    @DELETE("outcomes.php")
+    Observable<ResponseBody>  deleteOutcome(@Query("id") Long id);
+
 }
