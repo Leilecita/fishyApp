@@ -285,7 +285,8 @@
                 android:layout_weight="1"
                 android:textColor="#ffff"
                 android:padding="4dp"
-                android:background="@color/colorDialogButton"
+                android:backgroundTint="@color/colorDialogButton"
+                android:background="@drawable/rec_dialog"
                 android:text="guardar"/>
 
         </LinearLayout>

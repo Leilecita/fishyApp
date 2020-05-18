@@ -3,7 +3,9 @@ package com.leila.android.fishy.Fragments;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -115,7 +117,7 @@ public class OutcomesFragment extends BaseFragment implements Paginate.Callbacks
         mRecyclerView.addItemDecoration(headersDecor);
 
         // Add decoration for dividers between list items
-        mRecyclerView.addItemDecoration(new DividerDecoration(getContext()));
+      //  mRecyclerView.addItemDecoration(new DividerDecoration(getContext()));
 
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override public void onChanged() {
@@ -397,6 +399,7 @@ public class OutcomesFragment extends BaseFragment implements Paginate.Callbacks
             }
         });
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
     }
 

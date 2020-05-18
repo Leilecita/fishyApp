@@ -7,6 +7,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -224,6 +226,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
             }
         });
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
 
@@ -546,6 +549,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
             }
         });
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

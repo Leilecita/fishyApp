@@ -3,6 +3,8 @@ package com.leila.android.fishy.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -305,6 +307,7 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         });
 
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     private void deleteUser( final User u,final int position){
@@ -352,6 +355,7 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
             }
         });
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
     }
 
@@ -385,6 +389,7 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         final Button ok=  dialogView.findViewById(R.id.ok);
 
         final AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

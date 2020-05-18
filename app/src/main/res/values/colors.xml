@@ -57,10 +57,12 @@
     <color name="FishyBlueSoft">#2e566c</color>
     <color name="white">#ffffff</color>
     <color name="white_background">#F0EEEE</color>
+    <color name="background">#F0EEEE</color>
 
    <color name="colorlineheader">#376983</color>
 
     <color name="dia">#F8EAC0</color>
+
     <color name="mes">#F7D0DB</color>
 
 </resources>

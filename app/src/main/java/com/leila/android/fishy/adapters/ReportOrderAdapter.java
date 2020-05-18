@@ -2,6 +2,8 @@ package com.leila.android.fishy.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 
@@ -463,6 +465,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             }
         });
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
 
@@ -506,6 +509,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             }
         });
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     public static double round(double value, int places) {
@@ -635,6 +639,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             }
         });
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
     }
 
@@ -713,5 +718,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             }
         });
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 }

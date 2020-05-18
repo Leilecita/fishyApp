@@ -2,6 +2,8 @@ package com.leila.android.fishy.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -214,6 +216,7 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
 
         final AlertDialog dialog = builder.create();
         dialog.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
