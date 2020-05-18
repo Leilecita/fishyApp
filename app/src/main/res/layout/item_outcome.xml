@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginRight="16dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginTop="6dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -35,11 +35,25 @@
                 android:layout_gravity="center_horizontal"
                 android:paddingTop="14sp"
                 android:gravity="center_horizontal"
+                android:fontFamily="@font/opensansregular"
                 android:text="21"
                 android:textColor="@color/FishyLetra"
                 android:textSize="16sp" />
 
         </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="8dp"
+            android:layout_weight="1.7"
+            android:text="Nafta"
+            android:textColor="@color/FishyLetraDark"
+            android:textSize="16sp" />
 
 
         <TextView
@@ -49,10 +63,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingLeft="8dp"
-            android:layout_weight="1"
-            android:text=" Nafta "
-            android:textColor="@color/FishyLetra"
-            android:textSize="18sp" />
+            android:layout_weight="1.4"
+            android:text=" "
+            android:textColor="@color/FishyLetraDark"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -61,20 +75,20 @@
             android:text="19800"
             android:gravity="right"
             android:layout_gravity="center_vertical"
-            android:textColor="@color/FishyLetra"
+            android:textColor="@color/FishyLetraDark"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="16sp"
             />
 
     </LinearLayout>
+
     <TextView
-        style="@style/DivisorCategoryStyle"
         android:layout_width="match_parent"
+        android:layout_height="2dp"
         android:layout_marginTop="6dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginLeft="16dp"
-        android:background="@color/FishyLetraHeader"
-        android:layout_height="1dp" />
+        android:layout_marginLeft="12dp"
+        android:background="@drawable/divline"
+        />
 
 
 

@@ -50,6 +50,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder  {
         public TextView name;
         public TextView price;
+        public TextView mayor_price;
         public TextView stock;
         public TextView soldedCant;
         public ImageView options;
@@ -68,6 +69,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
             loadBothStock=v.findViewById(R.id.load_both);
             rosario=v.findViewById(R.id.rosario);
             mardel=v.findViewById(R.id.mardel);
+            mayor_price=v.findViewById(R.id.price_product_wholersale);
 
         }
     }
@@ -86,6 +88,8 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
             vh.name.setText(null);
         if(vh.price!=null)
             vh.price.setText(null);
+        if(vh.mayor_price!=null)
+            vh.mayor_price.setText(null);
         if(vh.stock!=null)
             vh.stock.setText(null);
         if(vh.stock2!=null)
@@ -105,6 +109,8 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
         holder.name.setText(currentProduct.fish_name);
 
         holder.price.setText("$"+getIntegerQuantity(currentProduct.price));
+        holder.mayor_price.setText("$"+getIntegerQuantity(currentProduct.wholesaler_price));
+
         holder.stock.setText(getIntegerQuantity(currentProduct.stock + currentProduct.stock2));
 
         if(currentProduct.load_both_stocks.equals("true")){
@@ -209,6 +215,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
 
         final TextView edit_name= dialogView.findViewById(R.id.edit_name);
         final TextView edit_price= dialogView.findViewById(R.id.edit_price);
+        final TextView edit_wholesaler_price= dialogView.findViewById(R.id.edit_wholesaler_price);
         final TextView edit_stock= dialogView.findViewById(R.id.edit_stock);
         final TextView stock2= dialogView.findViewById(R.id.stock2);
         final TextView text= dialogView.findViewById(R.id.textServer);
@@ -220,6 +227,10 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
         edit_name.setTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
         edit_price.setText(getIntegerQuantity(p.price));
         edit_price.setTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
+
+        edit_wholesaler_price.setText(getIntegerQuantity(p.wholesaler_price));
+        edit_wholesaler_price.setTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
+
         edit_stock.setText(getIntegerQuantity(p.stock));
         edit_stock.setTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
 
@@ -233,6 +244,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
             public void onClick(View view) {
                 String productName=edit_name.getText().toString().trim();
                 String productPrice=edit_price.getText().toString().trim();
+                String productWholesalerPrice=edit_wholesaler_price.getText().toString().trim();
                 String productStock=edit_stock.getText().toString().trim();
 
                 boolean isDataValid=true;
@@ -244,6 +256,15 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
                 if(!productPrice.matches("")) {
                     if (ValidatorHelper.get().isTypeDouble(productPrice)) {
                         p.price=Double.valueOf(productPrice);
+                    }else {
+                        isDataValid=false;
+                        Toast.makeText(dialogView.getContext(), " Tipo de precio no valido ", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                if(!productWholesalerPrice.matches("")) {
+                    if (ValidatorHelper.get().isTypeDouble(productPrice)) {
+                        p.wholesaler_price=Double.valueOf(productWholesalerPrice);
                     }else {
                         isDataValid=false;
                         Toast.makeText(dialogView.getContext(), " Tipo de precio no valido ", Toast.LENGTH_LONG).show();
@@ -262,7 +283,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
                 if(isDataValid){
                     updateItem(position,p);
 
-                    Product p2= new Product(p.fish_name,p.price,p.stock);
+                    Product p2= new Product(p.fish_name,p.price,p.wholesaler_price,p.stock);
                     p2.id=p.id;
 
                     ApiClient.get().putProduct(p2, new GenericCallback<Product>() {

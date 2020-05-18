@@ -2,40 +2,64 @@
 <LinearLayout
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
-android:layout_height="40dp"
+android:layout_height="52dp"
 android:gravity="center_vertical"
 android:orientation="horizontal"
 android:background="@color/FishyLetraHeader">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:background="@color/word_clear_clear"
+            android:background="@color/backr"
             android:paddingRight="16dp"
-            android:paddingLeft="16dp"
-            android:layout_height="33dp">
+            android:paddingLeft="12dp"
+            android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:text="Mayo 2020"
-                    android:textAllCaps="true"
-                    android:id="@+id/date"
-                    android:gravity="center_vertical"
-                    android:textSize="19sp"
-                    android:textColor="@color/FishyLetraHeader"
-                    />
+
+                <RelativeLayout
+                    android:layout_width="42dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/circle"
+                    android:orientation="vertical"
+                    android:backgroundTint="@color/white"
+                    android:layout_height="42dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="May"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="4dp"
+                            android:textAllCaps="true"
+                            android:fontFamily="@font/opensansregular"
+                            android:id="@+id/date"
+                            android:textSize="16sp"
+                            android:textColor="@color/FishyLetraHeader"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:paddingTop="18sp"
+                            android:text="2020"
+                            android:textAllCaps="true"
+                            android:textSize="12sp"
+                            android:textColor="@color/FishyLetraHeader"
+                            />
+
+                </RelativeLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/amount"
                     android:layout_weight="1"
-                    android:text="6"
+                    android:text="6000"
                     android:gravity="center_vertical|right"
+                    android:fontFamily="@font/opensansregular"
                     android:textSize="19sp"
-                    android:textColor="@color/FishyLetraHeader"
+                    android:textColor="@color/FishyLetra"
                     />
-
 
 
         </LinearLayout>

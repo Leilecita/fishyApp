@@ -13,13 +13,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.leila.android.fishy.CurrentValuesHelper;
 import com.leila.android.fishy.CustomLoadingListItemCreator;
+import com.leila.android.fishy.Events.EventListUsersState;
+import com.leila.android.fishy.Events.EventOrderState;
 import com.leila.android.fishy.R;
 import com.leila.android.fishy.activities.CreateUserActivity;
 import com.leila.android.fishy.adapters.UserAdapter;
 import com.leila.android.fishy.network.ApiClient;
 import com.leila.android.fishy.network.Error;
 import com.leila.android.fishy.network.GenericCallback;
+import com.leila.android.fishy.network.models.ReportUsers;
 import com.leila.android.fishy.network.models.User;
 import com.leila.android.fishy.network.models.reportsOrder.ValuesOrderReport;
 import com.paginate.Paginate;
@@ -30,7 +34,13 @@ import java.util.List;
 import java.util.UUID;
 
 import android.support.v7.widget.SearchView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.w3c.dom.Text;
 
 
 public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
@@ -48,6 +58,10 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
     private boolean hasMoreItems;
     private String mQuery = "";
     private String token = "";
+
+    private LinearLayout lineDebt;
+    private TextView totalDebt;
+
 
     public void onClickButton(){ activityAddUser(); }
     public int getIconButton(){
@@ -91,6 +105,9 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
         setHasOptionsMenu(true);
 
         pendients=mRootView.findViewById(R.id.pendients);
+        lineDebt=mRootView.findViewById(R.id.line_debt);
+        totalDebt=mRootView.findViewById(R.id.total_debt);
+
 
 
       final SearchView searchView= mRootView.findViewById(R.id.searchView);
@@ -122,6 +139,8 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
 
         implementsPaginate();
         loadCantOrdersPendient();
+
+        EventBus.getDefault().register(this);
 
         return mRootView;
     }
@@ -165,19 +184,20 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
         this.mQuery = query;
         final String newToken = UUID.randomUUID().toString();
         this.token =  newToken;
-        ApiClient.get().searchUsers(query, mCurrentPage, new GenericCallback<List<User>>() {
+        ApiClient.get().searchUsers(query, mCurrentPage, new GenericCallback<ReportUsers>() {
             @Override
-            public void onSuccess(List<User> data) {
+            public void onSuccess(ReportUsers data) {
+
                 if(token.equals(newToken)){
                     Log.e("TOKEN", "Llega token: " + newToken);
-                    System.out.println("IMPRIME"+mCurrentPage+" data size "+data.size());
+                    System.out.println("IMPRIME"+mCurrentPage+" data size "+data.listUsers.size());
                     if (query == mQuery) {
 
-                        if (data.size() == 0) {
+                        if (data.listUsers.size() == 0) {
                             hasMoreItems = false;
                         }else{
                             int prevSize = mAdapter.getItemCount();
-                            mAdapter.pushList(data);
+                            mAdapter.pushList(data.listUsers);
                             mCurrentPage++;
                             if(prevSize == 0){
                                 layoutManager.scrollToPosition(0);
@@ -187,6 +207,13 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
                     }
                 }else{
                     Log.e("TOKEN", "Descarta token: " + newToken);
+                }
+
+                if ((Double.compare(data.totalDebt, 0d) > 0)){
+                    lineDebt.setVisibility(View.VISIBLE);
+                    totalDebt.setText(String.valueOf(data.totalDebt));
+                }else{
+                    lineDebt.setVisibility(View.GONE);
                 }
             }
 
@@ -273,6 +300,29 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
     public boolean hasLoadedAllItems() {
         return !hasMoreItems;
     }
+
+    @Subscribe
+    public void onEvent(EventListUsersState event){
+        clearview();
+        listUsers(mQuery);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    public void onStop() {
+
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
 
 
 }

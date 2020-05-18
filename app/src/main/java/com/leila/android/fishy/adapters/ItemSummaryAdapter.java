@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 
 import com.leila.android.fishy.R;
+import com.leila.android.fishy.ValuesHelper;
 import com.leila.android.fishy.network.models.reportsOrder.SummaryDay;
 
 import java.util.List;
@@ -67,8 +68,11 @@ public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapt
         clearViewHolder(holder);
 
         final SummaryDay item= getItem(position);
-        holder.cant.setText(getIntegerQuantity(item.totalQuantity));
-        holder.total_amount.setText(String.valueOf(round(item.price*item.totalQuantity,2)));
+        holder.cant.setText(ValuesHelper.get().getIntegerQuantity(item.totalQuantity));
+
+       // holder.total_amount.setText(String.valueOf(round(item.price*item.totalQuantity,2)));
+        holder.total_amount.setText(String.valueOf(round(item.totalPrice,2)));
+
         holder.name_product.setText(item.nameProduct);
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -89,18 +93,6 @@ public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapt
         return (double) tmp / factor;
     }
 
-    private String getIntegerQuantity(Double val){
-        String[] arr=String.valueOf(val).split("\\.");
-        int[] intArr=new int[2];
-        intArr[0]=Integer.parseInt(arr[0]);
-        intArr[1]=Integer.parseInt(arr[1]);
 
-        if(intArr[1] == 0){
-            return String.valueOf(intArr[0]);
-        }else{
-            return String.valueOf(val);
-        }
-
-    }
 
 }

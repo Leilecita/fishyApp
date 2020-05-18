@@ -2,6 +2,8 @@ package com.leila.android.fishy.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
@@ -17,11 +19,13 @@ import android.widget.Toast;
 import com.leila.android.fishy.DialogHelper;
 import com.leila.android.fishy.Interfaces.OnAddItemListener;
 import com.leila.android.fishy.R;
+import com.leila.android.fishy.ValuesHelper;
 import com.leila.android.fishy.network.ApiClient;
 import com.leila.android.fishy.network.Error;
 import com.leila.android.fishy.network.GenericCallback;
 import com.leila.android.fishy.network.models.ItemOrder;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.types.Constants;
 
 import java.util.List;
 import java.text.DecimalFormat;
@@ -93,18 +97,6 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
 
     }
 
-    private String getIntegerQuantity(Double val){
-        String[] arr=String.valueOf(val).split("\\.");
-        int[] intArr=new int[2];
-        intArr[0]=Integer.parseInt(arr[0]);
-        intArr[1]=Integer.parseInt(arr[1]);
-
-        if(intArr[1] == 0){
-            return String.valueOf(intArr[0]);
-        }else{
-            return String.valueOf(val);
-        }
-    }
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
@@ -121,27 +113,52 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
         clearViewHolder(holder);
 
         final ItemOrder currentItem=getItem(position);
+        holder.name.setText(currentItem.product_name);
 
-        ApiClient.get().getProduct(currentItem.getProduct_id(), new GenericCallback<Product>() {
-            @Override
-            public void onSuccess(Product data) {
-                holder.name.setText(data.fish_name);
+        Double cant=currentItem.quantity;
 
-                Double cant=currentItem.quantity;
-                holder.cant.setText(getIntegerQuantity(cant));
-                String text="("+getIntegerQuantity(round(data.price,2))+")";
-                holder.price.setText(text);
-               // holder.total_price.setText("$"+getIntegerQuantity(cant*data.price));
+        holder.cant.setText(ValuesHelper.get().getIntegerQuantity(cant));
 
-                Double total=cant*data.price;
-                holder.total_price.setText("$"+getIntegerQuantity(roundTwoDecimals(total)));
+        if(currentItem.price_type.equals(Constants.TYPE_PRICE_MAYORISTA)){
+            holder.price.setTextColor(mContext.getResources().getColor(R.color.FishyRose3));
 
-            }
-            @Override
-            public void onError(Error error) {
+        }else{
+            holder.price.setTextColor(mContext.getResources().getColor(R.color.FishyLetraDark));
+        }
 
-            }
-        });
+        String text="("+ ValuesHelper.get().getIntegerQuantity(round(currentItem.price,2))+")";
+
+        holder.price.setText(text);
+
+        Double total=cant*currentItem.price;
+
+        holder.total_price.setText("$"+ValuesHelper.get().getIntegerQuantity(roundTwoDecimals(total)));
+
+
+    /*    if(currentItem.product_id >=0){
+
+            ApiClient.get().getProduct(currentItem.getProduct_id(), new GenericCallback<Product>() {
+                @Override
+                public void onSuccess(Product data) {
+                    holder.name.setText(data.fish_name);
+
+                    Double cant=currentItem.quantity;
+                    holder.cant.setText(ValuesHelper.get().getIntegerQuantity(cant));
+                    String text="("+ValuesHelper.get().getIntegerQuantity(round(data.price,2))+")";
+                    holder.price.setText(text);
+                    // holder.total_price.setText("$"+getIntegerQuantity(cant*data.price));
+
+                    Double total=cant*data.price;
+                    holder.total_price.setText("$"+ValuesHelper.get().getIntegerQuantity(roundTwoDecimals(total)));
+
+                }
+                @Override
+                public void onError(Error error) {
+
+                }
+            });
+
+        }*/
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,7 +214,8 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
                        Toast.makeText(mContext,"El producto ha sido borrado",Toast.LENGTH_SHORT).show();
                        removeItem(position);
                       if(onAddItemOrderLister!=null){
-                           onAddItemOrderLister.onAddItemToOrder(0l,0l,0l,0d,false);
+                           onAddItemOrderLister.onAddItemToOrder(0l,0l,0l,0d,false,""
+                           ,"",0.0);
                        }
                    }
 

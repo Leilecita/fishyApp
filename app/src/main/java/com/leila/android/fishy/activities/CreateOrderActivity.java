@@ -146,7 +146,6 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         mAdapter.setOnAddItemListener(this);
         mAdapter.setOnStart(this);
 
-
         mItemRecyclerView = this.findViewById(R.id.list_items);
         layoutManagerItem = new LinearLayoutManager(this);
         mItemRecyclerView.setLayoutManager(layoutManagerItem);
@@ -159,7 +158,6 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         deliverDate=findViewById(R.id.deliver_date);
         deliveryTime=findViewById(R.id.delivery_time);
         observation_order=findViewById(R.id.obs);
-
 
         initActivity();
 
@@ -321,12 +319,11 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         listProducts();
     }
 
-
-
-    public void onAddItemToOrder(Long id,Long product_id,Long order_id, Double quantity,boolean create){
+    public void onAddItemToOrder(Long id,Long product_id,Long order_id, Double quantity,boolean create,String product_name
+    ,String price_type, Double price){
 
         if(create){
-            ItemOrder i=new ItemOrder(product_id,order_id,quantity);
+            ItemOrder i=new ItemOrder(product_id,order_id,quantity,product_name,price_type,price);
             i.id=id;
             mItemAdapter.pushItem(i);
 

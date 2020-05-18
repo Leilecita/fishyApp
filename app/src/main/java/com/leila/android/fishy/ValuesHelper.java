@@ -24,7 +24,10 @@ public class ValuesHelper {
             return String.valueOf(val);
         }
 
+
     }
+
+
 
     public String getIntegerQuantity(Double val){
         String[] arr= String.valueOf(val).split("\\.");

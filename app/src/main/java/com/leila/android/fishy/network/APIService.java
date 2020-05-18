@@ -1,13 +1,16 @@
 package com.leila.android.fishy.network;
 
 import com.leila.android.fishy.network.models.AmountResult;
+import com.leila.android.fishy.network.models.Income;
 import com.leila.android.fishy.network.models.ItemOrder;
 import com.leila.android.fishy.network.models.Neighborhood;
 import com.leila.android.fishy.network.models.Order;
 import com.leila.android.fishy.network.models.Outcome;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.network.models.ReportIncome;
 import com.leila.android.fishy.network.models.ReportOutcome;
 import com.leila.android.fishy.network.models.ReportProduct;
+import com.leila.android.fishy.network.models.ReportUsers;
 import com.leila.android.fishy.network.models.reportsOrder.SummaryDay;
 import com.leila.android.fishy.network.models.User;
 import com.leila.android.fishy.network.models.reportsOrder.ReportOrder;
@@ -41,7 +44,7 @@ public interface APIService {
     Observable<Response<Order>>  send_account(@Query("method") String method,@Query("state") String state, @Query("order_id") Long order_id);
 
     @GET("orders.php")
-    Observable<Response<Order>>  done_payment(@Query("method") String method,@Query("state") String state, @Query("order_id") Long order_id);
+    Observable<Response<Order>>  done_payment(@Query("method") String method,@Query("state") String state, @Query("order_id") Long order_id,@Query("debt_value") Double debt_value);
 
     @GET("orders.php")
     Observable<Response<ValuesOrderReport>>  getValuesOrdersReport(@Query("method") String method, @Query("deliver_date") String date);
@@ -113,8 +116,7 @@ public interface APIService {
     @DELETE("items_order.php")
     Observable<ResponseBody>  deleteItemOrder(@Query("id") Long id);
 
-    @GET("orders.php")
-    Observable<Response<List<Order>>> getOrders();
+    //ORDERS
 
     @GET("orders.php")
     Observable<Response<Order>> getOrder(@Query("id") Long id);
@@ -129,8 +131,12 @@ public interface APIService {
     Observable<ResponseBody>  deleteOrder(@Query("id") Long id);
 
 
-    @GET("orders.php")
+/*    @GET("orders.php")
     Observable<Response<List<ReportOrder>>>  getOrdersReport( @Query("deliver_date") String date);
+
+    @GET("orders.php")
+    Observable<Response<List<ReportOrder>>>  getOrdersReportByUserId( @Query("user_id") Long user_id);
+    */
 
     @GET("orders.php")
     Observable<Response<List<SummaryDay>>>  getSummaryDay(@Query("method") String method, @Query("deliver_date") String date);
@@ -139,17 +145,18 @@ public interface APIService {
     Observable<Response<ValuesDay>>  getValuesDay(@Query("method") String method, @Query("deliver_date") String date);
 
     @GET("orders.php")
-    Observable<Response<List<ReportOrder>>>  getOrdersReportByUserId( @Query("user_id") Long user_id);
-
-    @GET("orders.php")
     Observable<Response<List<ReportOrder>>>  getOrdersReportByUserIdByPage(@Query("page") Integer page, @Query("user_id") Long user_id);
 
+
+    //USERS
 
     @GET("users.php")
     Observable<Response<List<User>>> getUsers();
 
     @GET("users.php")
-    Observable<Response<List<User>>> getUsersByPage(@Query("page") Integer page, @Query("query") String query );
+    Observable<Response<ReportUsers>> getUsersByPage(@Query("method") String method, @Query("page") Integer page, @Query("query") String query );
+
+
 
 
     @GET("users.php")
@@ -185,7 +192,7 @@ public interface APIService {
     //outcomes
 
     @GET("outcomes.php")
-    Observable<Response<List<ReportOutcome>>> getOutcomes(@Query("method") String method,@Query("page") Integer page);
+    Observable<Response<List<ReportOutcome>>> getOutcomes(@Query("method") String method,@Query("page") Integer page,@Query("type") String type);
 
     @POST("outcomes.php")
     Observable<Response<Outcome>> postOutcome(@Body Outcome outcome);
@@ -195,5 +202,13 @@ public interface APIService {
 
     @DELETE("outcomes.php")
     Observable<ResponseBody>  deleteOutcome(@Query("id") Long id);
+
+    //incomes
+
+    @GET("incomes.php")
+    Observable<Response<List<ReportIncome>>> getIncomes(@Query("method") String method, @Query("page") Integer page,@Query("type") String type);
+
+    @POST("incomes.php")
+    Observable<Response<Income>> postIncome(@Body Income income);
 
 }

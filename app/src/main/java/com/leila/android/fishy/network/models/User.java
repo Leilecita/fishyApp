@@ -17,10 +17,10 @@ public class User {
     public Integer pendient_orders;
     public String created;
     public String defaulter;
+    public Double debt_value;
 
     public String imageData;
 
-    public String havePendientOrder;
 
     public User(String name, String address, String phone, String document,String picpath, String neighboor,Integer pendient_orders){
         this.name=name;

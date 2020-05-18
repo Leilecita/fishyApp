@@ -33,7 +33,7 @@
 
     <color name="title_dialog_info">#252525</color>
     <color name="verde">#1b5b48</color>
-    <color name="rojo">#a71528</color>
+    <color name="rojo">#8D2836</color>
 
     <color name="borrador">#534f4f</color>
 
@@ -42,18 +42,25 @@
     <color name="colorPrimaryDarkFishy">#142831</color>
     <color name="FishyBlue">#103041</color>
     <color name="FishyRose">#DAB6AA</color>
-    <color name="FishyRose2">#E3C2B9</color>
+    <color name="FishyRose3">#E78D74</color>
     <color name="FishyLetra">#7F7359</color>
+
+
+    <color name="backr">#DFDBD1</color>
     <color name="FishyLetraHeader">#A29271</color>
     <color name="FishyLetraDark">#514936</color>
     <color name="FishyBlanco">#E3E4DF</color>
     <color name="FishyBlanco2">#E2E4DF</color>
 
+    <color name="FishyRoseSoftSoft">#E7CFC6</color>
     <color name="FishyRoseSoft">#e6cbc2</color>
     <color name="FishyBlueSoft">#2e566c</color>
     <color name="white">#ffffff</color>
     <color name="white_background">#F0EEEE</color>
 
    <color name="colorlineheader">#376983</color>
+
+    <color name="dia">#F8EAC0</color>
+    <color name="mes">#F7D0DB</color>
 
 </resources>

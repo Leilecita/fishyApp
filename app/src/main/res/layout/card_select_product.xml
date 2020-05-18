@@ -29,7 +29,7 @@
                         android:gravity="center"
                         android:text="Abadejo "
                         android:padding="2dp"
-                        android:textColor="#7F7359"
+                        android:textColor="@color/FishyLetraDark"
                         android:textSize="15sp" />
 
 

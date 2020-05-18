@@ -54,39 +54,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Abadejo"
-                        android:padding="2dp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
                         android:textSize="17sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-                        android:id="@+id/load_both"
-                        android:layout_gravity="center_vertical"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:id="@+id/rosario"
-                            android:src="@mipmap/ic_launcher_rosario"
-                            />
-
-
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_marginLeft="8dp"
-                            android:id="@+id/mardel"
-                            android:src="@mipmap/ic_launcher_lei"
-                            />
-
-                    </LinearLayout>
-
-
-
 
 
                 </LinearLayout>
@@ -104,6 +74,75 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1.9"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Stock total:"
+                        android:padding="2dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/stock_product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="340"
+                        android:paddingLeft="4dp"
+                        android:fontFamily="@font/opensansitalic"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:id="@+id/load_both"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:id="@+id/rosario"
+                        android:src="@mipmap/ic_launcher_rosario"
+                        />
+
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="8dp"
+                        android:id="@+id/mardel"
+                        android:src="@mipmap/ic_launcher_lei"
+                        />
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -115,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Precio:"
+                        android:text="$ min :"
                         android:padding="2dp"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
@@ -125,37 +164,37 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="12123"
+                        android:text="890"
                         android:paddingLeft="4dp"
-                        android:textStyle="italic"
+                        android:fontFamily="@font/opensansitalic"
                         android:textColor="@color/FishyLetraDark"
-                        android:textSize="15sp" />
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_weight="1.2"
+                    android:layout_weight="1.5"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text=" Stock total:"
+                        android:text="$ may :"
                         android:padding="2dp"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/stock_product"
+                        android:id="@+id/price_product_wholersale"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="34"
+                        android:text="1100"
                         android:paddingLeft="4dp"
-                        android:textStyle="italic"
-                        android:textColor="@color/FishyLetraDark"
+                        android:fontFamily="@font/opensansitalic"
+                        android:textColor="@color/FishyRose3"
                         android:textSize="16sp" />
 
                 </LinearLayout>

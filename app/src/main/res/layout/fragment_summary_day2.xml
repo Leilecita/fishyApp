@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/line2"
         android:paddingLeft="8dp"
         android:id="@+id/line11"
         android:layout_marginLeft="4dp"
@@ -167,7 +166,8 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:id="@+id/sumTot"
-                    android:textStyle="italic|bold"
+                    android:fontFamily="@font/opensansitalic"
+                    android:textStyle="bold"
                     android:textColor="@color/FishyLetraDark"
                     android:textSize="17sp"
                     />
@@ -195,7 +195,8 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:id="@+id/sumPendient"
-                    android:textStyle="italic|bold"
+                    android:fontFamily="@font/opensansitalic"
+                    android:textStyle="bold"
                     android:textColor="@color/FishyLetraDark"
                     android:textSize="17sp"
                     />
@@ -224,7 +225,8 @@
                     android:text=""
                     android:id="@+id/sumDone"
                     android:textColor="@color/FishyLetraDark"
-                    android:textStyle="italic|bold"
+                    android:fontFamily="@font/opensansitalic"
+                    android:textStyle="bold"
                     android:textSize="17sp"
                     />
 

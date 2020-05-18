@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import com.leila.android.fishy.network.GenericCallback;
 import com.leila.android.fishy.network.models.ItemOrder;
 import com.leila.android.fishy.network.models.Product;
 import com.leila.android.fishy.network.models.ReportProduct;
+import com.leila.android.fishy.types.PriceType;
 
 import java.util.List;
 import android.view.WindowManager.LayoutParams;
@@ -50,13 +53,11 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
 
     private Context mContext;
     private Long mOrderId;
-  //  private boolean isEdting;
 
     public ProductOrderAdapter(Context context, List<ReportProduct> products){
         setItems(products);
         mContext = context;
         mOrderId=90L;
-       // isEdting=false;
 
     }
 
@@ -150,6 +151,21 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
         });
     }
 
+    private String getPriceTypeSelected(CheckBox check_min,CheckBox cheack_may){
+        if(check_min.isChecked()){
+            return PriceType.MINORISTA.getName();
+        }else{
+            return PriceType.MAYORISTA.getName();
+        }
+    }
+
+    private Double getPriceSelected(CheckBox check_min,CheckBox cheack_may,ReportProduct p){
+        if(check_min.isChecked()){
+            return p.price;
+        }else{
+            return p.wholesaler_price;
+        }
+    }
 
     private void createItemOrder(final ReportProduct p){
 
@@ -161,11 +177,40 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
         final TextView name = dialogView.findViewById(R.id.fish_name);
         final TextView quantity = dialogView.findViewById(R.id.quantity);
         final TextView price = dialogView.findViewById(R.id.price);
+        final TextView wholesaler_price = dialogView.findViewById(R.id.wholesaler_price);
         final TextView cancel = dialogView.findViewById(R.id.cancel);
         final Button ok = dialogView.findViewById(R.id.ok);
+        final CheckBox check_min = dialogView.findViewById(R.id.check_min);
+        final CheckBox check_may = dialogView.findViewById(R.id.check_may);
 
         name.setText(p.fish_name);
         price.setText("$"+String.valueOf(p.price));
+        wholesaler_price.setText("$"+p.wholesaler_price);
+
+        check_min.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(check_min.isChecked()){
+                    check_min.setChecked(true);
+                    check_may.setChecked(false);
+                }else{
+                    check_min.setChecked(false);
+                }
+            }
+        });
+
+        check_may.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(check_may.isChecked()){
+                    check_may.setChecked(true);
+                    check_min.setChecked(false);
+                }else{
+                    check_may.setChecked(false);
+                }
+            }
+        });
+
 
         final AlertDialog dialog = builder.create();
         dialog.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -175,19 +220,24 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
             public void onClick(View view) {
                 String fishQuantity=quantity.getText().toString().trim();
 
-                if(!fishQuantity.matches("") && ValidatorHelper.get().isTypeDouble(fishQuantity)){
+                if(!fishQuantity.matches("")){
 
                     if(p.stock>= Double.valueOf(fishQuantity)){
 
-                        ItemOrder itemOrder=new ItemOrder(p.id,mOrderId,Double.valueOf(fishQuantity));
+                      //  ItemOrder itemOrder=new ItemOrder(p.id,mOrderId,Double.valueOf(fishQuantity)
+                        ItemOrder itemOrder=new ItemOrder(-1l,mOrderId,Double.valueOf(fishQuantity)
+                                ,p.fish_name,getPriceTypeSelected(check_min,check_may),
+                                getPriceSelected(check_min,check_may,p));
+
                             ApiClient.get().postItemOrder(itemOrder, new GenericCallback<ItemOrder>() {
                                 @Override
                                 public void onSuccess(ItemOrder data) {
 
                                     Toast.makeText(mContext, "Se ha agregado el producto "+name.getText().toString(),Toast.LENGTH_SHORT).show();
-                                    //EventBus.getDefault().post(new EventItemOrderState(data.id,data.product_id,data.quantity,data.order_id));
+
                                     if(onAddItemOrderLister!=null){
-                                        onAddItemOrderLister.onAddItemToOrder(data.id,data.product_id,data.order_id,data.quantity,true);
+                                        onAddItemOrderLister.onAddItemToOrder(data.id,data.product_id,data.order_id,data.quantity,true,
+                                                data.product_name,data.price_type,data.price);
                                     }
                                 }
 
@@ -204,7 +254,6 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
                         loadStock(p.fish_name,p.id);
                     }
                 }else{
-
                     Toast.makeText(mContext,"Dato inválido",Toast.LENGTH_LONG).show();
                 }
             }

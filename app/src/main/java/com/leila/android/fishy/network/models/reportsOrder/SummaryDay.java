@@ -5,12 +5,12 @@ public class SummaryDay {
     public Long productId;
     public String nameProduct;
     public Double totalQuantity;
-    public Double price;
+    public Double totalPrice;
 
-    public SummaryDay(Long idProduct,String nameProduct,Double totalQuantity,Double price ){
+    public SummaryDay(Long idProduct,String nameProduct,Double totalQuantity,Double totalPrice ){
         this.productId=idProduct;
         this.nameProduct=nameProduct;
         this.totalQuantity=totalQuantity;
-        this.price=price;
+        this.totalPrice=totalPrice;
     }
 }

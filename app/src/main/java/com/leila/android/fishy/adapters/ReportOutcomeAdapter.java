@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leila.android.fishy.DateHelper;
@@ -68,9 +69,10 @@ public class ReportOutcomeAdapter extends BaseAdapter<ReportOutcome, ReportOutco
             LinearLayout linear = (LinearLayout) holder.itemView;
 
             final ReportOutcome e = getItem(position);
-            String dateToShow = DateHelper.get().getNameMonth(e.created)+" "+DateHelper.get().getOnlyYear(e.created);
+            String dateToShow = DateHelper.get().getNameMonth(e.created).substring(0,3);
+            String year= DateHelper.get().getOnlyYear(e.created);
 
-            String amountByMonth= String.valueOf(e.amountByMonth);
+            String amountByMonth= ValuesHelper.get().getIntegerQuantity(e.amountByMonth);
 
             int count = linear.getChildCount();
             View v = null;
@@ -89,11 +91,28 @@ public class ReportOutcomeAdapter extends BaseAdapter<ReportOutcome, ReportOutco
                         v2 = linear2.getChildAt(j);
 
                         if(j==0){
-                            TextView t= (TextView) v2;
-                            t.setText(dateToShow);
+
+                            RelativeLayout rel1= (RelativeLayout) v2;
+
+                            int coutn3=rel1.getChildCount();
+
+                            for(int k=0;k< coutn3; ++k){
+                                v3=rel1.getChildAt(k);
+
+                                if(k==0){
+                                    TextView t= (TextView) v3;
+                                    t.setText(dateToShow);
+                                }else if(k==1){
+                                    TextView t2= (TextView) v3;
+                                    t2.setText(year);
+                                }
+
+                            }
+
+
                         }else if(j == 1){
                             TextView t2= (TextView) v2;
-                            t2.setText(amountByMonth);
+                            t2.setText("$ "+amountByMonth);
                         }
                     }
                 }
@@ -162,6 +181,8 @@ public class ReportOutcomeAdapter extends BaseAdapter<ReportOutcome, ReportOutco
 
 
     }
+
+
 
 
 }

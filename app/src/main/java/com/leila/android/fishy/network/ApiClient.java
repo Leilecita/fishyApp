@@ -3,13 +3,16 @@ package com.leila.android.fishy.network;
 import android.util.Log;
 
 import com.leila.android.fishy.network.models.AmountResult;
+import com.leila.android.fishy.network.models.Income;
 import com.leila.android.fishy.network.models.ItemOrder;
 import com.leila.android.fishy.network.models.Neighborhood;
 import com.leila.android.fishy.network.models.Order;
 import com.leila.android.fishy.network.models.Outcome;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.network.models.ReportIncome;
 import com.leila.android.fishy.network.models.ReportOutcome;
 import com.leila.android.fishy.network.models.ReportProduct;
+import com.leila.android.fishy.network.models.ReportUsers;
 import com.leila.android.fishy.network.models.reportsOrder.SummaryDay;
 import com.leila.android.fishy.network.models.User;
 
@@ -51,8 +54,8 @@ public class ApiClient {
         handleRequest( ApiUtils.getAPIService().send_account("send_account", state,order_id), callback);
     }
 
-    public void done_payment(Long order_id,String state,GenericCallback<Order> callback){
-        handleRequest( ApiUtils.getAPIService().done_payment("done_payment",state, order_id), callback);
+    public void done_payment(Long order_id,String state,Double debt_value,GenericCallback<Order> callback){
+        handleRequest( ApiUtils.getAPIService().done_payment("done_payment",state, order_id,debt_value), callback);
     }
 
 
@@ -84,14 +87,14 @@ public class ApiClient {
     public void updatePriority(Long order_id,Integer priority,GenericCallback<Order> callback){
         handleRequest( ApiUtils.getAPIService().updatePriority("priority", order_id,priority), callback);
     }
-
-    public void getOrdersReport(String deliver_date,GenericCallback<List<ReportOrder>> callback){
+/*
+   public void getOrdersReport(String deliver_date,GenericCallback<List<ReportOrder>> callback){
         handleRequest( ApiUtils.getAPIService().getOrdersReport(deliver_date), callback);
     }
 
     public void getOrdersReportByUserId(Long user_id,GenericCallback<List<ReportOrder>> callback){
         handleRequest( ApiUtils.getAPIService().getOrdersReportByUserId(user_id), callback);
-    }
+    }*/
 
     public void getOrdersReportByUserIdByPage(Integer page,Long user_id ,GenericCallback<List<ReportOrder>> callback){
         handleRequest( ApiUtils.getAPIService().getOrdersReportByUserIdByPage(page,user_id), callback);
@@ -173,13 +176,13 @@ public class ApiClient {
         handleRequest( ApiUtils.getAPIService().getUser(id), callback);
     }
 
-    public void searchUsers(String query, Integer page,final GenericCallback<List<User>> callback ){
-        handleRequest( ApiUtils.getAPIService().getUsersByPage(page,query), callback);
+    public void searchUsers(String query, Integer page,final GenericCallback<ReportUsers> callback ){
+        handleRequest( ApiUtils.getAPIService().getUsersByPage("getUsers",page,query), callback);
 
     }
 
-    public void getUsersByPage(Integer page, final GenericCallback<List<User>> callback){
-        handleRequest( ApiUtils.getAPIService().getUsersByPage(page,null), callback);
+    public void getUsersByPage(Integer page, final GenericCallback<ReportUsers> callback){
+        handleRequest( ApiUtils.getAPIService().getUsersByPage("getUsers",page,null), callback);
     }
 
     public void getUsers(final GenericCallback<List<User>> callback){
@@ -225,10 +228,21 @@ public class ApiClient {
     }
 
 
+    //INCOMES
+    public void getIncomes(Integer page, String type,final GenericCallback<List<ReportIncome>> callback){
+        handleRequest( ApiUtils.getAPIService().getIncomes("getIncomes",page,type), callback);
+    }
+
+    public void postIncome(Income income, GenericCallback<Income> callback){
+        handleRequest( ApiUtils.getAPIService().postIncome(income), callback);
+    }
+
+
+
     //OUTCOMES
 
-    public void getOutcomes(Integer page, final GenericCallback<List<ReportOutcome>> callback){
-        handleRequest( ApiUtils.getAPIService().getOutcomes("getOutcomes",page), callback);
+    public void getOutcomes(Integer page,String type, final GenericCallback<List<ReportOutcome>> callback){
+        handleRequest( ApiUtils.getAPIService().getOutcomes("getOutcomes",page,type), callback);
     }
 
     public void postOutcome(Outcome outcome,GenericCallback<Outcome> callback){

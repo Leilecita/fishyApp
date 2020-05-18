@@ -54,13 +54,14 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
         super.onCreate(savedInstanceState);
         showBackArrow();
 
+        setTitle("Productos");
+
         mRecyclerView = this.findViewById(R.id.list_products);
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new ProductAdapter(this, new ArrayList<ReportProduct>());
         mRecyclerView.setAdapter(mAdapter);
         //registerForContextMenu(mRecyclerView);
-
 
         FloatingActionButton addProduct= findViewById(R.id.add_product);
         addProduct.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +77,18 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
 
         implementsPaginate();
 
-       // listProducts();
+    }
+
+    private void clearview(){
+        mCurrentPage = 0;
+        mAdapter.clear();
+        hasMoreItems=true;
+    }
+
+    private void clearAndList(){
+        clearview();
+        listProducts();
+
     }
 
     private void createProduct(){
@@ -88,10 +100,10 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
 
         final TextView name= dialogView.findViewById(R.id.product_name);
         final EditText price= dialogView.findViewById(R.id.product_price);
+        final EditText wholsaler_price= dialogView.findViewById(R.id.wholesaler_price);
         final TextView stock= dialogView.findViewById(R.id.product_stock);
         final Button ok= dialogView.findViewById(R.id.ok);
         final TextView cancel= dialogView.findViewById(R.id.cancel);
-
 
         final AlertDialog dialog = builder.create();
         ok.setOnClickListener(new View.OnClickListener() {
@@ -99,25 +111,19 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
             public void onClick(View view) {
 
                 String priceProduct=price.getText().toString().trim();
+                String wholsaerPriceProduct=wholsaler_price.getText().toString().trim();
                 String stockProduct=stock.getText().toString().trim();
                 String nameProduct=name.getText().toString().trim();
 
-                if(!priceProduct.matches("") && !stockProduct.matches("") && !nameProduct.matches("")){
-                    if(ValidatorHelper.get().isTypeDouble(priceProduct) && ValidatorHelper.get().isTypeInteger(stockProduct)){
+                if(!priceProduct.matches("") && !stockProduct.matches("") && !nameProduct.matches("") && !wholsaerPriceProduct.matches("")){
 
-                        Product newProduct= new Product(nameProduct,Double.valueOf(priceProduct),Double.valueOf(stockProduct));
+                        Product newProduct= new Product(nameProduct,Double.valueOf(priceProduct),Double.valueOf(wholsaerPriceProduct),Double.valueOf(stockProduct));
                         ApiClient.get().postProduct(newProduct, new GenericCallback<Product>() {
                             @Override
                             public void onSuccess(Product data) {
 
-                                ReportProduct r=new ReportProduct();
-                                r.stock= data.stock;
-                                r.price=data.price;
-                                r.fish_name=data.fish_name;
-                                r.id=data.id;
-                                r.load_both_stocks="false";
+                                clearAndList();
 
-                                mAdapter.pushItem(r);
                                 Toast.makeText(dialogView.getContext(),"Se ha creado el producto "+data.fish_name, Toast.LENGTH_LONG).show();
                             }
 
@@ -127,10 +133,6 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
                             }
                         });
                         dialog.dismiss();
-
-                    }else{
-                        Toast.makeText(dialogView.getContext(),"Tipo de dato no valido ", Toast.LENGTH_LONG).show();
-                    }
 
                 }else{
                     Toast.makeText(dialogView.getContext()," Complete todo los datos por favor ", Toast.LENGTH_LONG).show();
@@ -146,22 +148,7 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
             }
         });
         dialog.show();
-
     }
-
-   /* private void listProducts(){
-        ApiClient.get().getAliveProducts("alive",new GenericCallback<List<Product>>() {
-            @Override
-            public void onSuccess(List<Product> data) {
-                mAdapter.setItems(data);
-            }
-
-            @Override
-            public void onError(Error error) {
-
-            }
-        });
-    }*/
 
     private void listProducts() {
         loadingInProgress=true;

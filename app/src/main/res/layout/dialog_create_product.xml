@@ -49,25 +49,27 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
                 android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/product_price"
-                    android:hint="Precio venta $/kg   "
+                    android:hint="Precio vta min $/kg   "
                     android:layout_width="match_parent"
                     style="@style/Widget.Design.TextInputLayout"
                     android:paddingLeft="8dp"
                     android:textColor="#5c5c5c"
+                    android:inputType="numberDecimal"
                     android:layout_height="33dp"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:background="@drawable/rec_text_edit"
                     />
 
@@ -75,31 +77,61 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
                 android:paddingTop="8dp"
+                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
-
                 <EditText
-                    android:id="@+id/product_stock"
-                    android:layout_height="33dp"
-                    android:paddingLeft="8dp"
-                    style="@style/Widget.Design.TextInputLayout"
+                    android:id="@+id/wholesaler_price"
+                    android:hint="Precio vta may $/kg  "
+                    android:inputType="numberDecimal"
                     android:layout_width="match_parent"
-                    android:textColor="#5c5c5c"
-                    android:textSize="16sp"
-                    android:hint="Stock inicial   "
+                    style="@style/Widget.Design.TextInputLayout"
+                    android:textColorHint="@color/FishyRose"
+                    android:paddingLeft="8dp"
+                    android:textColor="@color/FishyRose3"
+                    android:layout_height="33dp"
+                    android:textSize="15sp"
                     android:background="@drawable/rec_text_edit"
-                    android:inputType="textCapWords" />
-            </LinearLayout>
+                    />
 
+            </LinearLayout>
 
 
         </LinearLayout>
 
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/product_stock"
+                android:layout_height="33dp"
+                android:paddingLeft="8dp"
+                style="@style/Widget.Design.TextInputLayout"
+                android:layout_width="match_parent"
+                android:textColor="#5c5c5c"
+                android:textSize="16sp"
+                android:hint="Stock inicial   "
+                android:background="@drawable/rec_text_edit"
+                android:inputType="number" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

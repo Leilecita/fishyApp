@@ -17,12 +17,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leila.android.fishy.DialogHelper;
 import com.leila.android.fishy.DownloadTask;
+import com.leila.android.fishy.Events.EventListUsersState;
 import com.leila.android.fishy.Events.EventOrderState;
 import com.leila.android.fishy.Interfaces.ItemTouchHelperAdapter;
 import com.leila.android.fishy.Interfaces.ItemTouchHelperViewHolder;
@@ -94,6 +97,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         public CardView cardView;
 
         public TextView time;
+        public TextView debt_value;
 
         public ViewHolder(View v){
             super(v);
@@ -113,6 +117,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             priority= v.findViewById(R.id.priority);
             time=v.findViewById(R.id.time);
             cardView=v.findViewById(R.id.card_view);
+            debt_value=v.findViewById(R.id.debt_value);
 
         }
 
@@ -233,6 +238,17 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
         if(!r.delivery_time.equals("Horario")){
             holder.horario.setText(r.delivery_time);
+        }
+
+
+        if(r.debt_value != null){
+            if (Double.compare(r.debt_value, 0.0) > 0) {
+
+                holder.debt_value.setVisibility(View.VISIBLE);
+                holder.debt_value.setText(String.valueOf(r.debt_value));
+            }else{
+                holder.debt_value.setVisibility(View.GONE);
+            }
         }
 
 
@@ -453,6 +469,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
     private void startEdithOrderActivity(ReportOrder reportorder){
         CreateOrderActivity.startEdithOrder(mContext,reportorder);
     }
+
     private void showItemsList(final ReportOrder r){
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -631,38 +648,60 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         final TextView cancel=  dialogView.findViewById(R.id.cancel);
         final TextView text=  dialogView.findViewById(R.id.text);
         final TextView title=  dialogView.findViewById(R.id.title);
-        //final EditText amount=  dialogView.findViewById(R.id.amount);
+
+        final EditText debt_value=  dialogView.findViewById(R.id.debt_value);
         final Button ok=  dialogView.findViewById(R.id.ok);
 
         text.setText("¿Adeuda el pago?");
         title.setText("PAGO");
 
+        debt_value.setHint(String.valueOf(r.debt_value));
+
         final AlertDialog dialog = builder.create();
 
-        ok.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                ApiClient.get().done_payment(r.order_id, "true", new GenericCallback<Order>() {
-                    @Override
-                    public void onSuccess(Order data) {
-                        r.defaulter="true";
-                        updateItem(pos,r);
+
+            ok.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+
+
+                    if (!debt_value.getText().toString().trim().equals("")) {
+
+                        final Double val = Double.valueOf(debt_value.getText().toString().trim());
+
+                        ApiClient.get().done_payment(r.order_id, "true", val, new GenericCallback<Order>() {
+                            @Override
+                            public void onSuccess(Order data) {
+                                r.defaulter = "true";
+                                r.debt_value=data.debt_value;
+                                updateItem(pos, r);
+
+                                EventBus.getDefault().post(new EventListUsersState());
+
+                            }
+
+                            @Override
+                            public void onError(Error error) {
+                                DialogHelper.get().showMessage("Error", "No se pudo realizar el movimiento", mContext);
+                            }
+                        });
+                        dialog.dismiss();
+
+                    } else {
+                        Toast.makeText(mContext, "Tipo de dato inválido", Toast.LENGTH_SHORT).show();
                     }
-                    @Override
-                    public void onError(Error error) {
-                        DialogHelper.get().showMessage("Error", "No se pudo realizar el movimiento",mContext);
-                    }
-                });
-                dialog.dismiss();
-            }
-        });
+                }
+            });
+
+
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ApiClient.get().done_payment(r.order_id, "false", new GenericCallback<Order>() {
+                ApiClient.get().done_payment(r.order_id, "false",0.0, new GenericCallback<Order>() {
                     @Override
                     public void onSuccess(Order data) {
                         r.defaulter="false";
+                        r.debt_value=data.debt_value;
                         updateItem(pos,r);
                     }
                     @Override

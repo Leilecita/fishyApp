@@ -9,6 +9,7 @@ public class Product {
     public Long id;
     public String fish_name;
     public Double price;
+    public Double wholesaler_price;
     public Double stock;
 
     public String getFish_name() {
@@ -35,9 +36,10 @@ public class Product {
         this.stock = stock;
     }
 
-    public Product(String fish_name, Double price, Double stock){
+    public Product(String fish_name, Double price,Double wholesaler_price, Double stock){
         this.fish_name=fish_name;
         this.price=price;
+        this.wholesaler_price=wholesaler_price;
         this.stock=stock;
 
     }

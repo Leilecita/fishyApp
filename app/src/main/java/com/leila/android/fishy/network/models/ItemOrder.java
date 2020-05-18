@@ -10,28 +10,22 @@ public class ItemOrder {
     public Long order_id;
     public Double quantity;
     public String created;
+    public String product_name;
+    public String price_type;
+    public Double price;
 
-    public ItemOrder(Long product_id, Long order_id, Double quantity){
+    public ItemOrder(Long product_id, Long order_id, Double quantity,String product_name,String price_type,Double price){
         this.product_id=product_id;
         this.order_id=order_id;
         this.quantity=quantity;
+        this.price_type=price_type;
+        this.product_name=product_name;
+        this.price=price;
 
     }
 
     public Long getProduct_id() {
         return product_id;
-    }
-
-    public void setProduct_id(Long product_id) {
-        this.product_id = product_id;
-    }
-
-    public Long getOrder_id() {
-        return order_id;
-    }
-
-    public void setOrder_id(Long order_id) {
-        this.order_id = order_id;
     }
 
     public Double getQuantity() {

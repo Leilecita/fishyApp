@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.leila.android.fishy.Fragments.BaseFragment;
+import com.leila.android.fishy.Fragments.IncomesFragment;
 import com.leila.android.fishy.Fragments.OrdersFragment;
 import com.leila.android.fishy.Fragments.OutcomesFragment;
 import com.leila.android.fishy.Fragments.SummaryDayFragment;
@@ -32,6 +33,7 @@ public class PageAdapter extends FragmentPagerAdapter {
             mFragments.add(new OrdersFragment());
             mFragments.add(new SummaryDayFragment());
             mFragments.add(new OutcomesFragment());
+            mFragments.add(new IncomesFragment());
 
 
            // mFragments.add(new PreimpresoFragment().setChangeListener(this));
@@ -55,7 +57,7 @@ public class PageAdapter extends FragmentPagerAdapter {
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
 
         @Override
@@ -69,8 +71,10 @@ public class PageAdapter extends FragmentPagerAdapter {
 
             }else if(position ==2){
                 return"Resumen";
-            }else{
+            }else if (position==3){
                 return "Gastos";
+            }else{
+                return "Ingresos";
             }
         }
     }

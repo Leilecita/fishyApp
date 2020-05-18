@@ -4,7 +4,7 @@
     android:id="@+id/textView1"
     android:layout_width="250dp"
     android:layout_height="40dp"
-    android:textColor="#1e1e1e"
+    android:textColor="@color/word"
     android:padding="4dp"
     android:gravity="center_vertical"
     android:textSize="15sp"

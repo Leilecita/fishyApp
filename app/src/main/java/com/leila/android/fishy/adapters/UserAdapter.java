@@ -101,6 +101,7 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         public ImageView photo;
         public ImageView note;
         public ImageView debt;
+        public TextView debt_value;
 
 
         public ViewHolder(View v){
@@ -110,6 +111,7 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
             photo=v.findViewById(R.id.photo_user);
             note=v.findViewById(R.id.note);
             debt=v.findViewById(R.id.debt);
+            debt_value=v.findViewById(R.id.debt_value);
         }
     }
 
@@ -133,6 +135,8 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
             vh.note.setImageResource(android.R.color.transparent);
         if(vh.debt!=null)
             vh.debt.setImageResource(android.R.color.transparent);
+        if(vh.debt_value!=null)
+            vh.debt_value.setText(null);
 
     }
 
@@ -175,12 +179,6 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
 
         holder.photo.setImageDrawable(getDrawableFirstLetter(currentUser));
 
-       /* if(currentUser.image_url==null){
-            Glide.with(mContext).load(R.drawable.person_color).into(holder.photo);
-        }else{
-            Glide.with(mContext).load(ApiUtils.getImageUrl(currentUser.image_url)).into(holder.photo);
-        }*/
-
         holder.text_name.setText(currentUser.name);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +196,10 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
 
         if(currentUser.defaulter.equals("true")){
             holder.debt.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money));
+            holder.debt_value.setVisibility(View.VISIBLE);
+            holder.debt_value.setText("$"+String.valueOf(currentUser.debt_value));
+        }else{
+            holder.debt_value.setVisibility(View.GONE);
         }
 
 

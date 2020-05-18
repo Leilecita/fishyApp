@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.leila.android.fishy.R;
+import com.leila.android.fishy.ValuesHelper;
 import com.leila.android.fishy.network.models.reportsOrder.ReportItemOrder;
+import com.leila.android.fishy.types.Constants;
 
 import java.util.List;
 
@@ -66,7 +68,12 @@ public class ReportItemOrderAdapter extends BaseAdapter<ReportItemOrder,ReportIt
         final ReportItemOrder currentItem=getItem(position);
 
         holder.name.setText(currentItem.fish_name);
-        holder.cant.setText(getIntegerQuantity(currentItem.quantity));
+        holder.cant.setText(ValuesHelper.get().getIntegerQuantity(currentItem.quantity));
+        if(currentItem.price_type.equals(Constants.TYPE_PRICE_MAYORISTA)){
+            holder.amount.setTextColor(mContext.getResources().getColor(R.color.FishyRose3));
+        }else if(currentItem.price_type.equals(Constants.TYPE_PRICE_MINORISTA)){
+            holder.amount.setTextColor(mContext.getResources().getColor(R.color.FishyLetraDark));
+        }
         holder.amount.setText(String.valueOf(round(currentItem.price*currentItem.quantity,2)));
     }
 
@@ -80,17 +87,6 @@ public class ReportItemOrderAdapter extends BaseAdapter<ReportItemOrder,ReportIt
         return (double) tmp / factor;
     }
 
-    private String getIntegerQuantity(Double val){
-        String[] arr=String.valueOf(val).split("\\.");
-        int[] intArr=new int[2];
-        intArr[0]=Integer.parseInt(arr[0]);
-        intArr[1]=Integer.parseInt(arr[1]);
-        if(intArr[1] == 0){
-            return String.valueOf(intArr[0]);
-        }else{
-            return String.valueOf(val);
-        }
-    }
 
 }
 
