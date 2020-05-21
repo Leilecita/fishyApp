@@ -50,6 +50,7 @@
 
     <color name="backr">#DFDBD1</color>
     <color name="FishyLetraHeader">#A29271</color>
+    <color name="border_rec">#E7E1D2</color>
     <color name="FishyLetraDark">#514936</color>
     <color name="FishyBlanco">#E3E4DF</color>
     <color name="FishyBlanco2">#E2E4DF</color>
@@ -58,7 +59,7 @@
     <color name="FishyRoseSoft">#e6cbc2</color>
     <color name="FishyBlueSoft">#2e566c</color>
     <color name="white">#ffffff</color>
-    <color name="white_background">#F3F1F1</color>
+    <color name="white_background">#F7F5F5</color>
     <color name="background">#F0EEEE</color>
 
    <color name="colorlineheader">#376983</color>

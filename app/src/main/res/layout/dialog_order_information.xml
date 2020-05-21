@@ -11,11 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:paddingTop="6dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="22dp"
-        android:layout_marginRight="22dp"
+        android:layout_marginBottom="@dimen/dialog_margin_bottom"
+        android:layout_marginTop="@dimen/dialog_margin_top"
+        android:layout_marginLeft="@dimen/dialog_margin_left"
+        android:layout_marginRight="@dimen/dialog_margin_right"
         android:orientation="vertical">
 
 
@@ -23,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:text="Información pedido"
-            android:textSize="19sp"
+            android:textSize="18sp"
             android:textColor="@color/title_dialog_info"
             android:gravity="center"
             android:textStyle="bold"
@@ -34,14 +33,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_weight="2"
-                android:padding="4dp"
                 android:textSize="18dp"
-                android:textStyle="bold"
                 android:textColor="@color/word"
                 android:text="Nombre "/>
 
@@ -50,22 +48,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="4dp"
-                android:textColor="@color/word_info"
-                android:textSize="18dp"
-                android:textStyle="italic"/>
+                android:textColor="@color/FishyLetraDark"
+                android:textSize="@dimen/general_text"
+               />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_weight="2"
-                android:padding="4dp"
                 android:textSize="18dp"
-                android:textStyle="bold"
                 android:textColor="@color/word"
                 android:text="Entrega "/>
 
@@ -74,14 +70,14 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:textColor="@color/word_info"
-                android:textSize="18dp"
-                android:textStyle="italic"/>
+                android:textColor="@color/FishyLetraDark"
+                android:textSize="@dimen/general_text"
+               />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -89,8 +85,6 @@
                 android:layout_width="match_parent"
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:textStyle="bold"
                 android:text="Zona "
                 android:textColor="@color/word"
                 android:textSize="18dp" />
@@ -101,23 +95,21 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:textColor="@color/word_info"
-                android:textSize="18dp"
-                android:textStyle="italic"/>
+                android:textColor="@color/FishyLetraDark"
+                android:textSize="@dimen/general_text"
+                />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:textStyle="bold"
                 android:text="Creado "
                 android:textColor="@color/word"
                 android:textSize="18dp" />
@@ -127,11 +119,11 @@
                 android:id="@+id/created_date"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
+                android:text=""
                 android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:textColor="@color/word_info"
-                android:textSize="18dp"
-                android:textStyle="italic"/>
+                android:textColor="@color/FishyLetraDark"
+                android:textSize="@dimen/general_text"
+           />
         </LinearLayout>
 
         <LinearLayout

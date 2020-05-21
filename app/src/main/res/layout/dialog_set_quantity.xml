@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
         android:paddingTop="6dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:orientation="vertical">
@@ -21,9 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/fish_name"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="Abadejo"
-            android:textColor="@color/word_dor"
+            android:textColor="@color/word"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -31,8 +31,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:paddingTop="18dp"
+            android:paddingTop="16dp"
             android:gravity="center"
+            android:layout_gravity="center"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -54,10 +55,10 @@
                     />
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content">
@@ -110,6 +111,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:layout_height="wrap_content">
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -122,13 +124,13 @@
 
                     />
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content">
 

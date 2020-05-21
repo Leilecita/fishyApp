@@ -29,7 +29,6 @@ import com.leila.android.fishy.network.ApiClient;
 import com.leila.android.fishy.network.Error;
 import com.leila.android.fishy.network.GenericCallback;
 import com.leila.android.fishy.network.models.ItemOrder;
-import com.leila.android.fishy.network.models.Product;
 import com.leila.android.fishy.network.models.ReportProduct;
 import com.leila.android.fishy.types.PriceType;
 

@@ -37,15 +37,11 @@ public class MainActivity extends BaseActivity {
         mTabLayout.setupWithViewPager(viewPager);
         mTabLayout.setSelectedTabIndicatorHeight(10);
 
-
-
         button= findViewById(R.id.fab_agregarTod);
-       // input=findViewById(R.id.input);
 
         actionFloatingButton();
         setImageButton();
         setVisibilityButton();
-        //setInputType();
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -58,8 +54,6 @@ public class MainActivity extends BaseActivity {
                 setImageButton();
                 actionFloatingButton();
                 setVisibilityButton();
-          //      setInputType();
-
             }
 
             @Override
@@ -132,31 +126,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
- /*   public void onClickAction(){
-        int position = mTabLayout.getSelectedTabPosition();
-        final Fragment f = mAdapter.getItem(position);
-
-        if(f instanceof BaseFragment){
-            input.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((BaseFragment)f).onClickAction();
-                }
-            });
-        }
-
-    }*/
-
-   /* public void setInputType(){
-        int position = mTabLayout.getSelectedTabPosition();
-        Fragment f = mAdapter.getItem(position);
-
-        if( f instanceof BaseFragment){
-            input.setHint(((BaseFragment)f).getHint());
-
-        }
-
-    }*/
 
     public void setVisibilityButton(){
         int position = mTabLayout.getSelectedTabPosition();
@@ -175,8 +144,5 @@ public class MainActivity extends BaseActivity {
             if( f instanceof BaseFragment){
                 button.setImageResource(((BaseFragment)f).getIconButton());
             }
-
-
-
     }
 }

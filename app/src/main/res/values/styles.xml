@@ -94,7 +94,7 @@
         <item name="android:textColor">#5c5c5c</item>
         <item name="android:textSize">16dp</item>
         <item name="android:paddingLeft">8dp</item>
-        <item name="android:background">@drawable/rec_text_edit</item>
+        <item name="android:background">@drawable/rec_edit</item>
         <item name="android:inputType">textCapWords</item>
 
         <item name="android:typeface">monospace</item>

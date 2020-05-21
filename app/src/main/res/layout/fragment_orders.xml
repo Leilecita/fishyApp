@@ -3,13 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_background"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/listado">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/line1"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical">
 
 
@@ -17,16 +20,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/line2"
-            android:padding="4dp"
-            android:paddingLeft="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="1dp"
+
+            android:layout_marginBottom="12dp"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="28dp"
-                android:layout_height="28dp"
                 android:padding="1dp"
+                android:layout_height="28dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/date"/>
 
@@ -35,15 +35,15 @@
                 android:id="@+id/deliver_date"
                 android:layout_height="35dp"
                 style="@style/Widget.Design.TextInputLayout"
-                android:background="@drawable/rec_find"
+                android:background="@drawable/rec_edit"
                 android:layout_width="match_parent"
-                android:textColorHint="#1e1e1e"
+                android:layout_marginLeft="3dp"
+                android:textColorHint="@color/word"
                 android:hint="Ingrese día de entrega"
                 android:textColor="@color/word"
                 android:gravity="center_vertical"
-                android:padding="6dp"
+                android:paddingLeft="6dp"
                 android:textSize="15sp"
-                android:layout_margin="3dp"
                 android:inputType="textCapWords" />
 
 
@@ -60,7 +60,7 @@
             <ImageView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:layout_marginLeft="6dp"
+                android:padding="1dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/zone"/>
 
@@ -79,6 +79,7 @@
 
             <ImageView
                 android:layout_width="28dp"
+                android:padding="1dp"
                 android:layout_height="28dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/time_zone"/>
@@ -90,7 +91,6 @@
                 android:layout_marginLeft="3dp"
                 android:background="@drawable/custom_spinner_background"
                 android:layout_weight="1"
-                android:layout_marginRight="8dp"
                 android:dropDownVerticalOffset="38dp"
                 android:layout_height="35dp" />
         </LinearLayout>
@@ -106,7 +106,6 @@
         android:id="@+id/list_orders"
         android:layout_below="@+id/line1"
         android:scrollbars="vertical"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"

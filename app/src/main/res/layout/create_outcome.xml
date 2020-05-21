@@ -11,11 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:paddingTop="4dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="26dp"
-        android:layout_marginRight="26dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"

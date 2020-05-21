@@ -11,11 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:paddingTop="6dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:orientation="vertical">
 
 
@@ -23,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:text="Información usuario"
-            android:textSize="19sp"
+            android:textSize="18sp"
             android:textColor="@color/title_dialog_info"
             android:gravity="center"
             android:textStyle="bold"
@@ -34,14 +33,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_weight="2"
                 android:padding="4dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:textSize="@dimen/general_text"
                 android:textColor="@color/word"
                 android:text="Nombre "/>
 
@@ -51,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="4dp"
-                android:textColor="@color/word_info"
+                android:textColor="@color/FishyLetraDark"
                 android:textSize="16sp"
                 />
         </LinearLayout>
@@ -64,8 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="2"
                 android:padding="4dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:textSize="@dimen/general_text"
                 android:textColor="@color/word"
                 android:text="Dirección "/>
 
@@ -75,7 +73,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:textColor="@color/word_info"
+                android:textColor="@color/FishyLetraDark"
                 android:textSize="16sp"
                 />
         </LinearLayout>
@@ -88,8 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="2"
                 android:padding="4dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:textSize="@dimen/general_text"
                 android:textColor="@color/word"
                 android:text="Zona "/>
 
@@ -99,7 +96,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:textColor="@color/word_info"
+                android:textColor="@color/FishyLetraDark"
                 android:textSize="16sp"
                 />
         </LinearLayout>
@@ -114,10 +111,9 @@
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:textStyle="bold"
                 android:text="Telefono "
                 android:textColor="@color/word"
-                android:textSize="18sp" />
+                android:textSize="@dimen/general_text" />
 
 
             <TextView
@@ -126,7 +122,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:textColor="@color/word_info"
+                android:text="1140432754"
+                android:textColor="@color/FishyLetraDark"
                 android:textSize="16sp"
                 />
         </LinearLayout>
@@ -134,7 +131,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
 

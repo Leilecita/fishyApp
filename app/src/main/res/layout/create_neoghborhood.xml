@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rec_dialog"
+    android:layout_margin="8dp"
     android:backgroundTint="@color/white_background"
 
     >
@@ -10,11 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:paddingTop="6dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginBottom="@dimen/dialog_margin_bottom"
+        android:layout_marginTop="@dimen/dialog_margin_top"
+        android:layout_marginLeft="@dimen/dialog_margin_left"
+        android:layout_marginRight="@dimen/dialog_margin_right"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
@@ -34,25 +34,25 @@
 
             <EditText
                 android:id="@+id/neighborhood_name"
-                android:layout_height="33dp"
+                android:layout_height="35dp"
                 android:paddingLeft="8dp"
                 style="@style/Widget.Design.TextInputLayout"
                 android:layout_width="match_parent"
                 android:textColor="#5c5c5c"
                 android:textSize="16sp"
                 android:hint="Nombre"
-                android:background="@drawable/rec_text_edit"
+                android:background="@drawable/rec_edit"
                 android:inputType="textCapWords" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:id="@+id/cancel"
                 android:layout_weight="1"
                 android:text="CANCELAR"
@@ -64,11 +64,12 @@
             <Button
                 android:layout_width="match_parent"
                 android:id="@+id/ok"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:textColor="#ffff"
                 android:padding="4dp"
-                android:background="@color/colorDialogButton"
+                android:background="@drawable/rec_edit"
+                android:backgroundTint="@color/colorDialogButton"
                 android:text="guardar"/>
 
         </LinearLayout>

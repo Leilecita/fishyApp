@@ -29,7 +29,15 @@
                     android:text="Nombre "
                     />
                 <EditText
-                    style="@style/CodeFontInput"
+                    style="@style/Widget.Design.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="35dp"
+                    android:background="@drawable/rec_edit"
+                    android:paddingLeft="8dp"
+                    android:textColorHint="@color/word_clear"
+                    android:textColor="@color/FishyLetraDark"
+                    android:textSize="@dimen/general_text"
                     android:id="@+id/user_name"
                     />
 
@@ -50,7 +58,15 @@
                     android:text="Teléfono   "
                     />
                 <EditText
-                    style="@style/CodeFontInput"
+                    style="@style/Widget.Design.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="35dp"
+                    android:background="@drawable/rec_edit"
+                    android:paddingLeft="8dp"
+                    android:textColorHint="@color/word_clear"
+                    android:textColor="@color/FishyLetraDark"
+                    android:textSize="@dimen/general_text"
                     android:id="@+id/user_phone"
                     />
             </LinearLayout>
@@ -69,7 +85,15 @@
                     />
 
                 <EditText
-                    style="@style/CodeFontInput"
+                    style="@style/Widget.Design.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="35dp"
+                    android:background="@drawable/rec_edit"
+                    android:paddingLeft="8dp"
+                    android:textColorHint="@color/word_clear"
+                    android:textColor="@color/FishyLetraDark"
+                    android:textSize="@dimen/general_text"
                     android:id="@+id/user_address"
                     />
             </LinearLayout>
