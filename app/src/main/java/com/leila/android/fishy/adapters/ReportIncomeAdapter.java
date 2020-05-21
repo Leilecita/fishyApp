@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leila.android.fishy.DateHelper;
 import com.leila.android.fishy.R;
@@ -45,7 +46,7 @@ public class ReportIncomeAdapter extends BaseAdapter<ReportIncome, ReportIncomeA
             return -1;
         } else {
             Date date =  DateHelper.get().parseDate(DateHelper.get().onlyDateComplete(getItem(position).created));
-            return  date.getMonth();
+            return  date.getTime();
         }
     }
 
@@ -67,6 +68,7 @@ public class ReportIncomeAdapter extends BaseAdapter<ReportIncome, ReportIncomeA
             String year= DateHelper.get().getOnlyYear(e.created);
 
             String amountByMonth= String.valueOf(e.amountByMonth);
+            System.out.println("mes "+dateToShow+ "year "+year + "amoun "+ amountByMonth);
 
             int count = linear.getChildCount();
             View v = null;
@@ -96,14 +98,17 @@ public class ReportIncomeAdapter extends BaseAdapter<ReportIncome, ReportIncomeA
                                 if(k==0){
                                     TextView t= (TextView) v3;
                                     t.setText(dateToShow);
+                                    t.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Toast.makeText(mContext,"holaa",Toast.LENGTH_LONG).show();
+                                        }
+                                    });
                                 }else if(k==1){
                                     TextView t2= (TextView) v3;
                                     t2.setText(year);
                                 }
-
                             }
-
-
                         }else if(j == 1){
                             TextView t2= (TextView) v2;
                             t2.setText("$ "+amountByMonth);

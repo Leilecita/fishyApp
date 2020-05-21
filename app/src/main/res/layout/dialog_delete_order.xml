@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view_edith_user"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view_mistake"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="15dp"
-    card_view:cardCornerRadius="5dp"
-    card_view:cardElevation="2dp"
-    card_view:cardMaxElevation="4dp"
-    android:backgroundTint="#ededed"
-    card_view:contentPadding="10dp"
-
+    android:layout_margin="8dp"
+    android:background="@drawable/rec_dialog"
+    android:backgroundTint="@color/white_background"
 
     >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:paddingTop="6dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
@@ -161,18 +159,18 @@
             <Button
                 android:layout_width="match_parent"
                 android:id="@+id/ok"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:textColor="#ffff"
                 android:padding="4dp"
                 android:backgroundTint="@color/colorDialogButton"
-                android:background="@drawable/rec_dialog"
+                android:background="@drawable/rec_find"
                 android:text="eliminar"/>
         </LinearLayout>
 
 
     </LinearLayout>
+    </LinearLayout>
 
-</android.support.v7.widget.CardView>
 
 

@@ -264,39 +264,6 @@ public class OutcomesFragment extends BaseFragment implements Paginate.Callbacks
     }
 
 
-    private void createSpinner(final Spinner spinner){
-
-        List<String> spinner_time = new ArrayList<>();
-        spinner_time.add("Tipo");
-        spinner_time.add("Nafta");
-        spinner_time.add("Patente");
-        spinner_time.add("Seguro");
-        spinner_time.add("Compra mercadería");
-        spinner_time.add("Congelado");
-        spinner_time.add("Mano de obra");
-        spinner_time.add("Otro");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                R.layout.spinner_item, spinner_time);
-
-        adapter.setDropDownViewResource(R.layout.spinner_item);
-        spinner.setAdapter(adapter);
-
-        int spinnerPosition = adapter.getPosition(CurrentValuesHelper.get().getLastZone());
-        spinner.setSelection(spinnerPosition);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String itemSelected=String.valueOf(spinner.getSelectedItem());
-
-
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-    }
     private void createOutcome(){
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

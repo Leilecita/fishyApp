@@ -243,19 +243,20 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         }
 
 
-        if(r.debt_value != null){
-            if (Double.compare(r.debt_value, 0.0) > 0) {
-
-                holder.debt_value.setVisibility(View.VISIBLE);
-                holder.debt_value.setText(String.valueOf(r.debt_value));
-            }else{
-                holder.debt_value.setVisibility(View.GONE);
-            }
-        }
-
-
 
         if(!mOnlyAdress){
+
+            if(r.debt_value != null){
+                if (Double.compare(r.debt_value, 0.0) > 0) {
+
+                    holder.debt_value.setVisibility(View.VISIBLE);
+                    holder.debt_value.setText(String.valueOf(r.debt_value));
+                }else{
+                    holder.debt_value.setVisibility(View.GONE);
+                }
+            }
+
+
             if(r.send_account.equals("true")){
                 holder.factura.setImageDrawable(mContext.getResources().getDrawable(R.drawable.factura));
             }else{
@@ -408,6 +409,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         amount.setText(String.valueOf(r.total_amount));
 
         final AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

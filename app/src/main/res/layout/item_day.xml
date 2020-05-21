@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,24 +20,19 @@
                     android:layout_gravity="center"
                     android:padding="2dp"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/general_text" />
 
                 <TextView
-                        android:id="@+id/cant"
-                        android:layout_width="match_parent"
+                    android:id="@+id/cant"
+                    android:layout_width="match_parent"
                     android:layout_weight="2"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                       android:layout_gravity="center_vertical"
-                        android:text="0"
-                        android:textStyle="italic"
-
-                        android:padding="4dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:text="0"
+                    android:padding="4dp"
                     android:textColor="@color/FishyLetraDark"
-                        android:textSize="16sp" />
-
-
-
+                    android:textSize="@dimen/general_text" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -48,7 +42,7 @@
                     android:gravity="end"
                     android:id="@+id/total_amount"
                     android:text="022"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/general_text"
                     android:layout_marginRight="2dp"
                     android:textColor="@color/FishyLetraDark"
                     />

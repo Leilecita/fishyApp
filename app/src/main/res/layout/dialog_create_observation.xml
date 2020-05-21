@@ -2,6 +2,7 @@
     android:id="@+id/card_view_mistake"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="8dp"
     android:background="@drawable/rec_dialog"
     android:backgroundTint="@color/white_background"
 
@@ -16,39 +17,38 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:text="Observación"
+            android:textColor="@color/FishyLetraDark"
             android:textSize="18sp"
-            android:gravity="center"
-            android:textColor="@color/title_dialog_helper"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
+            android:paddingTop="16dp"
             android:orientation="vertical">
 
 
             <EditText
                 android:id="@+id/obs"
-                android:layout_height="33dp"
+                android:layout_height="35dp"
                 android:paddingLeft="8dp"
-                style="@style/Widget.Design.TextInputLayout"
+                android:fontFamily="@font/opensanssight"
                 android:layout_width="match_parent"
-                android:textColor="#5c5c5c"
+                android:textColor="@color/FishyLetraDark"
                 android:textSize="16sp"
                 android:hint="Ingrese algun dato importante"
-                android:background="@drawable/rec_text_edit"
+                android:background="@drawable/rec_edit"
                 android:inputType="textCapWords" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="18dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="match_parent"
@@ -64,7 +64,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:id="@+id/ok"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:textColor="#ffff"
                 android:padding="4dp"

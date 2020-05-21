@@ -20,6 +20,8 @@
    <color name="word">#142831</color>
    -->
  <color name="word">#252525</color>
+ <color name="word_dor">#413A29</color>
+    <color name="word_clear2">#534D40</color>
     <color name="word_clear">#807e7e</color>
     <color name="word_clear_clear">#E2E1E1</color>
 
@@ -56,7 +58,7 @@
     <color name="FishyRoseSoft">#e6cbc2</color>
     <color name="FishyBlueSoft">#2e566c</color>
     <color name="white">#ffffff</color>
-    <color name="white_background">#F0EEEE</color>
+    <color name="white_background">#F3F1F1</color>
     <color name="background">#F0EEEE</color>
 
    <color name="colorlineheader">#376983</color>

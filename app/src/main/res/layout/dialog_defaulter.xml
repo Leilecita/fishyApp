@@ -65,7 +65,7 @@
                 android:id="@+id/debt_value"
                 android:layout_width="180dp"
                 android:layout_height="35dp"
-                android:background="@drawable/rec_find"
+                android:background="@drawable/rec_edit"
                 android:paddingLeft="8dp"
                 android:textColor="@color/word"
                 android:fontFamily="@font/opensanssight"
@@ -89,7 +89,7 @@
             <TextView
                 android:id="@+id/cancel"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="SALDADO"
@@ -99,7 +99,7 @@
             <Button
                 android:id="@+id/ok"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/colorDialogButton"
                 android:background="@drawable/rec_dialog"

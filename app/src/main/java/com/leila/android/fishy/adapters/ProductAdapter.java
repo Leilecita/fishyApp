@@ -2,6 +2,8 @@ package com.leila.android.fishy.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
@@ -109,6 +111,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
         holder.name.setText(currentProduct.fish_name);
 
         holder.price.setText("$"+getIntegerQuantity(currentProduct.price));
+        if(currentProduct.wholesaler_price!=null)
         holder.mayor_price.setText("$"+getIntegerQuantity(currentProduct.wholesaler_price));
 
         holder.stock.setText(getIntegerQuantity(currentProduct.stock + currentProduct.stock2));
@@ -204,6 +207,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
             }
         });
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     private void edithProduct(final ReportProduct p,final int position, final ViewHolder holder){
@@ -228,7 +232,12 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
         edit_price.setText(getIntegerQuantity(p.price));
         edit_price.setTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
 
-        edit_wholesaler_price.setText(getIntegerQuantity(p.wholesaler_price));
+        if(p.wholesaler_price != null){
+            edit_wholesaler_price.setText(getIntegerQuantity(p.wholesaler_price));
+        }else{
+            edit_wholesaler_price.setHint("0.0");
+        }
+
         edit_wholesaler_price.setTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
 
         edit_stock.setText(getIntegerQuantity(p.stock));
@@ -312,6 +321,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
             }
         });
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
     private String getIntegerQuantity(Double val){
         String[] arr=String.valueOf(val).split("\\.");

@@ -10,11 +10,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:paddingTop="6dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginBottom="12dp"
+        android:paddingTop="4dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -29,8 +29,9 @@
                 android:layout_height="36dp"
                 android:id="@+id/user_name"
                 android:gravity="center"
-                android:textColor="@color/title_dialog_helper"
+                android:textColor="@color/word"
                 android:textSize="18sp"
+                android:text="Leila del campo"
                 android:textStyle="bold" />
 
 
@@ -43,7 +44,8 @@
             android:layout_below="@+id/line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"
 
             />
 
@@ -91,7 +93,7 @@
             <Button
                 android:id="@+id/ok"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/colorDialogButton"
                 android:background="@drawable/rec_dialog"

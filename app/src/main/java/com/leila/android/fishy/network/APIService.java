@@ -80,7 +80,8 @@ public interface APIService {
     //PRODUCTS
 
     @GET("products.php")
-    Observable<Response<List<ReportProduct>>> getAliveProductsByPage(@Query("method") String method, @Query("page") Integer page, @Query("state") String state);
+    Observable<Response<List<ReportProduct>>> getAliveProductsByPage(@Query("method") String method, @Query("page") Integer page, @Query("state") String state, @Query("query") String query);
+
 
     @GET("products.php")
     Observable<Response<Product>> getProduct(@Query("id") Long id);

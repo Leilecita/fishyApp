@@ -2,6 +2,7 @@
     android:id="@+id/card_view_mistake"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="16dp"
     android:background="@drawable/rec_dialog"
     android:backgroundTint="@color/white_background"
 
@@ -10,19 +11,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="10dp"
         android:paddingTop="6dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="¿Seguro que desea cancelar el pedido?"
-            android:textSize="16sp"
+            android:text="Seguro que desea cancelar el pedido?"
+            android:textSize="18sp"
             android:textColor="@color/word"
-            android:gravity="center"
             android:textStyle="bold"
             android:paddingTop="6dp"
             android:paddingBottom="4dp"
@@ -32,10 +32,9 @@
             android:layout_height="wrap_content"
             android:text="Se borraran todos los datos ingresados"
             android:textSize="16sp"
-            android:gravity="center"
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
-            android:textColor="#504e4e"
+            android:textColor="@color/word_clear2"
             />
 
 
@@ -44,22 +43,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_weight="1"
+                android:textColor="@color/colorDialogButton"
+                android:layout_gravity="center_vertical"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
                 android:id="@+id/cancel"
                 android:layout_weight="1"
                 android:text="CANCELAR"
-                android:gravity="center"
+                android:gravity="center_vertical|right"
                 android:textColor="@color/colorDialogButton"
                 android:textStyle="bold"
                 />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:id="@+id/ok"
                 android:layout_weight="1"
                 android:text="OK"

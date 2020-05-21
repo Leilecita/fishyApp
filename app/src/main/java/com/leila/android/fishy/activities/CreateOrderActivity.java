@@ -380,7 +380,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
 
     private void listProducts() {
         loadingInProgress=true;
-        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive", new GenericCallback<List<ReportProduct>>() {
+        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive", "",new GenericCallback<List<ReportProduct>>() {
             @Override
             public void onSuccess(List<ReportProduct> data) {
                     mAdapter.setOrderId(mOrder.id);

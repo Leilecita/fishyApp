@@ -45,13 +45,11 @@ public class ReportOutcomeAdapter extends BaseAdapter<ReportOutcome, ReportOutco
 
     @Override
     public long getHeaderId(int position) {
-        // Log.d("ALE","Position: "+position + " COunt: " + getItemCount());
         if(position>= getItemCount()){
-            //   Log.d("ALE","ERROR Position: "+position + " COunt: " + getItemCount());
             return -1;
         } else {
             Date date =  DateHelper.get().parseDate(DateHelper.get().onlyDateComplete(getItem(position).created));
-            return  date.getMonth();
+            return  date.getTime();
         }
     }
 

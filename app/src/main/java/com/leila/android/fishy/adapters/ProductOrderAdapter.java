@@ -60,9 +60,7 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
         setItems(products);
         mContext = context;
         mOrderId=90L;
-
     }
-
 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -228,7 +226,8 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
                     if(p.stock>= Double.valueOf(fishQuantity)){
 
                       //  ItemOrder itemOrder=new ItemOrder(p.id,mOrderId,Double.valueOf(fishQuantity)
-                        ItemOrder itemOrder=new ItemOrder(-1l,mOrderId,Double.valueOf(fishQuantity)
+
+                        ItemOrder itemOrder=new ItemOrder(p.id,mOrderId,Double.valueOf(fishQuantity)
                                 ,p.fish_name,getPriceTypeSelected(check_min,check_may),
                                 getPriceSelected(check_min,check_may,p));
 
@@ -285,6 +284,7 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
         final TextView cancel=  dialogView.findViewById(R.id.cancel);
         final TextView ok=  dialogView.findViewById(R.id.ok);
         final AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

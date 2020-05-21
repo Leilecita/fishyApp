@@ -68,9 +68,11 @@ public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapt
         clearViewHolder(holder);
 
         final SummaryDay item= getItem(position);
-        holder.cant.setText(ValuesHelper.get().getIntegerQuantity(item.totalQuantity));
+        holder.cant.setText(ValuesHelper.get().getIntegerQuantity(round(item.totalQuantity,2)));
 
        // holder.total_amount.setText(String.valueOf(round(item.price*item.totalQuantity,2)));
+
+        if(item.totalPrice !=null)
         holder.total_amount.setText(String.valueOf(round(item.totalPrice,2)));
 
         holder.name_product.setText(item.nameProduct);

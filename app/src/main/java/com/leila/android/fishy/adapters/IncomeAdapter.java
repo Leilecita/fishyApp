@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leila.android.fishy.DateHelper;
 import com.leila.android.fishy.R;
@@ -66,6 +67,10 @@ public class IncomeAdapter extends BaseAdapter<Income, IncomeAdapter.ViewHolder>
             vh.type.setText(null);
         if (vh.value != null)
             vh.value.setText(null);
+        if (vh.numberDay != null)
+            vh.numberDay.setText(null);
+        if (vh.dateDay != null)
+            vh.dateDay.setText(null);
 
     }
 
@@ -85,6 +90,13 @@ public class IncomeAdapter extends BaseAdapter<Income, IncomeAdapter.ViewHolder>
 
         holder.dateDay.setText(DateHelper.get().getNameDay(current.created));
         holder.numberDay.setText(DateHelper.get().getDayEvent(current.created));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext,"fecha "+current.created,Toast.LENGTH_LONG).show();
+            }
+        });
 
 
     }

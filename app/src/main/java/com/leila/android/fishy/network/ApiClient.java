@@ -111,8 +111,8 @@ public class ApiClient {
 
     //PRODUCTS
 
-    public void getAliveProductsByPage(Integer page,String state,final GenericCallback<List<ReportProduct>> callback){
-        handleRequest( ApiUtils.getAPIService().getAliveProductsByPage("getProducts",page,state), callback);
+    public void getAliveProductsByPage(Integer page,String state,String query,final GenericCallback<List<ReportProduct>> callback){
+        handleRequest( ApiUtils.getAPIService().getAliveProductsByPage("getProducts",page,state,query), callback);
     }
 
     public void getProduct(Long id,final GenericCallback<Product> callback){

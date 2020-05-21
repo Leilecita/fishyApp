@@ -351,9 +351,9 @@ public class DateHelper {
 
     public String getOnlyYear(String date) {
         String[] parts = date.split("-");
-        String part1 = parts[0]; // dia
+        String part1 = parts[0]; // año
         String part2 = parts[1]; // mes
-        String part3 = parts[2]; // año
+        String part3 = parts[2]; // dia
         return part1;
     }
 

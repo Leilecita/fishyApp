@@ -81,8 +81,8 @@
                 android:layout_gravity="center"
                 android:text="Leila del campo"
                 android:padding="2dp"
-                android:textStyle="bold"
-                android:textColor="@color/FishyLetra"
+                android:fontFamily="@font/opensansregular"
+                android:textColor="@color/FishyLetraDark"
                 android:textSize="18sp" />
 
 
@@ -104,8 +104,7 @@
                 android:layout_gravity="center"
                 android:text="Aristobulo del valle 3020"
                 android:padding="2dp"
-                android:textStyle="italic"
-                android:textColor="@color/FishyLetra"
+                android:textColor="@color/FishyLetraDark"
                 android:textSize="16sp" />
 
 
@@ -114,8 +113,7 @@
                 android:layout_height="wrap_content"
                 android:padding="2dp"
                 android:id="@+id/horario"
-                android:textColor="@color/FishyLetra"
-                android:textStyle="italic"
+                android:textColor="@color/FishyLetraDark"
                 android:text=""
                 android:layout_gravity="center_vertical"
                 android:textSize="15sp"
@@ -138,7 +136,6 @@
                 android:id="@+id/state"
 
                 android:textColor="@color/FishyLetra"
-                android:textStyle="italic"
                 android:text=""
                 android:layout_gravity="center_vertical"
                 android:textSize="16sp"
@@ -147,9 +144,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/FishyLetra"
+                android:textColor="@color/FishyLetraDark"
                 android:text="$"
-                android:textStyle="italic"
                 android:layout_gravity="center"
                 android:textSize="16dp"
                 />
@@ -159,11 +155,10 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:paddingRight="6dp"
-                android:textStyle="italic"
                 android:textSize="16sp"
                 android:layout_gravity="center"
                 android:id="@+id/amount_order"
-                android:textColor="@color/FishyLetra"
+                android:textColor="@color/FishyLetraDark"
                 android:text="900"
 
                 />
@@ -173,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:padding="2dp"
                 android:id="@+id/priority"
-                android:textColor="@color/FishyLetra"
+                android:textColor="@color/FishyLetraDark"
                 android:layout_marginRight="5dp"
                 android:text=""
                 android:layout_gravity="center_vertical"

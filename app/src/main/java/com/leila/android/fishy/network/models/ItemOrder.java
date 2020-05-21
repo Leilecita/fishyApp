@@ -14,6 +14,8 @@ public class ItemOrder {
     public String price_type;
     public Double price;
 
+    public String new_version;
+
     public ItemOrder(Long product_id, Long order_id, Double quantity,String product_name,String price_type,Double price){
         this.product_id=product_id;
         this.order_id=order_id;
@@ -21,7 +23,7 @@ public class ItemOrder {
         this.price_type=price_type;
         this.product_name=product_name;
         this.price=price;
-
+        this.new_version="true";
     }
 
     public Long getProduct_id() {

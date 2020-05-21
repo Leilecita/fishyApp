@@ -10,20 +10,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="14dp"
         android:paddingTop="6dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/fish_name"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:text="Abadejo"
-            android:textColor="@color/FishyLetraDark"
+            android:textColor="@color/word_dor"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -31,162 +31,166 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:paddingTop="16dp"
+            android:paddingTop="18dp"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
                 android:layout_height="wrap_content">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:id="@+id/check_min"
-                        android:layout_height="wrap_content"
-                        android:scaleX="1.2"
-                        android:checked="true"
-                        android:scaleY="1.2"
-                        android:layout_gravity="center"
-                        android:buttonTint="@color/FishyLetraDark"
-
-                        />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/word"
-                            android:fontFamily="@font/opensansitalic"
-                            android:textSize="16sp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="2dp"
-                            android:id="@+id/price"
-                            android:text="400"
-                            android:fontFamily="@font/opensansregular"
-                            android:textColor="@color/FishyLetraDark"
-                            android:textSize="16sp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="2dp"
-                            android:fontFamily="@font/opensansregular"
-                            android:text="/ kg "
-                            android:textColor="@color/FishyLetraDark"
-                            android:textSize="16sp"
-                            />
-
-
-                    </LinearLayout>
-
-            </LinearLayout>
-                <TextView
+                <CheckBox
                     android:layout_width="wrap_content"
-                    android:text="minorista"
-                    android:textColor="@color/FishyLetraDark"
-                    android:textSize="@dimen/general_text"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="wrap_content"/>
+                    android:id="@+id/check_min"
+                    android:layout_height="wrap_content"
+                    android:scaleX="1.2"
+                    android:checked="true"
+                    android:scaleY="1.2"
+                    android:layout_gravity="center"
+                    android:buttonTint="@color/FishyLetraDark"
+
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="2dp"
+                                android:id="@+id/price"
+                                android:text="400"
+                                android:fontFamily="@font/opensansregular"
+                                android:textColor="@color/FishyLetraDark"
+                                android:textSize="16sp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="2dp"
+                                android:fontFamily="@font/opensansregular"
+                                android:text="/ kg "
+                                android:textColor="@color/FishyLetraDark"
+                                android:textSize="16sp"
+                                />
 
 
 
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="(min)"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="13sp"
+                        android:layout_marginTop="22dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
                 android:layout_height="wrap_content">
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:id="@+id/check_may"
+                    android:layout_height="wrap_content"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"
+                    android:layout_gravity="center"
+                    android:buttonTint="@color/FishyRose3"
+
+                    />
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
                     android:layout_height="wrap_content">
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:id="@+id/check_may"
-                        android:layout_height="wrap_content"
-                        android:scaleX="1.2"
-                        android:scaleY="1.2"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="25dp"
-                        android:buttonTint="@color/FishyRose3"
 
-                        />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
 
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/word"
-                            android:fontFamily="@font/opensansitalic"
-                            android:textSize="16sp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/FishyRose3"
-                            android:text="200"
-                            android:padding="2dp"
-                            android:id="@+id/wholesaler_price"
-                            android:gravity="center"
-                            android:fontFamily="@font/opensansregular"
-                            android:layout_marginLeft="8dp"
                             android:layout_gravity="center"
-                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
 
-                            />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@color/word"
+                                android:fontFamily="@font/opensansitalic"
+                                android:textSize="16sp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/FishyRose3"
+                                android:text="200"
+                                android:padding="2dp"
+                                android:id="@+id/wholesaler_price"
+                                android:gravity="center"
+                                android:fontFamily="@font/opensansregular"
+                                android:layout_gravity="center"
+                                android:textSize="16sp"
+
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="2dp"
+                                android:fontFamily="@font/opensansregular"
+                                android:text="/ kg "
+                                android:textColor="@color/FishyRose3"
+                                android:textSize="16sp"
+                                />
+
+
+                        </LinearLayout>
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="2dp"
-                            android:fontFamily="@font/opensansregular"
-                            android:text="/ kg "
+                            android:text="(may)"
                             android:textColor="@color/FishyRose3"
-                            android:textSize="16sp"
-                            />
+                            android:textSize="13sp"
+                            android:layout_marginTop="22dp"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"/>
 
+                    </RelativeLayout>
 
-                    </LinearLayout>
 
                 </LinearLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:text="mayorista"
-                    android:textColor="@color/FishyRose3"
-                    android:textSize="@dimen/general_text"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
+
+
 
 
         </LinearLayout>
@@ -194,7 +198,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
+            android:paddingTop="18dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -204,7 +208,7 @@
                 android:layout_width="100dp"
                 android:gravity="center"
                 android:layout_height="40dp"
-                android:background="@drawable/rec_text_edit"
+                android:background="@drawable/rec_edit"
                 android:inputType="numberDecimal"
                 android:paddingLeft="8dp"
                 android:hint="kg"
@@ -222,22 +226,25 @@
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
+
             <TextView
                 android:id="@+id/cancel"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="CANCELAR"
                 android:textColor="@color/colorDialogButton"
                 android:textStyle="bold" />
 
+
             <Button
                 android:id="@+id/ok"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/colorDialogButton"
+
                 android:background="@drawable/rec_dialog"
                 android:padding="4dp"
                 android:text="ok"

@@ -8,9 +8,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.leila.android.fishy.CurrentValuesHelper;
 import com.leila.android.fishy.CustomLoadingListItemCreator;
 import com.leila.android.fishy.DialogHelper;
 import com.leila.android.fishy.R;
@@ -33,6 +39,7 @@ import com.paginate.recycler.LoadingListItemSpanLookup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ProductsActivity extends BaseActivity implements Paginate.Callbacks{
 
@@ -50,6 +57,8 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
     private Integer mCurrentPage;
     private Paginate paginate;
     private boolean hasMoreItems;
+    private String mQuery = "";
+    private String token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +86,8 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
         mCurrentPage=0;
         hasMoreItems = true;
 
+        registerForContextMenu(mRecyclerView);
+       //setHasOptionsMenu(true);
         implementsPaginate();
 
     }
@@ -89,9 +100,52 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
 
     private void clearAndList(){
         clearview();
-        listProducts();
+        listProducts(mQuery);
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_products2, menu);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem.expandActionView();
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setQueryHint("Ingrese nombre");
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchView.requestFocus();
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                return false;
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(!newText.trim().toLowerCase().equals(mQuery)) {
+                    mCurrentPage = 0;
+                    mAdapter.clear();
+                    listProducts(newText.trim().toLowerCase());
+                }
+                return false;
+            }
+        });
+        super.onCreateOptionsMenu(menu);
+
+        return true;
+    }
+
 
     private void createProduct(){
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -153,24 +207,32 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
-    private void listProducts() {
+    private void listProducts(final String query) {
         loadingInProgress=true;
-        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive", new GenericCallback<List<ReportProduct>>() {
+        this.mQuery = query;
+        final String newToken = UUID.randomUUID().toString();
+        this.token =  newToken;
+        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive",mQuery, new GenericCallback<List<ReportProduct>>() {
             @Override
             public void onSuccess(List<ReportProduct> data) {
 
-                if (data.size() == 0) {
-                    hasMoreItems = false;
-                }else{
-                    int prevSize = mAdapter.getItemCount();
-                    mAdapter.pushList(data);
-                    mCurrentPage++;
-                    if(prevSize == 0){
-                        layoutManager.scrollToPosition(0);
+                if(token.equals(newToken)) {
+
+                    if (query == mQuery) {
+
+                        if (data.size() == 0) {
+                            hasMoreItems = false;
+                        } else {
+                            int prevSize = mAdapter.getItemCount();
+                            mAdapter.pushList(data);
+                            mCurrentPage++;
+                            if (prevSize == 0) {
+                                layoutManager.scrollToPosition(0);
+                            }
+                        }
+                        loadingInProgress = false;
                     }
                 }
-                loadingInProgress = false;
-
             }
 
             @Override
@@ -201,7 +263,7 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
 
     @Override
     public void onLoadMore() {
-        listProducts();
+        listProducts(mQuery);
     }
 
     @Override

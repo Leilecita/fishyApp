@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rec_dialog"
+    android:layout_margin="8dp"
     android:backgroundTint="@color/white_background"
 
     >
@@ -10,11 +11,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:paddingTop="6dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginBottom="14dp"
+        android:paddingTop="4dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginRight="26dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
@@ -29,7 +30,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
+            android:paddingTop="16dp"
             android:orientation="vertical">
 
 
@@ -42,7 +43,7 @@
                 android:textSize="16sp"
                 android:gravity="center_vertical"
                 android:hint="10-10-2020"
-                android:background="@drawable/rec_text_edit"
+                android:background="@drawable/rec_edit"
                 android:inputType="textCapWords" />
         </LinearLayout>
 
@@ -85,7 +86,7 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/opensanssight"
                 android:hint="Detalle"
-                android:background="@drawable/rec_text_edit"
+                android:background="@drawable/rec_edit"
                 android:inputType="textCapWords" />
         </LinearLayout>
 
@@ -110,7 +111,7 @@
                     android:layout_height="33dp"
                     android:textSize="16sp"
                     android:fontFamily="@font/opensanssight"
-                    android:background="@drawable/rec_text_edit"
+                    android:background="@drawable/rec_edit"
                     />
 
             </LinearLayout>
@@ -120,11 +121,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:id="@+id/cancel"
                 android:layout_weight="1"
                 android:text="CANCELAR"
@@ -136,7 +137,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:id="@+id/ok"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:textColor="#ffff"
                 android:padding="4dp"
