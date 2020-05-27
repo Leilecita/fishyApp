@@ -9,6 +9,10 @@
         android:id="@+id/action_products"
         android:title="Productos"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_ventas"
+        android:title="Ventas"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_statistics"

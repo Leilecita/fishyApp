@@ -11,17 +11,19 @@ public class ItemOrder {
     public Double quantity;
     public String created;
     public String product_name;
+    public Double product_cost;
     public String price_type;
     public Double price;
 
     public String new_version;
 
-    public ItemOrder(Long product_id, Long order_id, Double quantity,String product_name,String price_type,Double price){
+    public ItemOrder(Long product_id, Long order_id, Double quantity,String product_name,String price_type,Double price, Double product_cost){
         this.product_id=product_id;
         this.order_id=order_id;
         this.quantity=quantity;
         this.price_type=price_type;
         this.product_name=product_name;
+        this.product_cost=product_cost;
         this.price=price;
         this.new_version="true";
     }

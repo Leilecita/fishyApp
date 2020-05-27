@@ -24,8 +24,6 @@
 
     </LinearLayout>
 
-
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_users"
         android:layout_below="@+id/line1"
@@ -34,10 +32,14 @@
         android:layout_marginBottom="50dp"
         />
 
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"
+        android:background="@drawable/rec_edit"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
         android:layout_marginLeft="18dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
@@ -47,8 +49,8 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:src="@drawable/pendien_dor_dark"
                 android:layout_gravity="center_vertical"
                 />
@@ -61,9 +63,9 @@
                 android:padding="2dp"
                 android:layout_marginLeft="4dp"
                 android:id="@+id/pendients"
-                android:textSize="18sp"
-                android:textColor="@color/FishyBlue"
-                android:text="0"
+                android:textSize="16sp"
+                android:textColor="@color/FishyLetraDark"
+                android:text=""
 
                 />
 
@@ -73,31 +75,35 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:padding="2dp"
             android:id="@+id/line_debt"
-            android:layout_height="wrap_content">
+            android:visibility="gone"
+            android:padding="2dp"
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/money_roj"
+
+            <TextView
+                android:layout_width="18dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="2dp"
+                android:textColor="@color/rojo"
+                android:text="$"
+
                 />
-
-
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
-                android:layout_marginLeft="4dp"
                 android:id="@+id/total_debt"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/rojo"
-                android:text="0"
+                android:text="123123"
 
                 />
-
 
         </LinearLayout>
 

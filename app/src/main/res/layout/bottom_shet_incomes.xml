@@ -9,6 +9,7 @@
     app:behavior_hideable="false"
     app:behavior_peekHeight="@dimen/peek_bottom_shet" >
 
+
     <TextView
         android:layout_width="30dp"
         android:layout_marginBottom="4dp"
@@ -49,6 +50,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="14sp"
                     android:layout_gravity="center_horizontal"
                     android:text="todos"
                     />
@@ -72,6 +74,7 @@
                 </ImageView>
                 <TextView
                     android:layout_width="wrap_content"
+                    android:textSize="14sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="entr"
@@ -97,6 +100,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="14sp"
                     android:layout_gravity="center_horizontal"
                     android:text="perso"
                     />

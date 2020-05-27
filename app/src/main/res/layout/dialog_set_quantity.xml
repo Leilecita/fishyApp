@@ -10,11 +10,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:paddingTop="6dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginBottom="@dimen/dialog_margin_bottom"
+        android:layout_marginTop="@dimen/dialog_margin_top"
+        android:layout_marginLeft="@dimen/dialog_margin_left"
+        android:layout_marginRight="@dimen/dialog_margin_right"
         android:orientation="vertical">
 
         <TextView
@@ -31,176 +30,154 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:paddingTop="16dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:layout_gravity="center"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
+
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:layout_height="wrap_content">
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:id="@+id/check_min"
-                    android:layout_height="wrap_content"
-                    android:scaleX="1.2"
-                    android:checked="true"
-                    android:scaleY="1.2"
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:text="(minorista)"
+                    android:textColor="@color/FishyLetraDark"
+                    android:textSize="@dimen/general_text"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
                     android:layout_gravity="center"
-                    android:buttonTint="@color/FishyLetraDark"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/price"
                         android:layout_width="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensanssight"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:text="400"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="@dimen/general_text" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="2dp"
-                                android:id="@+id/price"
-                                android:text="400"
-                                android:fontFamily="@font/opensansregular"
-                                android:textColor="@color/FishyLetraDark"
-                                android:textSize="16sp"
-                                />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="2dp"
-                                android:fontFamily="@font/opensansregular"
-                                android:text="/ kg "
-                                android:textColor="@color/FishyLetraDark"
-                                android:textSize="16sp"
-                                />
-
-
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="(min)"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensanssight"
+                        android:padding="2dp"
+                        android:text="/ kg "
                         android:textColor="@color/FishyLetraDark"
-                        android:textSize="13sp"
-                        android:layout_marginTop="22dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="@dimen/general_text" />
 
-                </RelativeLayout>
+                </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_weight="1.1"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:id="@+id/check_min"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:layout_gravity="center"
+                            android:buttonTint="@color/FishyLetraDark"
+
+                            />
+
+                    </LinearLayout>
+
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
                 android:layout_height="wrap_content">
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:id="@+id/check_may"
-                    android:layout_height="wrap_content"
-                    android:scaleX="1.2"
-                    android:scaleY="1.2"
-                    android:layout_gravity="center"
-                    android:buttonTint="@color/FishyRose3"
 
-                    />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:text="(mayorista)"
+                    android:textColor="@color/FishyRose3"
+                    android:textSize="@dimen/general_text"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"/>
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:orientation="horizontal"
+                        android:layout_gravity="center"
                         android:layout_height="wrap_content">
-
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/word"
-                                android:fontFamily="@font/opensansitalic"
-                                android:textSize="16sp"
-                                />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/FishyRose3"
-                                android:text="200"
-                                android:padding="2dp"
-                                android:id="@+id/wholesaler_price"
-                                android:gravity="center"
-                                android:fontFamily="@font/opensansregular"
-                                android:layout_gravity="center"
-                                android:textSize="16sp"
-
-                                />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="2dp"
-                                android:fontFamily="@font/opensansregular"
-                                android:text="/ kg "
-                                android:textColor="@color/FishyRose3"
-                                android:textSize="16sp"
-                                />
-
-
-                        </LinearLayout>
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="(may)"
+                            android:layout_height="wrap_content"
                             android:textColor="@color/FishyRose3"
-                            android:textSize="13sp"
-                            android:layout_marginTop="22dp"
+                            android:text="200"
+                            android:padding="2dp"
+                            android:id="@+id/wholesaler_price"
+                            android:gravity="center"
+                            android:fontFamily="@font/opensanssight"
                             android:layout_gravity="center"
-                            android:layout_height="wrap_content"/>
+                            android:textSize="@dimen/general_text"
 
-                    </RelativeLayout>
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:fontFamily="@font/opensanssight"
+                            android:text="/ kg "
+                            android:textColor="@color/FishyRose3"
+                            android:textSize="@dimen/general_text"
+                            />
 
 
-                </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_weight="1.1"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:id="@+id/check_may"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:buttonTint="@color/FishyRose3"
+
+                            />
+
+                    </LinearLayout>
+
 
             </LinearLayout>
-
-
-
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="18dp"
+            android:paddingTop="16dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -225,7 +202,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
 

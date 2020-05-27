@@ -158,6 +158,7 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
         final EditText price= dialogView.findViewById(R.id.product_price);
         final EditText wholsaler_price= dialogView.findViewById(R.id.wholesaler_price);
         final TextView stock= dialogView.findViewById(R.id.product_stock);
+        final TextView cost= dialogView.findViewById(R.id.cost_product);
         final Button ok= dialogView.findViewById(R.id.ok);
         final TextView cancel= dialogView.findViewById(R.id.cancel);
 
@@ -170,10 +171,11 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
                 String wholsaerPriceProduct=wholsaler_price.getText().toString().trim();
                 String stockProduct=stock.getText().toString().trim();
                 String nameProduct=name.getText().toString().trim();
+                String costProduct=cost.getText().toString().trim();
 
                 if(!priceProduct.matches("") && !stockProduct.matches("") && !nameProduct.matches("") && !wholsaerPriceProduct.matches("")){
 
-                        Product newProduct= new Product(nameProduct,Double.valueOf(priceProduct),Double.valueOf(wholsaerPriceProduct),Double.valueOf(stockProduct));
+                        Product newProduct= new Product(nameProduct,Double.valueOf(priceProduct),Double.valueOf(wholsaerPriceProduct),Double.valueOf(stockProduct),Double.valueOf(costProduct));
                         ApiClient.get().postProduct(newProduct, new GenericCallback<Product>() {
                             @Override
                             public void onSuccess(Product data) {

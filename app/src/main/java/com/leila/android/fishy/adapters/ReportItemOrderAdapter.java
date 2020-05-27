@@ -71,6 +71,7 @@ public class ReportItemOrderAdapter extends BaseAdapter<ReportItemOrder,ReportIt
         holder.cant.setText(ValuesHelper.get().getIntegerQuantity(currentItem.quantity));
         if(currentItem.price_type.equals(Constants.TYPE_PRICE_MAYORISTA)){
             holder.amount.setTextColor(mContext.getResources().getColor(R.color.FishyRose3));
+
         }else if(currentItem.price_type.equals(Constants.TYPE_PRICE_MINORISTA)){
             holder.amount.setTextColor(mContext.getResources().getColor(R.color.FishyLetraDark));
         }

@@ -203,8 +203,9 @@ public class ApiClient {
 
     //NEIGHBORHOOD
 
+
     public void getNeighborhoods(final GenericCallback<List<Neighborhood>> callback){
-        handleRequest( ApiUtils.getAPIService().getNeighborhoods(), callback);
+        handleRequest( ApiUtils.getAPIService().getNeighborhoods("getNeighs"), callback);
     }
 
     public void getNeighborhoodsByPage(Integer page,final GenericCallback<List<Neighborhood>> callback){

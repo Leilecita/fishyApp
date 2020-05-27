@@ -21,36 +21,12 @@
             android:layout_height="32dp"
             android:id="@+id/title"
             android:gravity="center"
-            android:text="Pago"
+            android:text="Adeuda el pago?"
+            android:fontFamily="@font/opensansregular"
             android:textColor="@color/FishyLetraDark"
             android:textSize="17sp"
-            android:textStyle="bold" />
+           />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="30dp"
-                android:inputType="textCapWords"
-                android:paddingLeft="8dp"
-                android:textColor="@color/FishyLetraDark"
-                android:text="¿Adeuda el pago?"
-                android:textSize="18sp"
-
-                />
-
-
-
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

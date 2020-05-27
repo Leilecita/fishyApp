@@ -28,6 +28,18 @@ public class ValuesHelper {
     }
 
 
+    public String getIntegerQuantityByLei2(Double val){
+
+        String[] parts = String.valueOf(val).split(".");
+        if(Integer.valueOf(parts[1]) == 0){
+            return parts[0];
+        }else{
+            return String.valueOf(val);
+        }
+
+    }
+
+
 
     public String getIntegerQuantity(Double val){
         String[] arr= String.valueOf(val).split("\\.");

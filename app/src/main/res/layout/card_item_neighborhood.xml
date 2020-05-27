@@ -33,7 +33,7 @@
             android:layout_gravity="center"
             android:text=""
             android:padding="4dp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/word"
             android:textSize="18sp" />
 
 

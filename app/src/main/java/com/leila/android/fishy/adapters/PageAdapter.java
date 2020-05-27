@@ -33,7 +33,7 @@ public class PageAdapter extends FragmentPagerAdapter {
             mFragments.add(new OrdersFragment());
             mFragments.add(new SummaryDayFragment());
             mFragments.add(new OutcomesFragment());
-            mFragments.add(new IncomesFragment());
+            //mFragments.add(new IncomesFragment());
 
 
            // mFragments.add(new PreimpresoFragment().setChangeListener(this));
@@ -57,7 +57,7 @@ public class PageAdapter extends FragmentPagerAdapter {
 
         @Override
         public int getCount() {
-            return 5;
+            return 4;
         }
 
         @Override
@@ -71,10 +71,8 @@ public class PageAdapter extends FragmentPagerAdapter {
 
             }else if(position ==2){
                 return"Resumen";
-            }else if (position==3){
+            }else {
                 return "Gastos";
-            }else{
-                return "Ingresos";
             }
         }
     }

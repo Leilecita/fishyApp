@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,44 +13,38 @@
         android:layout_marginTop="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="12dp"
+        android:background="@drawable/rec_edit"
         android:id="@+id/line11"
 
         android:orientation="horizontal">
         <ImageView
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:padding="1dp"
+            android:padding="3dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/date"/>
 
-
         <TextView
             android:id="@+id/deliver_date"
-
             android:layout_height="35dp"
-            android:paddingLeft="6dp"
+            android:paddingLeft="2dp"
             style="@style/Widget.Design.TextInputLayout"
-            android:background="@drawable/rec_edit"
+            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:hint="Ingrese fecha"
-            android:textColorHint="@color/word"
+            android:textColorHint="@color/FishyLetraDark"
             android:layout_toRightOf="@id/date"
-            android:textColor="@color/word"
+            android:textColor="@color/FishyLetraDark"
             android:gravity="center_vertical"
             android:layout_marginLeft="3dp"
             android:textSize="15sp"
             android:padding="6dp"
             android:inputType="textCapWords" />
 
-
     </LinearLayout>
 
 
-
-
-
 <android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_marginLeft="8dp"
@@ -62,7 +55,7 @@
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
     card_view:cardMaxElevation="4dp"
-    card_view:cardBackgroundColor="#DAB6AA"
+    card_view:cardBackgroundColor="@color/FishyRoseSoftSoft"
     card_view:cardElevation="2dp"
     card_view:contentPadding="8dp"
     android:layout_above="@+id/ss"
@@ -88,7 +81,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Pescado"
-                android:textStyle="bold"
+                android:fontFamily="@font/opensansregular"
 
                 android:textSize="17sp"
                 android:textColor="@color/FishyLetraDark"
@@ -99,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textSize="17sp"
-                android:textStyle="bold"
+                android:fontFamily="@font/opensansregular"
                 android:gravity="center"
                 android:textColor="@color/FishyLetraDark"
                 android:text="Kg"
@@ -111,7 +104,7 @@
                 android:layout_weight="2"
                 android:layout_height="match_parent"
                 android:textSize="17sp"
-                android:textStyle="bold"
+         android:fontFamily="@font/opensansregular"
                 android:textColor="@color/FishyLetraDark"
                 android:text="Total  "
                 android:gravity="end"
@@ -160,9 +153,9 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Total del día"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/opensansregular"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="17sp"
+                    android:textSize="@dimen/general_text"
                     />
 
                 <TextView
@@ -170,10 +163,9 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:id="@+id/sumTot"
-                    android:fontFamily="@font/opensansitalic"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/opensanssight"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="17sp"
+                    android:textSize="@dimen/general_text"
                     />
 
 
@@ -189,9 +181,9 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Total restante"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/opensansregular"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="17sp"
+                    android:textSize="@dimen/general_text"
                     />
 
                 <TextView
@@ -199,10 +191,10 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:id="@+id/sumPendient"
-                    android:fontFamily="@font/opensansitalic"
-                    android:textStyle="bold"
+
+                    android:fontFamily="@font/opensanssight"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="17sp"
+                    android:textSize="@dimen/general_text"
                     />
 
 
@@ -218,9 +210,9 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Total recaudado"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/opensansregular"
                     android:textColor="@color/FishyLetraDark"
-                    android:textSize="17sp"
+                    android:textSize="@dimen/general_text"
                     />
 
                 <TextView
@@ -229,9 +221,9 @@
                     android:text=""
                     android:id="@+id/sumDone"
                     android:textColor="@color/FishyLetraDark"
-                    android:fontFamily="@font/opensansitalic"
-                    android:textStyle="bold"
-                    android:textSize="17sp"
+                    android:fontFamily="@font/opensanssight"
+
+                    android:textSize="@dimen/general_text"
                     />
 
 

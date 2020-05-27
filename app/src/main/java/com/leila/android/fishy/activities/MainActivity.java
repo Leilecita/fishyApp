@@ -17,6 +17,7 @@ import android.support.design.widget.TabLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 public class MainActivity extends BaseActivity {
@@ -43,6 +44,44 @@ public class MainActivity extends BaseActivity {
         setImageButton();
         setVisibilityButton();
 
+
+        for (int i = 0; i < mAdapter.getCount(); i++) {
+            TabLayout.Tab tab = mTabLayout.getTabAt(i);
+            if (tab != null) {
+                tab.setCustomView(R.layout.tab_text);
+                View v= tab.getCustomView();
+                TextView t= v.findViewById(R.id.text1);
+
+                setTextByPosition(t,i);
+
+            }
+        }
+
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                View im=tab.getCustomView();
+                TextView t=im.findViewById(R.id.text1);
+                t.setTextColor(getResources().getColor(R.color.white));
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                View im=tab.getCustomView();
+                TextView t=im.findViewById(R.id.text1);
+                t.setTextColor(getResources().getColor(R.color.word_clear));
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -62,6 +101,21 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+    }
+    private void setTextByPosition(TextView t, Integer i) {
+        if (i == 0) {
+            t.setText("CLIENTES");
+            t.setTextColor(getResources().getColor(R.color.white));
+        } else if (i == 1) {
+            t.setText("PEDIDOS");
+            t.setTextColor(getResources().getColor(R.color.word_clear));
+        } else if (i == 2) {
+            t.setText("RESUMEN");
+            t.setTextColor(getResources().getColor(R.color.word_clear));
+        } else {
+            t.setText("GASTOS");
+            t.setTextColor(getResources().getColor(R.color.word_clear));
+        }
     }
 
 
@@ -83,6 +137,9 @@ public class MainActivity extends BaseActivity {
             case R.id.action_products:
                 startProductsActivity();
                 return true;
+            case R.id.action_ventas:
+                startIncomesActivity();
+                return true;
             case R.id.action_statistics:
                 startStatisticActivity();
                 return true;
@@ -96,6 +153,10 @@ public class MainActivity extends BaseActivity {
 
     private void startProductsActivity(){
         startActivity(new Intent(MainActivity.this, ProductsActivity.class));
+    }
+
+    private void startIncomesActivity(){
+        startActivity(new Intent(MainActivity.this, IncomesActivity.class));
     }
 
     private void startStatisticActivity(){

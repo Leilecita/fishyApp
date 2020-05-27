@@ -97,10 +97,6 @@
             </LinearLayout>
 
 
-
-
-
-
             <FrameLayout
                 android:layout_width="match_parent"
                 android:id="@+id/circle"
@@ -112,10 +108,9 @@
             <com.txusballesteros.widgets.FitChart
                     android:layout_width="220dp"
                     android:layout_height="220dp"
-                    app:strokeSize="20dp"
+                    app:strokeSize="10dp"
                     android:layout_gravity="center"
                     android:id="@+id/fitChart"
-
                     app:animationMode="overdraw" />
 
                 <LinearLayout

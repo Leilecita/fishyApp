@@ -29,27 +29,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/kg"
-                android:textStyle="italic"
                 android:padding="4dp"
-                android:textSize="16sp"
-                android:textColor="#2e2d2d" />
+                android:textSize="@dimen/general_text"
+                android:textColor="@color/FishyLetraDark" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/name"
-                android:textStyle="italic"
 
                 android:padding="4dp"
-                android:textSize="16sp"
-                android:textColor="#2e2d2d" />
+                android:textSize="@dimen/general_text"
+                android:textColor="@color/FishyLetraDark" />
 
         </LinearLayout>
 

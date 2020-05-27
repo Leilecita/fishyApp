@@ -29,10 +29,10 @@
 
                     <TextView
                         android:id="@+id/cant"
-                        android:layout_width="28sp"
+                        android:layout_width="38sp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="0"
+                        android:text=""
                         android:padding="2dp"
                         android:textColor="@color/word"
                         android:textSize="15sp" />
@@ -41,32 +41,31 @@
                         android:id="@+id/name_product"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text=" "
                         android:textColor="@color/word"
                         android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/price"
                         android:layout_width="match_parent"
-                        android:layout_weight="2"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:layout_gravity="center"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="2"
                         android:gravity="center_horizontal"
+                        android:text=""
                         android:textColor="@color/word"
                         android:textSize="13sp" />
 
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_weight="2"
+                        android:layout_weight="1.9"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="end"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:id="@+id/total_amount"
-                        android:inputType="numberDecimal"
                         android:textSize="15sp"
                         android:layout_marginRight="4dp"
                         android:textColor="@color/word"

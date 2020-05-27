@@ -3,9 +3,12 @@
    <!-- <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
      <color name="colorAccent">#FF4081</color>
+
+      <color name="colorPrimary">#103041</color>
+    <color name="colorPrimaryDark">#133a4e</color>
      -->
     <color name="colorPrimary">#103041</color>
-    <color name="colorPrimaryDark">#133a4e</color>
+    <color name="colorPrimaryDark">#204058</color>
 
     <color name="colorAccent">#7F7359</color>
 
@@ -50,6 +53,7 @@
 
     <color name="backr">#DFDBD1</color>
     <color name="FishyLetraHeader">#A29271</color>
+    <color name="bottom">#F0EBE3</color>
     <color name="border_rec">#E7E1D2</color>
     <color name="FishyLetraDark">#514936</color>
     <color name="FishyBlanco">#E3E4DF</color>

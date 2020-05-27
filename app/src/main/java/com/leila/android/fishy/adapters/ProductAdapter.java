@@ -55,6 +55,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
         public TextView mayor_price;
         public TextView stock;
         public TextView soldedCant;
+        public TextView product_cost;
         public ImageView options;
         public ImageView rosario;
         public ImageView mardel;
@@ -67,6 +68,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
             name= v.findViewById(R.id.name_product);
             price= v.findViewById(R.id.price_product);
             stock= v.findViewById(R.id.stock_product);
+            product_cost= v.findViewById(R.id.cost_product);
             options=v.findViewById(R.id.options);
             loadBothStock=v.findViewById(R.id.load_both);
             rosario=v.findViewById(R.id.rosario);
@@ -109,10 +111,13 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
         final ReportProduct currentProduct=getItem(position);
 
         holder.name.setText(currentProduct.fish_name);
+        holder.product_cost.setText(getIntegerQuantity(currentProduct.product_cost));
 
-        holder.price.setText("$"+getIntegerQuantity(currentProduct.price));
+        System.out.println("servidor" + currentProduct.serverStock2);
+
+        holder.price.setText(getIntegerQuantity(currentProduct.price));
         if(currentProduct.wholesaler_price!=null)
-        holder.mayor_price.setText("$"+getIntegerQuantity(currentProduct.wholesaler_price));
+        holder.mayor_price.setText(getIntegerQuantity(currentProduct.wholesaler_price));
 
         holder.stock.setText(getIntegerQuantity(currentProduct.stock + currentProduct.stock2));
 
@@ -221,12 +226,25 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
         final TextView edit_price= dialogView.findViewById(R.id.edit_price);
         final TextView edit_wholesaler_price= dialogView.findViewById(R.id.edit_wholesaler_price);
         final TextView edit_stock= dialogView.findViewById(R.id.edit_stock);
+        final TextView edit_cost= dialogView.findViewById(R.id.edit_product_cost);
         final TextView stock2= dialogView.findViewById(R.id.stock2);
+
         final TextView text= dialogView.findViewById(R.id.textServer);
         final TextView cancel= dialogView.findViewById(R.id.cancel);
         final Button ok= dialogView.findViewById(R.id.ok);
 
+        final TextView stockEdithable= dialogView.findViewById(R.id.stock_edithable);
+        final TextView stockNoEdithable= dialogView.findViewById(R.id.stock_no_edithable);
 
+        if(p.serverStock2.equals("Rosario")){
+            stockNoEdithable.setText("Stock Ros");
+            stockEdithable.setText("Stock MDP");
+        }else{
+            stockNoEdithable.setText("Stock MDP");
+            stockEdithable.setText("Stock Ros");
+        }
+
+        edit_cost.setText(String.valueOf(p.product_cost));
         edit_name.setText(p.fish_name);
         edit_name.setTextColor(mContext.getResources().getColor(R.color.colorDialogButton));
         edit_price.setText(getIntegerQuantity(p.price));
@@ -255,44 +273,33 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
                 String productPrice=edit_price.getText().toString().trim();
                 String productWholesalerPrice=edit_wholesaler_price.getText().toString().trim();
                 String productStock=edit_stock.getText().toString().trim();
+                String costProduct=edit_cost.getText().toString().trim();
 
                 boolean isDataValid=true;
 
                 if(!productName.matches("")){
                     p.fish_name=productName;
                 }
+                if(!costProduct.matches("")){
+                    p.product_cost=Double.valueOf(costProduct);
+                }
 
                 if(!productPrice.matches("")) {
-                    if (ValidatorHelper.get().isTypeDouble(productPrice)) {
-                        p.price=Double.valueOf(productPrice);
-                    }else {
-                        isDataValid=false;
-                        Toast.makeText(dialogView.getContext(), " Tipo de precio no valido ", Toast.LENGTH_LONG).show();
-                    }
+                    p.price=Double.valueOf(productPrice);
                 }
 
                 if(!productWholesalerPrice.matches("")) {
-                    if (ValidatorHelper.get().isTypeDouble(productPrice)) {
-                        p.wholesaler_price=Double.valueOf(productWholesalerPrice);
-                    }else {
-                        isDataValid=false;
-                        Toast.makeText(dialogView.getContext(), " Tipo de precio no valido ", Toast.LENGTH_LONG).show();
-                    }
+                    p.wholesaler_price=Double.valueOf(productWholesalerPrice);
                 }
 
                 if(!productStock.matches("")) {
-                    if (ValidatorHelper.get().isTypeDouble(productStock)) {
-                        p.stock=Double.valueOf(productStock);
-                    }else {
-                        isDataValid=false;
-                        Toast.makeText(dialogView.getContext(), " Tipo de stock no valido ", Toast.LENGTH_LONG).show();
-                    }
+                    p.stock=Double.valueOf(productStock);
                 }
 
                 if(isDataValid){
                     updateItem(position,p);
 
-                    Product p2= new Product(p.fish_name,p.price,p.wholesaler_price,p.stock);
+                    Product p2= new Product(p.fish_name,p.price,p.wholesaler_price,p.stock,p.product_cost);
                     p2.id=p.id;
 
                     ApiClient.get().putProduct(p2, new GenericCallback<Product>() {

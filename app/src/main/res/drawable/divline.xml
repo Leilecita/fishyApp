@@ -3,6 +3,7 @@
     android:shape="line">
     <stroke
         android:width="0.1dp"
+
         android:color="@color/FishyLetraHeader"
         android:dashGap="0dp"
         android:dashWidth="0dp"/>

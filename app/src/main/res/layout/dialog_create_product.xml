@@ -29,8 +29,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Nombre "
+                android:textSize="@dimen/general_text"
+                android:textColor="@color/word" />
 
             <EditText
                 android:id="@+id/product_name"
@@ -38,30 +44,59 @@
                 android:paddingLeft="8dp"
                 style="@style/Widget.Design.TextInputLayout"
                 android:layout_width="match_parent"
+
                 android:textColor="#5c5c5c"
                 android:textSize="16sp"
                 android:fontFamily="@font/opensanssight"
-                android:hint="Nombre"
                 android:background="@drawable/rec_edit"
                 android:inputType="textCapWords" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:paddingTop="12dp"
-            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="12dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Valor costo"
+                android:textSize="@dimen/general_text"
+                android:textColor="@color/word" />
+
+            <EditText
+                android:id="@+id/product_cost"
+                android:layout_width="match_parent"
+                style="@style/Widget.Design.TextInputLayout"
+                android:paddingLeft="8dp"
+                android:fontFamily="@font/opensanssight"
+                android:textColor="#5c5c5c"
+                android:inputType="numberDecimal"
+                android:layout_height="35dp"
+                android:textSize="15sp"
+                android:background="@drawable/rec_edit"
+                />
+
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
+                android:layout_marginTop="12dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:orientation="vertical">
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:text="Precio vta min $/kg "
+                    android:textSize="@dimen/general_text"
+                    android:textColor="@color/word" />
 
                 <EditText
                     android:id="@+id/product_price"
-                    android:hint="Precio vta min $/kg"
+                    android:hint=""
                     android:layout_width="match_parent"
                     style="@style/Widget.Design.TextInputLayout"
                     android:paddingLeft="8dp"
@@ -78,13 +113,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
+                android:layout_marginTop="12dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:orientation="vertical">
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:text="Precio vta may $/kg"
+                    android:textSize="@dimen/general_text"
+                    android:textColor="@color/word" />
 
                 <EditText
                     android:id="@+id/wholesaler_price"
-                    android:hint="Precio vta may $/kg"
                     android:inputType="numberDecimal"
                     android:layout_width="match_parent"
                     style="@style/Widget.Design.TextInputLayout"
@@ -101,11 +141,9 @@
             </LinearLayout>
 
 
-        </LinearLayout>
-
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
@@ -113,8 +151,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="12dp"
-            android:orientation="vertical">
-
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Stock inicial"
+                android:textSize="@dimen/general_text"
+                android:textColor="@color/word" />
 
             <EditText
                 android:id="@+id/product_stock"
@@ -125,7 +168,7 @@
                 android:textColor="#5c5c5c"
                 android:textSize="16sp"
                 android:fontFamily="@font/opensanssight"
-                android:hint="Stock inicial   "
+                android:hint=""
                 android:background="@drawable/rec_edit"
                 android:inputType="number" />
         </LinearLayout>

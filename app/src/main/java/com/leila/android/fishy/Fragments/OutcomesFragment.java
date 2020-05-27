@@ -280,7 +280,7 @@ public class OutcomesFragment extends BaseFragment implements Paginate.Callbacks
         final Spinner spinner= dialogView.findViewById(R.id.spinner_outcome);
 
         List<String> spinner_time = new ArrayList<>();
-        spinner_time.add("Seleccione detalle");
+        spinner_time.add("Seleccione tipo");
         spinner_time.add("Nafta");
         spinner_time.add("Patente");
         spinner_time.add("Seguro");
@@ -335,7 +335,7 @@ public class OutcomesFragment extends BaseFragment implements Paginate.Callbacks
 
                 String valuet= value.getText().toString().trim();
 
-                    if(ValidatorHelper.get().isTypeDouble(valuet) && !type.equals("")){
+                    if(ValidatorHelper.get().isTypeDouble(valuet) && !type.equals("") && !type.equals("Seleccione tipo")){
 
                         Outcome newOut= new Outcome(Double.valueOf(valuet),type,descr);
                         newOut.created=dateSelected;

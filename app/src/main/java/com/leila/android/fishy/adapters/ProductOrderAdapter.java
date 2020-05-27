@@ -228,7 +228,7 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
 
                         ItemOrder itemOrder=new ItemOrder(p.id,mOrderId,Double.valueOf(fishQuantity)
                                 ,p.fish_name,getPriceTypeSelected(check_min,check_may),
-                                getPriceSelected(check_min,check_may,p));
+                                getPriceSelected(check_min,check_may,p),p.product_cost);
 
                             ApiClient.get().postItemOrder(itemOrder, new GenericCallback<ItemOrder>() {
                                 @Override
@@ -238,7 +238,7 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
 
                                     if(onAddItemOrderLister!=null){
                                         onAddItemOrderLister.onAddItemToOrder(data.id,data.product_id,data.order_id,data.quantity,true,
-                                                data.product_name,data.price_type,data.price);
+                                                data.product_name,data.price_type,data.price,data.product_cost);
                                     }
                                 }
 
@@ -266,8 +266,6 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
             }
         });
         dialog.show();
-
-
     }
 
     private void loadStock(String fish_name,final Long id_product){

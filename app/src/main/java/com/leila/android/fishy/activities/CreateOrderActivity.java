@@ -323,10 +323,10 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
     }
 
     public void onAddItemToOrder(Long id,Long product_id,Long order_id, Double quantity,boolean create,String product_name
-    ,String price_type, Double price){
+    ,String price_type, Double price, Double cost){
 
         if(create){
-            ItemOrder i=new ItemOrder(product_id,order_id,quantity,product_name,price_type,price);
+            ItemOrder i=new ItemOrder(product_id,order_id,quantity,product_name,price_type,price,cost);
             i.id=id;
             mItemAdapter.pushItem(i);
 

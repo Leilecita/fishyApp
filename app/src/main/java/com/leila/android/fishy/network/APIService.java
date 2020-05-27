@@ -158,7 +158,8 @@ public interface APIService {
     Observable<Response<ReportUsers>> getUsersByPage(@Query("method") String method, @Query("page") Integer page, @Query("query") String query );
 
 
-
+    @GET("neighborhoods.php")
+    Observable<Response<List<Neighborhood>>> searchNeigh(@Query("method") String method, @Query("page") Integer page, @Query("query") String query );
 
     @GET("users.php")
     Observable<Response<User>> getUser(@Query("id") Long id);
@@ -173,7 +174,7 @@ public interface APIService {
     Observable<ResponseBody>  deleteUser(@Query("id") Long id);
 
     @GET("neighborhoods.php")
-    Observable<Response<List<Neighborhood>>> getNeighborhoods();
+    Observable<Response<List<Neighborhood>>> getNeighborhoods(@Query("method") String method);
 
     @GET("neighborhoods.php")
     Observable<Response<List<Neighborhood>>> getNeighborhoodsByPage(@Query("page") Integer page);

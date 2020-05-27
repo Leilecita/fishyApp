@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:textColor="@color/word"
+                android:textColor="@color/FishyLetraDark"
                 android:textSize="18sp" />
 
             <TextView

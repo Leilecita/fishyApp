@@ -102,6 +102,7 @@ public class CreateUserActivity extends BaseActivity{
             @Override
             public void onSuccess(List<Neighborhood> data) {
                 final List<String> listneighborhoods=createArray(data);
+
                 adapter = new ArrayAdapter<String>(getBaseContext(),
                         android.R.layout.simple_dropdown_item_1line, listneighborhoods);
                 neig.setThreshold(1);

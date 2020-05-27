@@ -36,7 +36,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/description"
-                android:textStyle="italic"
 
                 android:padding="4dp"
                 android:textSize="16sp"
@@ -56,7 +55,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/value"
-                android:textStyle="italic"
                 android:padding="4dp"
                 android:textSize="16sp"
                 android:textColor="#2e2d2d" />
@@ -85,7 +83,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:id="@+id/ok"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:textColor="#ffff"
                 android:padding="4dp"

@@ -121,9 +121,11 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
 
         if(currentItem.price_type.equals(Constants.TYPE_PRICE_MAYORISTA)){
             holder.price.setTextColor(mContext.getResources().getColor(R.color.FishyRose3));
+            holder.total_price.setTextColor(mContext.getResources().getColor(R.color.FishyRose3));
 
         }else{
             holder.price.setTextColor(mContext.getResources().getColor(R.color.FishyLetraDark));
+            holder.total_price.setTextColor(mContext.getResources().getColor(R.color.word));
         }
 
         String text="("+ ValuesHelper.get().getIntegerQuantity(round(currentItem.price,2))+")";
@@ -132,7 +134,10 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
 
         Double total=cant*currentItem.price;
 
-        holder.total_price.setText("$"+ValuesHelper.get().getIntegerQuantity(roundTwoDecimals(total)));
+        System.out.println("cant="+String.valueOf(cant));
+        System.out.println("price="+String.valueOf(currentItem.price));
+        System.out.println("tot="+String.valueOf(cant*currentItem.price));
+        holder.total_price.setText("$"+total);
 
 
     /*    if(currentItem.product_id >=0){
@@ -182,11 +187,12 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
         });
     }
 
-    private double roundTwoDecimals(double d)
+    //ANDA MAL
+   /* private double roundTwoDecimals(double d)
     {
         DecimalFormat twoDForm = new DecimalFormat("#.##");
         return Double.valueOf(twoDForm.format(d));
-    }
+    }*/
 
     private void deleteItem(final ItemOrder currentItem,final Integer position,ViewHolder holder ){
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -215,7 +221,7 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
                        removeItem(position);
                       if(onAddItemOrderLister!=null){
                            onAddItemOrderLister.onAddItemToOrder(0l,0l,0l,0d,false,""
-                           ,"",0.0);
+                           ,"",0.0,0.0);
                        }
                    }
 

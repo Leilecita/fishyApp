@@ -250,7 +250,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                 if (Double.compare(r.debt_value, 0.0) > 0) {
 
                     holder.debt_value.setVisibility(View.VISIBLE);
-                    holder.debt_value.setText(String.valueOf(r.debt_value));
+                    holder.debt_value.setText("$ "+String.valueOf(r.debt_value));
                 }else{
                     holder.debt_value.setVisibility(View.GONE);
                 }
@@ -264,8 +264,10 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             }
 
             if(r.defaulter.equals("true")){
-                holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money_roj));
+               // holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money_roj));
+                holder.money.setVisibility(View.GONE);
             }else{
+                holder.money.setVisibility(View.VISIBLE);
                 holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money_dor));
             }
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -273,6 +275,13 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                 public boolean onLongClick(View view) {
                     showOrderInfo(r,position);
                     return false;
+                }
+            });
+
+            holder.debt_value.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDialogMoney(r,position);
                 }
             });
 
@@ -659,9 +668,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         final EditText debt_value=  dialogView.findViewById(R.id.debt_value);
         final Button ok=  dialogView.findViewById(R.id.ok);
 
-        text.setText("¿Adeuda el pago?");
-        title.setText("PAGO");
-
         debt_value.setHint(String.valueOf(r.debt_value));
 
         final AlertDialog dialog = builder.create();
@@ -710,6 +716,8 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                         r.defaulter="false";
                         r.debt_value=data.debt_value;
                         updateItem(pos,r);
+
+                        EventBus.getDefault().post(new EventListUsersState());
                     }
                     @Override
                     public void onError(Error error) {

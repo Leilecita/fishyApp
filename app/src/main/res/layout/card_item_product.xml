@@ -55,16 +55,16 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Abadejo"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/opensansregular"
                         android:textColor="@color/word"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/general_text" />
 
 
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="28dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_gravity="center_vertical"
                     android:id="@+id/options"
                     android:src="@drawable/options"
@@ -75,6 +75,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:orientation="horizontal">
 
 
@@ -86,10 +87,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Stock total:"
+                        android:text="Stock total"
                         android:padding="2dp"
                         android:textColor="@color/word"
-                        android:textSize="16sp" />
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:id="@+id/stock_product"
@@ -98,9 +99,9 @@
                         android:layout_gravity="center"
                         android:text="340"
                         android:paddingLeft="4dp"
-                        android:fontFamily="@font/opensansregular"
+                        android:fontFamily="@font/opensanssight"
                         android:textColor="@color/FishyLetraDark"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/general_text" />
 
                 </LinearLayout>
 
@@ -140,22 +141,56 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="6dp"
+
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1"
+                    android:layout_marginRight="4dp"
+                    android:background="@drawable/rec_find"
+                    android:backgroundTint="@color/white_background"
                     android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="$ min :"
+                        android:text=" $ costo"
                         android:padding="2dp"
                         android:textColor="@color/word"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/cost_product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="200"
+                        android:paddingLeft="4dp"
+                        android:fontFamily="@font/opensanssight"
+                        android:textColor="@color/FishyLetraDark"
                         android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="4dp"
+                    android:background="@drawable/rec_find"
+                    android:backgroundTint="@color/white_background"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text=" $ min"
+                        android:padding="2dp"
+                        android:textColor="@color/word"
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:id="@+id/price_product"
@@ -164,7 +199,7 @@
                         android:layout_gravity="center"
                         android:text="890"
                         android:paddingLeft="4dp"
-                        android:fontFamily="@font/opensansregular"
+                        android:fontFamily="@font/opensanssight"
                         android:textColor="@color/FishyLetraDark"
                         android:textSize="16sp" />
 
@@ -172,17 +207,20 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1"
+                    android:background="@drawable/rec_find"
+                    android:layout_marginLeft="8dp"
+                    android:backgroundTint="@color/white_background"
                     android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="$ may :"
+                        android:text=" $ may"
                         android:padding="2dp"
                         android:textColor="@color/word"
-                        android:textSize="16sp" />
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:id="@+id/price_product_wholersale"
@@ -191,15 +229,11 @@
                         android:layout_gravity="center"
                         android:text="1100"
                         android:paddingLeft="4dp"
-                        android:fontFamily="@font/opensansregular"
+                        android:fontFamily="@font/opensanssight"
                         android:textColor="@color/FishyRose3"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/general_text" />
 
                 </LinearLayout>
-
-
-
-
 
             </LinearLayout>
 

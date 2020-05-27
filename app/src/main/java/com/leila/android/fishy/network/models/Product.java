@@ -11,6 +11,7 @@ public class Product {
     public Double price;
     public Double wholesaler_price;
     public Double stock;
+    public Double product_cost;
 
     public String getFish_name() {
         return fish_name;
@@ -36,11 +37,12 @@ public class Product {
         this.stock = stock;
     }
 
-    public Product(String fish_name, Double price,Double wholesaler_price, Double stock){
+    public Product(String fish_name, Double price,Double wholesaler_price, Double stock,Double cost){
         this.fish_name=fish_name;
         this.price=price;
         this.wholesaler_price=wholesaler_price;
         this.stock=stock;
+        this.product_cost=cost;
 
     }
 }

@@ -7,6 +7,7 @@ public class ReportProduct {
     public String load_both_stocks;
     public Double price;
     public Double wholesaler_price;
+    public Double product_cost;
     public Double stock;
 
 
