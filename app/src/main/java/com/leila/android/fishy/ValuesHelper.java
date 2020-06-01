@@ -42,7 +42,9 @@ public class ValuesHelper {
 
 
     public String getIntegerQuantity(Double val){
-        String[] arr= String.valueOf(val).split("\\.");
+
+        return String.valueOf(val);
+       /* String[] arr= String.valueOf(val).split("\\.");
         int[] intArr=new int[2];
         intArr[0]= Integer.parseInt(arr[0]);
         intArr[1]= Integer.parseInt(arr[1]);
@@ -51,7 +53,7 @@ public class ValuesHelper {
             return String.valueOf(intArr[0]);
         }else{
             return String.valueOf(val);
-        }
+        }*/
     }
 
     public Double roundTwoDecimals(double d)

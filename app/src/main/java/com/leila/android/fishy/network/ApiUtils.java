@@ -9,11 +9,11 @@ public class ApiUtils {
         private ApiUtils() {}
 
        //public static final String BASE_URL = "http://192.168.43.112/fishyserver/";
-      public static final String BASE_URL = "http://192.168.88.7/fishyserver/";
+     // public static final String BASE_URL = "http://192.168.88.7/fishyserver/";
        // public static final String BASE_URL = "http://192.168.0.10/fishyserver/";
 
     //FISHY MARDEL
-      // public static final String BASE_URL = "http://fishy.abarbieri.com.ar/";
+       public static final String BASE_URL = "http://fishy.abarbieri.com.ar/";
 
     //FISHY ROSARIO
         // public static final String BASE_URL = "http://fishydev.abarbieri.com.ar/";

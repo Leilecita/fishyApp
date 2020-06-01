@@ -98,6 +98,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="340"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:paddingLeft="4dp"
                         android:fontFamily="@font/opensanssight"
                         android:textColor="@color/FishyLetraDark"

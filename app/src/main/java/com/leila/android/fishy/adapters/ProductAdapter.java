@@ -117,8 +117,11 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
 
         holder.price.setText(getIntegerQuantity(currentProduct.price));
         if(currentProduct.wholesaler_price!=null)
-        holder.mayor_price.setText(getIntegerQuantity(currentProduct.wholesaler_price));
+        holder.mayor_price.setText(String.valueOf(currentProduct.wholesaler_price));
 
+        System.out.println("produc name"+currentProduct.fish_name);
+        System.out.println("s1"+currentProduct.stock);
+        System.out.println("s2"+currentProduct.stock2);
         holder.stock.setText(getIntegerQuantity(currentProduct.stock + currentProduct.stock2));
 
         if(currentProduct.load_both_stocks.equals("true")){
@@ -331,7 +334,9 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
     private String getIntegerQuantity(Double val){
-        String[] arr=String.valueOf(val).split("\\.");
+
+       return String.valueOf(val);
+     /*   String[] arr=String.valueOf(val).split("\\.");
         int[] intArr=new int[2];
         intArr[0]=Integer.parseInt(arr[0]);
         intArr[1]=Integer.parseInt(arr[1]);
@@ -340,8 +345,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
             return String.valueOf(intArr[0]);
         }else{
             return String.valueOf(val);
-        }
+        }*/
 
     }
-
 }

@@ -33,6 +33,7 @@
         <item name="colorPrimary">#ffff</item>
         <item name="colorPrimaryDark">#ffff</item>
         <item name="colorAccent">@color/colorDialogButton</item>
+        <item name="dialogCornerRadius">8dp</item>
     </style>
 
     <style name="ThemeOverlay" parent="Theme.AppCompat.NoActionBar">
