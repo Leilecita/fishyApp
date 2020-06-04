@@ -158,7 +158,7 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
         final EditText price= dialogView.findViewById(R.id.product_price);
         final EditText wholsaler_price= dialogView.findViewById(R.id.wholesaler_price);
         final TextView stock= dialogView.findViewById(R.id.product_stock);
-        final TextView cost= dialogView.findViewById(R.id.cost_product);
+        final TextView cost= dialogView.findViewById(R.id.product_cost);
         final Button ok= dialogView.findViewById(R.id.ok);
         final TextView cancel= dialogView.findViewById(R.id.cancel);
 

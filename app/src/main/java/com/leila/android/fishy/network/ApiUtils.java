@@ -13,10 +13,10 @@ public class ApiUtils {
        // public static final String BASE_URL = "http://192.168.0.10/fishyserver/";
 
     //FISHY MARDEL
-       public static final String BASE_URL = "http://fishy.abarbieri.com.ar/";
+       //public static final String BASE_URL = "http://fishy.abarbieri.com.ar/";
 
     //FISHY ROSARIO
-        // public static final String BASE_URL = "http://fishydev.abarbieri.com.ar/";
+         public static final String BASE_URL = "http://fishydev.abarbieri.com.ar/";
 
 
     public static APIService getAPIService() {

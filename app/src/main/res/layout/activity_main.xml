@@ -44,6 +44,7 @@ android:background="#c2dbfd">
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
 
