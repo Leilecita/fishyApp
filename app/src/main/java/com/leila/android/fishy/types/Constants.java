@@ -1,6 +1,10 @@
 package com.leila.android.fishy.types;
 
 public class Constants {
+    public static String TYPE_PAYMENT_CASH = "efectivo";
+    public static String TYPE_PAYMENT_CARD = "tarjeta";
+    public static String TYPE_PAYMENT_TRANSFER = "transferencia";
+
     public static String TYPE_PRICE_MINORISTA = "minorista";
     public static String TYPE_PRICE_MAYORISTA = "mayorista";
 

@@ -17,6 +17,7 @@ public class Order {
     public Integer priority;
     public String created;
     public Double debt_value;
+    public String payment_method;
 
     public Order(Long user_id, String deliver_date, String observation,String state,String delivery_time){
         this.user_id=user_id;

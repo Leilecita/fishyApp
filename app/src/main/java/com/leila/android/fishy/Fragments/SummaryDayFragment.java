@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,8 +41,14 @@ public class SummaryDayFragment extends BaseFragment {
     private View mRootView;
     private TextView mDeliver_date;
     private TextView mSumTot;
+    private TextView mSumTotCard;
+    private TextView mSumTotCash;
+    private TextView mSumTotTrans;
     private TextView mSumDone;
     private TextView mSumPendient;
+
+    private ImageView mView;
+    private LinearLayout mCompleteViewTot;
 
 
     public void onClickButton(){  }
@@ -85,6 +93,26 @@ public class SummaryDayFragment extends BaseFragment {
         mSumDone= mRootView.findViewById(R.id.sumDone);
         mSumPendient= mRootView.findViewById(R.id.sumPendient);
         mSumTot= mRootView.findViewById(R.id.sumTot);
+        mSumTotCard= mRootView.findViewById(R.id.sumTotCard);
+        mSumTotCash= mRootView.findViewById(R.id.sumTotCash);
+        mSumTotTrans= mRootView.findViewById(R.id.sumTotTrans);
+
+        mView=mRootView.findViewById(R.id.view);
+        mCompleteViewTot=mRootView.findViewById(R.id.completeViewTot);
+
+        mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mCompleteViewTot.getVisibility() == View.GONE){
+                    mCompleteViewTot.setVisibility(View.VISIBLE);
+                    mView.setImageResource(R.drawable.viewmore);
+                }else{
+                    mCompleteViewTot.setVisibility(View.GONE);
+                    mView.setImageResource(R.drawable.viewless);
+                }
+            }
+        });
+
 
         mDeliver_date.setText(CurrentValuesHelper.get().getSummaryDate());
         mDeliver_date.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +173,10 @@ public class SummaryDayFragment extends BaseFragment {
                     mSumDone.setText(String.valueOf(round(data.sumDone,1)));
                     mSumPendient.setText(String.valueOf(round(data.sumPendient,1)));
                     mSumTot.setText(String.valueOf(round(data.sumTot,1)));
+
+                    mSumTotCard.setText(String.valueOf(data.sumTotCard));
+                    mSumTotCash.setText(String.valueOf(data.sumTotCash));
+                    mSumTotTrans.setText(String.valueOf(data.sumTotTrans));
                 }
 
                 @Override

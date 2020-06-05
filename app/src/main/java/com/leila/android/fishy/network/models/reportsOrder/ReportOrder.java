@@ -22,6 +22,7 @@ public class ReportOrder {
     public Integer priority;
 
     public Double debt_value;
+    public String payment_method;
 
     public String getUser_name() {
         return name;

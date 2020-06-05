@@ -11,6 +11,7 @@
     <color name="colorPrimaryDark">#204058</color>
 
     <color name="colorAccent">#7F7359</color>
+    <color name="colorAccentClear">#ADA38C</color>
 
     <!--<color name="colorDialogButton"> #7a47b1</color>
     <color name="word_info">#7d47b2</color>

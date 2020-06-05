@@ -43,6 +43,7 @@ import com.leila.android.fishy.network.GenericCallback;
 import com.leila.android.fishy.network.models.Order;
 import com.leila.android.fishy.network.models.reportsOrder.ReportItemOrder;
 import com.leila.android.fishy.network.models.reportsOrder.ReportOrder;
+import com.leila.android.fishy.types.Constants;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -246,6 +247,11 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
         if(!mOnlyAdress){
 
+            if(r.payment_method.equals(Constants.TYPE_PAYMENT_CARD)){
+
+            }else if(r.payment_method.equals(Constants.TYPE_PAYMENT_TRANSFER)){
+
+            }
             if(r.debt_value != null){
                 if (Double.compare(r.debt_value, 0.0) > 0) {
 

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_background"
-    android:layout_marginBottom="22dp"
+    android:layout_marginBottom="12dp"
     android:id="@+id/resume">
 
     <LinearLayout
@@ -58,7 +58,6 @@
     card_view:cardBackgroundColor="@color/FishyRoseSoftSoft"
     card_view:cardElevation="2dp"
     card_view:contentPadding="8dp"
-    android:layout_above="@+id/ss"
     >
 
     <RelativeLayout
@@ -158,6 +157,7 @@
                     android:textSize="@dimen/general_text"
                     />
 
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -167,9 +167,119 @@
                     android:textColor="@color/FishyLetraDark"
                     android:textSize="@dimen/general_text"
                     />
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="6dp"
+
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/view"
+                    android:src="@drawable/viewless"
+                    />
 
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:id="@+id/completeViewTot"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Efectivo"
+                        android:fontFamily="@font/opensansregular"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="@dimen/general_text"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:id="@+id/sumTotCash"
+                        android:fontFamily="@font/opensanssight"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="@dimen/general_text"
+                        />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Tarjeta"
+                        android:fontFamily="@font/opensansregular"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="@dimen/general_text"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:id="@+id/sumTotCard"
+                        android:fontFamily="@font/opensanssight"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="@dimen/general_text"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Transferencia"
+                        android:fontFamily="@font/opensansregular"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="@dimen/general_text"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:id="@+id/sumTotTrans"
+                        android:fontFamily="@font/opensanssight"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="@dimen/general_text"
+                        />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -235,11 +345,5 @@
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/ss"
-    android:textSize="15dp"
-    android:layout_alignParentBottom="true"
-    />
+
 </RelativeLayout>

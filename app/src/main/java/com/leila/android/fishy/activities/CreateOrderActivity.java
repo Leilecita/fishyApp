@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,11 +45,15 @@ import com.leila.android.fishy.network.models.Product;
 import com.leila.android.fishy.network.models.ReportProduct;
 import com.leila.android.fishy.network.models.User;
 import com.leila.android.fishy.network.models.reportsOrder.ReportOrder;
+import com.leila.android.fishy.types.Constants;
+import com.leila.android.fishy.types.PaymentMethodType;
+import com.leila.android.fishy.types.PriceType;
 import com.paginate.Paginate;
 import com.paginate.recycler.LoadingListItemSpanLookup;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -64,6 +70,12 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
     TextView userName;
 
     ImageView observation_order;
+    ImageView date_image;
+    ImageView payment_image;
+    ImageView time_image;
+
+    TextView mPaymentMethod;
+    TextView mTextObservationOrder;
 
     TextView totalAmount;
     boolean mEdithOrder;
@@ -73,6 +85,8 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
     private Integer mCurrentPage;
     private Paginate paginate;
     private boolean hasMoreItems;
+
+    private PaymentMethodType selectedMethodPayment = PaymentMethodType.CASH;
 
     public void onStartProducts(Long id_product){
         Intent intent = new Intent(this, ProductsActivity.class);
@@ -131,6 +145,25 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         super.onCreate(savedInstanceState);
         showBackArrow();
 
+        time_image=this.findViewById(R.id.time_image);
+        date_image=this.findViewById(R.id.date_image);
+        payment_image=this.findViewById(R.id.payment_image);
+
+        mPaymentMethod=this.findViewById(R.id.payment_method);
+        mPaymentMethod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectPaymentMethod();
+            }
+        });
+        mTextObservationOrder=this.findViewById(R.id.text_obs_order);
+        mTextObservationOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setObservation();
+            }
+        });
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         mEdithOrder=false;
@@ -160,6 +193,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         deliverDate=findViewById(R.id.deliver_date);
         deliveryTime=findViewById(R.id.delivery_time);
         observation_order=findViewById(R.id.obs);
+      //  observation_order.setColorFilter(this.getResources().getColor(R.color.word_clear));
 
         initActivity();
 
@@ -201,6 +235,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
                 if(mEdithOrder){
                     mOrder.observation=obs.getText().toString();
                     mObservation_order=obs.getText().toString();
+                    mTextObservationOrder.setText(mObservation_order);
                     ApiClient.get().putOrder(mOrder, new GenericCallback<Order>() {
                         @Override
                         public void onSuccess(Order data) {
@@ -214,7 +249,123 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
                     });
                 }else{
                     mObservation_order=obs.getText().toString();
+                    mTextObservationOrder.setText(mObservation_order);
                 }
+
+                observation_order.setColorFilter(CreateOrderActivity.this.getResources().getColor(R.color.colorAccent));
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
+
+    private void selectPaymentMethod(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.select_payment_method, null);
+        builder.setView(dialogView);
+
+        final CheckBox check_ef = dialogView.findViewById(R.id.check_ef);
+        final CheckBox check_card = dialogView.findViewById(R.id.check_card);
+        final CheckBox check_trans = dialogView.findViewById(R.id.check_trans);
+
+        if(mEdithOrder){
+            if(mOrder.payment_method.equals(PaymentMethodType.CARD.getName())){
+                check_card.setChecked(true);
+                check_trans.setChecked(false);
+                check_ef.setChecked(false);
+            }else if(mOrder.payment_method.equals(PaymentMethodType.CASH.getName())){
+                check_ef.setChecked(true);
+                check_card.setChecked(false);
+                check_trans.setChecked(false);
+            }else{
+                check_trans.setChecked(true);
+                check_card.setChecked(false);
+                check_ef.setChecked(false);
+            }
+        }
+
+        check_ef.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(check_ef.isChecked()){
+                    check_ef.setChecked(true);
+                    check_card.setChecked(false);
+                    check_trans.setChecked(false);
+                    selectedMethodPayment=PaymentMethodType.CASH;
+                }else{
+                    check_ef.setChecked(false);
+                }
+            }
+        });
+
+        check_card.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(check_card.isChecked()){
+                    check_card.setChecked(true);
+                    check_trans.setChecked(false);
+                    check_ef.setChecked(false);
+                    selectedMethodPayment=PaymentMethodType.CARD;
+                }else{
+                    check_card.setChecked(false);
+                }
+            }
+        });
+
+        check_trans.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(check_trans.isChecked()){
+                    check_trans.setChecked(true);
+                    check_card.setChecked(false);
+                    check_ef.setChecked(false);
+                    selectedMethodPayment=PaymentMethodType.TRANSFER;
+                }else{
+                    check_trans.setChecked(false);
+                }
+            }
+        });
+
+
+        final TextView cancel=  dialogView.findViewById(R.id.cancel);
+        final Button ok=  dialogView.findViewById(R.id.ok);
+        final AlertDialog dialog = builder.create();
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+                if(mEdithOrder){
+                    mOrder.payment_method=selectedMethodPayment.getName();
+
+                    mPaymentMethod.setText(selectedMethodPayment.getName());
+
+                    ApiClient.get().putOrder(mOrder, new GenericCallback<Order>() {
+                        @Override
+                        public void onSuccess(Order data) {
+
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            DialogHelper.get().showMessage("Error","No se pudo cargar la información",getBaseContext());
+                        }
+                    });
+                }else{
+                    mPaymentMethod.setText(selectedMethodPayment.getName());
+                    mOrder.payment_method=selectedMethodPayment.getName();
+                   // mObservation_order=obs.getText().toString();
+                }
+
+                payment_image.setColorFilter(CreateOrderActivity.this.getResources().getColor(R.color.colorAccent));
 
                 dialog.dismiss();
             }
@@ -227,6 +378,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         });
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
     }
 
 
@@ -244,6 +396,8 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
                 mDeliveryTime=(items[item]);
             }
         });
+
+        time_image.setColorFilter(CreateOrderActivity.this.getResources().getColor(R.color.colorAccent));
         AlertDialog alert = builder.create();
         alert.show();
     }
@@ -264,6 +418,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
                     implementsPaginate();
 
                     mObservation_order=data.observation;
+                    mTextObservationOrder.setText(mObservation_order);
                     deliverDate.setText(mDeliverDate);
                     userName.setText(getIntent().getStringExtra("USERNAME"));
                 }
@@ -395,7 +550,6 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
                     }
                 }
                 loadingInProgress = false;
-
             }
 
             @Override
@@ -447,6 +601,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
                         }
                         mDeliverDate=sdayOfMonth+"-"+smonthOfYear+"-"+year;
                         deliverDate.setText(mDeliverDate);
+                        date_image.setColorFilter(CreateOrderActivity.this.getResources().getColor(R.color.colorAccent));
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
