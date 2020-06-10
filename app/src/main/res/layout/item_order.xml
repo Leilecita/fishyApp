@@ -32,8 +32,7 @@
                         android:layout_width="38sp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text=""
-                        android:padding="2dp"
+                        android:text="1.03"
                         android:textColor="@color/word"
                         android:textSize="14sp" />
 
@@ -41,7 +40,10 @@
                         android:id="@+id/name_product"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="1.1"
+                        android:ellipsize="end"
+                        android:paddingLeft="2dp"
+                        android:maxLines="1"
                         android:text=""
                         android:textColor="@color/word"
                         android:textSize="15sp" />
@@ -50,9 +52,10 @@
                         android:id="@+id/price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2.1"
+                        android:layout_weight="2"
+                        android:layout_gravity="center_vertical"
                         android:gravity="center_horizontal"
-                        android:text="(101)"
+                        android:text=""
                         android:textColor="@color/word"
                         android:textSize="13sp" />
 
@@ -64,7 +67,7 @@
                         android:gravity="end"
                         android:maxLines="1"
                         android:ellipsize="end"
-                        android:text="501.333333333"
+                        android:text=""
                         android:id="@+id/total_amount"
                         android:textSize="15sp"
                         android:layout_marginRight="4dp"

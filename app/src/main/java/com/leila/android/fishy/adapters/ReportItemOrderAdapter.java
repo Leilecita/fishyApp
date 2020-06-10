@@ -78,6 +78,8 @@ public class ReportItemOrderAdapter extends BaseAdapter<ReportItemOrder,ReportIt
         holder.amount.setText(String.valueOf(round(currentItem.price*currentItem.quantity,2)));
     }
 
+
+
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 

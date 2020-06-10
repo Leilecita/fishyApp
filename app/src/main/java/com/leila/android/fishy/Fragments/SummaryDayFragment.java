@@ -2,6 +2,7 @@ package com.leila.android.fishy.Fragments;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.leila.android.fishy.network.Error;
 import com.leila.android.fishy.network.GenericCallback;
 import com.leila.android.fishy.network.models.reportsOrder.SummaryDay;
 import com.leila.android.fishy.network.models.reportsOrder.ValuesDay;
+import com.leila.android.fishy.types.Constants;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,7 +51,7 @@ public class SummaryDayFragment extends BaseFragment {
 
     private ImageView mView;
     private LinearLayout mCompleteViewTot;
-
+    private LinearLayout bottomSheet;
 
     public void onClickButton(){  }
     public int getIconButton(){
@@ -88,8 +90,9 @@ public class SummaryDayFragment extends BaseFragment {
         setHasOptionsMenu(true);
 
         loadSummaryDay();
-
         mDeliver_date= mRootView.findViewById(R.id.deliver_date);
+/*
+
         mSumDone= mRootView.findViewById(R.id.sumDone);
         mSumPendient= mRootView.findViewById(R.id.sumPendient);
         mSumTot= mRootView.findViewById(R.id.sumTot);
@@ -112,7 +115,7 @@ public class SummaryDayFragment extends BaseFragment {
                 }
             }
         });
-
+*/
 
         mDeliver_date.setText(CurrentValuesHelper.get().getSummaryDate());
         mDeliver_date.setOnClickListener(new View.OnClickListener() {
@@ -122,10 +125,43 @@ public class SummaryDayFragment extends BaseFragment {
             }
         });
 
-        EventBus.getDefault().register(this);
+        bottomSheet = mRootView.findViewById(R.id.bottomSheet);
+        final BottomSheetBehavior bsb = BottomSheetBehavior.from(bottomSheet);
 
+        EventBus.getDefault().register(this);
+        topBarListener(bottomSheet);
         return mRootView;
     }
+
+    private void topBarListener(View bottomSheet){
+        mSumDone= bottomSheet.findViewById(R.id.sumDone);
+        mSumPendient= bottomSheet.findViewById(R.id.sumPendient);
+        mSumTot= bottomSheet.findViewById(R.id.sumTot);
+        mSumTotCard= bottomSheet.findViewById(R.id.sumTotCard);
+        mSumTotCash= bottomSheet.findViewById(R.id.sumTotCash);
+        mSumTotTrans= bottomSheet.findViewById(R.id.sumTotTrans);
+        ImageView tranf= bottomSheet.findViewById(R.id.transf);
+        tranf.setColorFilter(getResources().getColor(R.color.colorAccent));
+
+        mView=bottomSheet.findViewById(R.id.view);
+        mCompleteViewTot=bottomSheet.findViewById(R.id.completeViewTot);
+
+        mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mCompleteViewTot.getVisibility() == View.GONE){
+                    mCompleteViewTot.setVisibility(View.VISIBLE);
+                    mView.setImageResource(R.drawable.viewless);
+                }else{
+                    mCompleteViewTot.setVisibility(View.GONE);
+                    mView.setImageResource(R.drawable.viewmore);
+                }
+            }
+        });
+
+
+    }
+
 
     public void loadSummaryDay(){
         listItemsDay();

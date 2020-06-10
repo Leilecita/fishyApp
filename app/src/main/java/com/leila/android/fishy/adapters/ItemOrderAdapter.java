@@ -128,15 +128,12 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
             holder.total_price.setTextColor(mContext.getResources().getColor(R.color.word));
         }
 
-        String text="("+ ValuesHelper.get().getIntegerQuantity(round(currentItem.price,2))+")";
+        String text="("+ ValuesHelper.get().getIntegerQuantityRounded(currentItem.price)+")";
 
         holder.price.setText(text);
 
-        Double total=cant*currentItem.price;
+        Double total=round(cant*currentItem.price,2);
 
-        System.out.println("cant="+String.valueOf(cant));
-        System.out.println("price="+String.valueOf(currentItem.price));
-        System.out.println("tot="+String.valueOf(cant*currentItem.price));
         holder.total_price.setText("$"+total);
 
 

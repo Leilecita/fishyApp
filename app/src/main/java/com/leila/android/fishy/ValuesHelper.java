@@ -15,30 +15,23 @@ public class ValuesHelper {
     }
 
 
-    public String getIntegerQuantityByLei(Double val){
+    public String getIntegerQuantityRounded(Double val){
 
-        String[] parts = String.valueOf(val).split(".");
-        if(Integer.valueOf(parts[1]) == 0){
-            return parts[0];
-        }else{
-            return String.valueOf(val);
-        }
+        val=roundTwoDecimals(val);
 
+        String[] arr=String.valueOf(val).split("\\.");
+        int[] intArr=new int[2];
 
-    }
+        intArr[0]=Integer.parseInt(arr[0]);
+        intArr[1]=Integer.parseInt(arr[1]);
 
-
-    public String getIntegerQuantityByLei2(Double val){
-
-        String[] parts = String.valueOf(val).split(".");
-        if(Integer.valueOf(parts[1]) == 0){
-            return parts[0];
+        if(intArr[1] == 0){
+            return String.valueOf(intArr[0]);
         }else{
             return String.valueOf(val);
         }
 
     }
-
 
 
     public String getIntegerQuantity(Double val){
@@ -60,8 +53,6 @@ public class ValuesHelper {
     {
         double roundOff = (double) Math.round(d * 100) / 100;
 
-        // DecimalFormat twoDForm = new DecimalFormat("#.##");
-        //return Double.valueOf(twoDForm.format(d));
         return roundOff;
     }
 

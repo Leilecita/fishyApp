@@ -1,349 +1,399 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@color/white_background"
-    android:layout_marginBottom="12dp"
-    android:id="@+id/resume">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/rec_edit"
-        android:id="@+id/line11"
-
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:padding="3dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/date"/>
-
-        <TextView
-            android:id="@+id/deliver_date"
-            android:layout_height="35dp"
-            android:paddingLeft="2dp"
-            style="@style/Widget.Design.TextInputLayout"
-            android:layout_gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:hint="Ingrese fecha"
-            android:textColorHint="@color/FishyLetraDark"
-            android:layout_toRightOf="@id/date"
-            android:textColor="@color/FishyLetraDark"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="3dp"
-            android:textSize="15sp"
-            android:padding="6dp"
-            android:inputType="textCapWords" />
-
-    </LinearLayout>
-
-
-<android.support.v7.widget.CardView
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginBottom="8dp"
-    android:layout_below="@id/line11"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardMaxElevation="4dp"
-    card_view:cardBackgroundColor="@color/FishyRoseSoftSoft"
-    card_view:cardElevation="2dp"
-    card_view:contentPadding="8dp"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_height="match_parent"
     >
-
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_background"
+        android:layout_marginBottom="12dp"
+        android:id="@+id/resume">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rec_edit"
+            android:id="@+id/line11"
+
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:padding="3dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/date"/>
+
+            <TextView
+                android:id="@+id/deliver_date"
+                android:layout_height="35dp"
+                android:paddingLeft="2dp"
+                style="@style/Widget.Design.TextInputLayout"
+                android:layout_gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:hint="Ingrese fecha"
+                android:textColorHint="@color/FishyLetraDark"
+                android:layout_toRightOf="@id/date"
+                android:textColor="@color/FishyLetraDark"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="3dp"
+                android:textSize="15sp"
+                android:padding="6dp"
+                android:inputType="textCapWords" />
+
+        </LinearLayout>
+
+
+        <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="70dp"
+        android:layout_below="@id/line11"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardMaxElevation="4dp"
+        card_view:cardBackgroundColor="@color/FishyRoseSoftSoft"
+        card_view:cardElevation="2dp"
+        card_view:contentPadding="8dp"
         >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/line1"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:orientation="horizontal">
+            >
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Pescado"
-                android:fontFamily="@font/opensansregular"
-
-                android:textSize="17sp"
-                android:textColor="@color/FishyLetraDark"
-                />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textSize="17sp"
-                android:fontFamily="@font/opensansregular"
-                android:gravity="center"
-                android:textColor="@color/FishyLetraDark"
-                android:text="Kg"
+                android:id="@+id/line1"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:orientation="horizontal">
 
-                />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Pescado"
+                    android:fontFamily="@font/opensansregular"
 
-            <TextView
+                    android:textSize="17sp"
+                    android:textColor="@color/FishyLetraDark"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textSize="17sp"
+                    android:fontFamily="@font/opensansregular"
+                    android:gravity="center"
+                    android:textColor="@color/FishyLetraDark"
+                    android:text="Kg"
+
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:textSize="17sp"
+             android:fontFamily="@font/opensansregular"
+                    android:textColor="@color/FishyLetraDark"
+                    android:text="Total  "
+                    android:gravity="end"
+
+                    />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_summary"
+                android:layout_below="@+id/line1"
+                android:layout_margin="3dp"
                 android:layout_width="match_parent"
-                android:layout_weight="2"
                 android:layout_height="match_parent"
-                android:textSize="17sp"
-         android:fontFamily="@font/opensansregular"
-                android:textColor="@color/FishyLetraDark"
-                android:text="Total  "
-                android:gravity="end"
-
+                android:paddingBottom="6dp"
                 />
 
-        </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/list_summary"
-            android:layout_below="@+id/line1"
-            android:layout_above="@id/s"
-            android:layout_margin="3dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            />
+        </RelativeLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            style="@style/DivisorCategoryStyle"
-            android:background="#7F7359"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_below="@id/list_summary"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:id="@+id/s"
-            android:layout_margin="2dp"
-            android:paddingTop="3dp"
-            android:paddingRight="4dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:paddingBottom="4dp"
-            android:orientation="vertical">
+    </android.support.v7.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Total del día"
-                    android:fontFamily="@font/opensansregular"
-                    android:textColor="@color/FishyLetraDark"
-                    android:textSize="@dimen/general_text"
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:id="@+id/sumTot"
-                    android:fontFamily="@font/opensanssight"
-                    android:textColor="@color/FishyLetraDark"
-                    android:textSize="@dimen/general_text"
-                    />
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_marginLeft="6dp"
-
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/view"
-                    android:src="@drawable/viewless"
-                    />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:id="@+id/completeViewTot"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="Efectivo"
-                        android:fontFamily="@font/opensansregular"
-                        android:textColor="@color/FishyLetraDark"
-                        android:textSize="@dimen/general_text"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:id="@+id/sumTotCash"
-                        android:fontFamily="@font/opensanssight"
-                        android:textColor="@color/FishyLetraDark"
-                        android:textSize="@dimen/general_text"
-                        />
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="Tarjeta"
-                        android:fontFamily="@font/opensansregular"
-                        android:textColor="@color/FishyLetraDark"
-                        android:textSize="@dimen/general_text"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:id="@+id/sumTotCard"
-                        android:fontFamily="@font/opensanssight"
-                        android:textColor="@color/FishyLetraDark"
-                        android:textSize="@dimen/general_text"
-                        />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="Transferencia"
-                        android:fontFamily="@font/opensansregular"
-                        android:textColor="@color/FishyLetraDark"
-                        android:textSize="@dimen/general_text"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:id="@+id/sumTotTrans"
-                        android:fontFamily="@font/opensanssight"
-                        android:textColor="@color/FishyLetraDark"
-                        android:textSize="@dimen/general_text"
-                        />
-
-
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Total restante"
-                    android:fontFamily="@font/opensansregular"
-                    android:textColor="@color/FishyLetraDark"
-                    android:textSize="@dimen/general_text"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:id="@+id/sumPendient"
-
-                    android:fontFamily="@font/opensanssight"
-                    android:textColor="@color/FishyLetraDark"
-                    android:textSize="@dimen/general_text"
-                    />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Total recaudado"
-                    android:fontFamily="@font/opensansregular"
-                    android:textColor="@color/FishyLetraDark"
-                    android:textSize="@dimen/general_text"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:id="@+id/sumDone"
-                    android:textColor="@color/FishyLetraDark"
-                    android:fontFamily="@font/opensanssight"
-
-                    android:textSize="@dimen/general_text"
-                    />
-
-
-            </LinearLayout>
-
-
-
-        </LinearLayout>
     </RelativeLayout>
 
-</android.support.v7.widget.CardView>
+    <include layout="@layout/bottom_shet_summary" />
 
-</RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+        android:background="@color/white_background"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_height="match_parent"
+                                >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
+            android:id="@+id/listado">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_outcomes"
+                android:layout_below="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="50dp"
+                />
+
+        </RelativeLayout>
+
+
+
+<include layout="@layout/bottom_shet" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+    <TextView
+                android:layout_width="match_parent"
+                style="@style/DivisorCategoryStyle"
+                android:background="#7F7359"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:visibility="invisible"
+                android:layout_below="@id/list_summary"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/s"
+                android:layout_margin="2dp"
+                android:visibility="invisible"
+                android:paddingTop="3dp"
+                android:paddingRight="4dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="4dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Total del día"
+                        android:fontFamily="@font/opensansregular"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="@dimen/general_text"
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:id="@+id/sumTot"
+                        android:fontFamily="@font/opensanssight"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="@dimen/general_text"
+                        />
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="6dp"
+
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/view"
+                        android:src="@drawable/viewless"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:id="@+id/completeViewTot"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Efectivo"
+                            android:fontFamily="@font/opensansregular"
+                            android:textColor="@color/FishyLetraDark"
+                            android:textSize="@dimen/general_text"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:id="@+id/sumTotCash"
+                            android:fontFamily="@font/opensanssight"
+                            android:textColor="@color/FishyLetraDark"
+                            android:textSize="@dimen/general_text"
+                            />
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Tarjeta"
+                            android:fontFamily="@font/opensansregular"
+                            android:textColor="@color/FishyLetraDark"
+                            android:textSize="@dimen/general_text"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:id="@+id/sumTotCard"
+                            android:fontFamily="@font/opensanssight"
+                            android:textColor="@color/FishyLetraDark"
+                            android:textSize="@dimen/general_text"
+                            />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Transferencia"
+                            android:fontFamily="@font/opensansregular"
+                            android:textColor="@color/FishyLetraDark"
+                            android:textSize="@dimen/general_text"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:id="@+id/sumTotTrans"
+                            android:fontFamily="@font/opensanssight"
+                            android:textColor="@color/FishyLetraDark"
+                            android:textSize="@dimen/general_text"
+                            />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Total restante"
+                        android:fontFamily="@font/opensansregular"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="@dimen/general_text"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:id="@+id/sumPendient"
+
+                        android:fontFamily="@font/opensanssight"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="@dimen/general_text"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Total recaudado"
+                        android:fontFamily="@font/opensansregular"
+                        android:textColor="@color/FishyLetraDark"
+                        android:textSize="@dimen/general_text"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:id="@+id/sumDone"
+                        android:textColor="@color/FishyLetraDark"
+                        android:fontFamily="@font/opensanssight"
+
+                        android:textSize="@dimen/general_text"
+                        />
+
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+-->

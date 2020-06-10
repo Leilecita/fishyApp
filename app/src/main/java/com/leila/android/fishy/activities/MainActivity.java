@@ -44,6 +44,11 @@ public class MainActivity extends BaseActivity {
         setImageButton();
         setVisibilityButton();
 
+        Double d=1.03;
+        Double d2=510.0;
+
+        System.out.println("integer quantity"+getIntegerQuantityRounded(d+d2));
+
 
         for (int i = 0; i < mAdapter.getCount(); i++) {
             TabLayout.Tab tab = mTabLayout.getTabAt(i);
@@ -100,6 +105,61 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+
+    }
+
+
+
+    public Double roundTwoDecimals(double d)
+    {
+        double roundOff = (double) Math.round(d * 100) / 100;
+        return roundOff;
+    }
+
+    private String getIntegerQuantityRounded(Double val){
+
+        val=roundTwoDecimals(val);
+
+        String[] arr=String.valueOf(val).split("\\.");
+        int[] intArr=new int[2];
+
+        intArr[0]=Integer.parseInt(arr[0]);
+        intArr[1]=Integer.parseInt(arr[1]);
+
+
+        if(intArr[1] == 0){
+            return String.valueOf(intArr[0]);
+        }else{
+            return String.valueOf(val);
+        }
+
+    }
+
+    private String getIntegerQuantity(Double val){
+        String[] arr=String.valueOf(val).split("\\.");
+        int[] intArr=new int[2];
+
+        if(arr[1].length() > 2){
+
+            val=roundTwoDecimals(val);
+
+            String[] arrRounded=String.valueOf(val).split("\\.");
+
+            intArr[0]=Integer.parseInt(arrRounded[0]);
+            intArr[1]=Integer.parseInt(arrRounded[1]);
+
+        }else{
+
+            intArr[0]=Integer.parseInt(arr[0]);
+            intArr[1]=Integer.parseInt(arr[1]);
+        }
+
+
+        if(intArr[1] == 0){
+            return String.valueOf(intArr[0]);
+        }else{
+            return String.valueOf(val);
+        }
 
     }
     private void setTextByPosition(TextView t, Integer i) {

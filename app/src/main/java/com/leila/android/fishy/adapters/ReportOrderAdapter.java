@@ -3,6 +3,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -101,6 +102,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
         public TextView time;
         public TextView debt_value;
+        public ImageView payment;
 
         public ViewHolder(View v){
             super(v);
@@ -121,6 +123,7 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             time=v.findViewById(R.id.time);
             cardView=v.findViewById(R.id.card_view);
             debt_value=v.findViewById(R.id.debt_value);
+            payment=v.findViewById(R.id.card);
 
         }
 
@@ -248,12 +251,24 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         if(!mOnlyAdress){
 
             if(r.payment_method.equals(Constants.TYPE_PAYMENT_CARD)){
+                holder.payment.setImageResource(R.drawable.card);
 
             }else if(r.payment_method.equals(Constants.TYPE_PAYMENT_TRANSFER)){
-
+                holder.payment.setImageResource(R.drawable.transf);
+                holder.payment.setColorFilter(mContext.getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+            }else{
+                holder.payment.setImageResource(R.drawable.money_dor);
             }
+
+            holder.payment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext,"Abona con "+r.payment_method,Toast.LENGTH_SHORT).show();
+                }
+            });
+
             if(r.debt_value != null){
-                if (Double.compare(r.debt_value, 0.0) > 0) {
+                if (Double.compare(r.debt_value, 0.0) > 0 ) {
 
                     holder.debt_value.setVisibility(View.VISIBLE);
                     holder.debt_value.setText("$ "+String.valueOf(r.debt_value));
@@ -274,7 +289,10 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                 holder.money.setVisibility(View.GONE);
             }else{
                 holder.money.setVisibility(View.VISIBLE);
-                holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money_dor));
+               // holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.debt77));
+                holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.debtbols));
+
+                holder.money.setColorFilter(mContext.getResources().getColor(R.color.colorAccent));
             }
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -392,6 +410,8 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             public void onSuccess(Order data) {
                 r.state=data.state;
                 updateItem(position,r);
+
+                EventBus.getDefault().post(new EventListUsersState());
                 EventBus.getDefault().post(new EventOrderState(data.id,"finish",r.deliver_date));
 
                 if(onOrderFragmentLister!=null){

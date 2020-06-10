@@ -305,6 +305,7 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
     public void onEvent(EventListUsersState event){
         clearview();
         listUsers(mQuery);
+        loadCantOrdersPendient();
     }
 
 

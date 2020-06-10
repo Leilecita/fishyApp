@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -276,17 +277,23 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         final CheckBox check_ef = dialogView.findViewById(R.id.check_ef);
         final CheckBox check_card = dialogView.findViewById(R.id.check_card);
         final CheckBox check_trans = dialogView.findViewById(R.id.check_trans);
+        final ImageView tranf = dialogView.findViewById(R.id.tranf);
+        tranf.setColorFilter(this.getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
 
         if(mEdithOrder){
             if(mOrder.payment_method.equals(PaymentMethodType.CARD.getName())){
                 check_card.setChecked(true);
+                payment_image.setImageResource(R.drawable.card);
                 check_trans.setChecked(false);
                 check_ef.setChecked(false);
             }else if(mOrder.payment_method.equals(PaymentMethodType.CASH.getName())){
+                payment_image.setImageResource(R.drawable.money_dor);
                 check_ef.setChecked(true);
                 check_card.setChecked(false);
                 check_trans.setChecked(false);
             }else{
+                payment_image.setImageResource(R.drawable.transf);
+                payment_image.setColorFilter(getResources().getColor(R.color.colorAccent));
                 check_trans.setChecked(true);
                 check_card.setChecked(false);
                 check_ef.setChecked(false);
@@ -297,6 +304,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(check_ef.isChecked()){
+                    payment_image.setImageResource(R.drawable.money_dor);
                     check_ef.setChecked(true);
                     check_card.setChecked(false);
                     check_trans.setChecked(false);
@@ -311,6 +319,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(check_card.isChecked()){
+                    payment_image.setImageResource(R.drawable.card);
                     check_card.setChecked(true);
                     check_trans.setChecked(false);
                     check_ef.setChecked(false);
@@ -325,6 +334,8 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(check_trans.isChecked()){
+                    payment_image.setImageResource(R.drawable.transf);
+                    payment_image.setColorFilter(getResources().getColor(R.color.colorAccent));
                     check_trans.setChecked(true);
                     check_card.setChecked(false);
                     check_ef.setChecked(false);
@@ -421,6 +432,18 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
                     mTextObservationOrder.setText(mObservation_order);
                     deliverDate.setText(mDeliverDate);
                     userName.setText(getIntent().getStringExtra("USERNAME"));
+                    mPaymentMethod.setText(data.payment_method);
+                    deliveryTime.setText(data.delivery_time);
+
+                    if(data.payment_method.equals(Constants.TYPE_PAYMENT_TRANSFER)){
+                        payment_image.setImageResource(R.drawable.transf);
+                        payment_image.setColorFilter(getResources().getColor(R.color.colorAccent));
+
+                    }else if(data.payment_method.equals(Constants.TYPE_PAYMENT_CARD)){
+                        payment_image.setImageResource(R.drawable.card);
+                    }else{
+                        payment_image.setImageResource(R.drawable.money_dor);
+                    }
                 }
 
                 @Override

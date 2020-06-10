@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hadiidbouk.charts.BarData;
+import com.hadiidbouk.charts.ChartProgressBar;
 import com.leila.android.fishy.Events.EventOrderState;
 import com.leila.android.fishy.R;
 
@@ -41,7 +43,7 @@ public class StatisticsActivity extends BaseActivity {
 
     @Override
     public int getLayoutRes() {
-        return R.layout.estadisitcas_recycler;
+        return R.layout.statistics_act;
     }
 
     private RecyclerView mRecyclerView;
@@ -64,6 +66,8 @@ public class StatisticsActivity extends BaseActivity {
     private TextView textRent;
     private TextView textFish;
 
+    public ChartProgressBar chart;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +87,7 @@ public class StatisticsActivity extends BaseActivity {
 
         textIntoCircle=findViewById(R.id.textIntoCircle);
 
-        bottom_sheet = findViewById(R.id.bottom_sheet);
+       /* bottom_sheet = findViewById(R.id.bottom_sheet);
         final ImageView btn_bottom_sheet = findViewById(R.id.btn_bottom_sheet);
 
         sheetBehavior = BottomSheetBehavior.from(bottom_sheet);
@@ -133,7 +137,7 @@ public class StatisticsActivity extends BaseActivity {
             public void onSlide(@NonNull View view, float v) {
 
             }
-        });
+        });*/
 
         final FitChart fitChart = (FitChart)findViewById(R.id.fitChart);
 
@@ -147,6 +151,32 @@ public class StatisticsActivity extends BaseActivity {
         values.add(new FitChartValue(15f, 3));
         values.add(new FitChartValue(10f, 4));
         fitChart.setValues(values);
+
+
+        //-----
+
+        chart=this.findViewById(R.id.ChartProgressBar);
+
+        ArrayList<BarData> dataList = new ArrayList<>();
+        BarData data = new BarData();
+        Double maxValue=0.0;
+
+         /* for(int i=0;i < infoYear.listMonths.size(); ++i){
+            String monthToShow= DateHelper.get().getNameMonth(infoYear.listMonths.get(i).month);
+            data = new BarData(monthToShow.substring(0,3), infoYear.listMonths.get(i).outcomes.floatValue(),
+                    "tot "+ValuesHelper.get().getIntegerQuantity(infoYear.listMonths.get(i).outcomes));
+            dataList.add(data);
+
+            if(infoYear.listMonths.get(i).outcomes> maxValue){
+                maxValue=infoYear.listMonths.get(i).outcomes;
+            }
+        }*/
+
+        chart.setMaxValue(maxValue.floatValue());
+        chart.setDataList(dataList);
+
+        chart.build();
+
     }
 
 

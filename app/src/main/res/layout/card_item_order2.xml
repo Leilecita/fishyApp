@@ -18,54 +18,73 @@
         android:layout_height="wrap_content"
         >
 
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:id="@+id/stateImage"
-            android:layout_alignParentRight="true"
-            android:layout_margin="4dp"
-            android:src="@drawable/pendien_dor_dark"/>
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:id="@+id/factura"
-            android:layout_toLeftOf="@id/stateImage"
-
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:layout_margin="4dp"
-            android:src="@drawable/factura_dor"/>
-
-
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-
-            android:id="@+id/money"
-            android:layout_toLeftOf="@id/debt_value"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:src="@drawable/money_dor"/>
-
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:id="@+id/debt_value"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:paddingTop="2dp"
+            android:layout_alignParentRight="true"
             android:gravity="center_vertical"
-            android:textColor="@color/rojo"
-            android:layout_toLeftOf="@id/factura"
-            android:textSize="18sp"
-            android:text="190"
-            />
+            android:orientation="horizontal"
+            android:layout_height="30dp">
+
+
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:id="@+id/factura"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_margin="4dp"
+                android:src="@drawable/factura_dor"/>
+
+
+
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:id="@+id/money"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/debtbols"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/debt_value"
+                android:layout_gravity="center"
+
+                android:visibility="gone"
+                android:gravity="center_vertical"
+                android:textColor="@color/rojo"
+                android:layout_marginRight="4dp"
+                android:textSize="18sp"
+                android:text="$190"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="2dp"
+                android:id="@+id/card"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:src="@drawable/card"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:id="@+id/stateImage"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:padding="2dp"
+                android:src="@drawable/pendien_dor_dark"/>
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -234,3 +253,59 @@
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
+<!--
+<ImageView
+            android:layout_width="30dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:id="@+id/card"
+            android:layout_toLeftOf="@id/stateImage"
+            android:layout_margin="4dp"
+            android:src="@drawable/card"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:id="@+id/stateImage"
+            android:layout_alignParentRight="true"
+            android:layout_margin="4dp"
+            android:src="@drawable/pendien_dor_dark"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:id="@+id/factura"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/factura_dor"/>
+
+
+
+        <ImageView
+            android:layout_width="23dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:id="@+id/money"
+            android:layout_toLeftOf="@id/card"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/debt77"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/debt_value"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:paddingTop="2dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/rojo"
+            android:layout_toLeftOf="@id/card"
+            android:textSize="18sp"
+            android:text="190"
+            />
+-->

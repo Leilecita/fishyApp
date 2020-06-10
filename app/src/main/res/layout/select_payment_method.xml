@@ -38,12 +38,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:layout_height="wrap_content">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1.4"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/money_dor"/>
 
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -53,13 +63,14 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
+
+
                     <TextView
                         android:id="@+id/text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/opensanssight"
                         android:gravity="center"
-                        android:padding="2dp"
                         android:text="Efectivo"
                         android:textColor="@color/FishyLetraDark"
                         android:textSize="@dimen/general_text" />
@@ -94,7 +105,18 @@
                 android:layout_height="wrap_content">
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1.4"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/card"/>
 
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_weight="1"
@@ -107,7 +129,6 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/FishyLetraDark"
                         android:text="Tarjeta"
-                        android:padding="2dp"
                         android:id="@+id/wholesaler_price"
                         android:gravity="center"
                         android:fontFamily="@font/opensanssight"
@@ -145,7 +166,19 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1.4"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:id="@+id/tranf"
+                        android:layout_height="20dp"
+                        android:src="@drawable/transf"/>
 
+                </LinearLayout>
 
 
                 <LinearLayout
@@ -160,7 +193,6 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/FishyLetraDark"
                         android:text="Transferencia"
-                        android:padding="2dp"
                         android:gravity="center"
                         android:fontFamily="@font/opensanssight"
                         android:layout_gravity="center"
@@ -194,7 +226,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
 
