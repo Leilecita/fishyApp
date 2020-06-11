@@ -29,19 +29,21 @@
         android:layout_below="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
+        android:paddingBottom="20dp"
         />
 
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rec_edit"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginBottom="10dp"
+        android:layout_height="35dp"
+        android:background="@drawable/rec_chip_info"
+        android:backgroundTint="@color/colorPrimaryDarkTab"
+        android:paddingLeft="8dp"
+        android:gravity="center_vertical"
+        android:paddingRight="8dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
         android:orientation="horizontal">
         <LinearLayout
             android:layout_width="wrap_content"
@@ -51,6 +53,7 @@
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:id="@+id/pends"
                 android:src="@drawable/pendien_dor_dark"
                 android:layout_gravity="center_vertical"
                 />
@@ -64,7 +67,7 @@
                 android:layout_marginLeft="4dp"
                 android:id="@+id/pendients"
                 android:textSize="16sp"
-                android:textColor="@color/FishyLetraDark"
+                android:textColor="@color/white"
                 android:text=""
 
                 />
@@ -77,6 +80,8 @@
             android:layout_width="wrap_content"
             android:id="@+id/line_debt"
             android:visibility="gone"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
             android:padding="2dp"
             android:layout_height="match_parent">
 
@@ -89,18 +94,17 @@
                 android:textSize="18sp"
                 android:paddingBottom="2dp"
                 android:paddingLeft="2dp"
-                android:textColor="@color/rojo"
-                android:text="$"
+                android:textColor="@color/white"
+                android:text="-$"
 
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="2dp"
                 android:id="@+id/total_debt"
                 android:textSize="16sp"
-                android:textColor="@color/rojo"
+                android:textColor="@color/white"
                 android:text="123123"
 
                 />

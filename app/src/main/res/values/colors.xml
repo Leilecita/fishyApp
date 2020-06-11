@@ -10,7 +10,18 @@
     <color name="colorPrimary">#103041</color>
     <color name="colorPrimaryDark">#204058</color>
 
+    <color name="colorPrimaryDarkTab">#DA103041</color>
+
+
     <color name="colorAccent">#7F7359</color>
+
+    <color name="color1">#346990</color>
+    <color name="color2">#204058</color>
+    <color name="color3">#2e5b7d</color>
+    <color name="color31">#3D6685</color>
+    <color name="color4">#4F88B4</color>
+    <color name="color5">#477DA7</color>
+
     <color name="colorAccentClear">#ADA38C</color>
 
     <!--<color name="colorDialogButton"> #7a47b1</color>

@@ -42,6 +42,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -56,6 +57,9 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
     private Context mContext;
     private ArrayAdapter<String> adapter;
     private boolean validateNeigh;
+
+    List<Integer> listColor=new ArrayList<>();
+    Random random;
 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -73,7 +77,15 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         setItems(users);
         mContext = context;
         validateNeigh=false;
+        listColor.add(mContext.getResources().getColor(R.color.color1));
+        listColor.add(mContext.getResources().getColor(R.color.color2));
+        listColor.add(mContext.getResources().getColor(R.color.color31));
+        listColor.add(mContext.getResources().getColor(R.color.color3));
+        listColor.add(mContext.getResources().getColor(R.color.color4));
+        listColor.add(mContext.getResources().getColor(R.color.color5));
 
+
+        random=new Random();
     }
 
     @Subscribe
@@ -148,7 +160,8 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         String firstLetter = String.valueOf(user.name.charAt(0));
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         // generate random color
-        int color = generator.getColor(user);
+       // int color = generator.getColor(user);
+        int color = listColor.get(random.nextInt(listColor.size()));
         //int color = generator.getRandomColor();
         TextDrawable drawable = TextDrawable.builder()
                 .beginConfig()

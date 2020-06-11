@@ -3,6 +3,7 @@ package com.leila.android.fishy.Fragments;
 import android.Manifest;
 import android.app.DatePickerDialog;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -125,6 +127,11 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
         final Spinner spinnerTime = mRootView.findViewById(R.id.spinner_time);
         pendients_order = mRootView.findViewById(R.id.pendients);
         sends_order = mRootView.findViewById(R.id.sends);
+
+        ImageView sends = mRootView.findViewById(R.id.sendsim);
+        ImageView pends = mRootView.findViewById(R.id.pendsim);
+        sends.setColorFilter(this.getResources().getColor(R.color.white));
+        pends.setColorFilter(this.getResources().getColor(R.color.white));
 
 
         registerForContextMenu(mRecyclerView);

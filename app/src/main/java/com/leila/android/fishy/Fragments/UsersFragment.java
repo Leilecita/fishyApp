@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.UUID;
 
 import android.support.v7.widget.SearchView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,6 +104,9 @@ public class UsersFragment extends BaseFragment implements Paginate.Callbacks{
         registerForContextMenu(mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
         setHasOptionsMenu(true);
+
+        ImageView pends = mRootView.findViewById(R.id.pends);
+        pends.setColorFilter(this.getResources().getColor(R.color.white));
 
         pendients=mRootView.findViewById(R.id.pendients);
         lineDebt=mRootView.findViewById(R.id.line_debt);
