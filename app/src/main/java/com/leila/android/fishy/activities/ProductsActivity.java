@@ -18,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,10 +34,13 @@ import com.leila.android.fishy.adapters.ProductAdapter;
 import com.leila.android.fishy.network.ApiClient;
 import com.leila.android.fishy.network.Error;
 import com.leila.android.fishy.network.GenericCallback;
+import com.leila.android.fishy.network.models.Neighborhood;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.network.models.ReportCategory;
 import com.leila.android.fishy.network.models.ReportProduct;
 import com.paginate.Paginate;
 import com.paginate.recycler.LoadingListItemSpanLookup;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +65,9 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
     private String mQuery = "";
     private String token = "";
 
+    private List<String> mCategories;
+    private ArrayAdapter<String> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +80,20 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new ProductAdapter(this, new ArrayList<ReportProduct>());
         mRecyclerView.setAdapter(mAdapter);
-        //registerForContextMenu(mRecyclerView);
+       // registerForContextMenu(mRecyclerView);
 
-        FloatingActionButton addProduct= findViewById(R.id.add_product);
+
+         final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
+          mRecyclerView.addItemDecoration(headersDecor);
+
+           mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+
+                     @Override public void onChanged() {
+                         headersDecor.invalidateHeaders();
+                     }
+          });
+
+           FloatingActionButton addProduct= findViewById(R.id.add_product);
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,13 +101,12 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
             }
         });
 
-        loadingInProgress=false;
-        mCurrentPage=0;
-        hasMoreItems = true;
 
-        registerForContextMenu(mRecyclerView);
-       //setHasOptionsMenu(true);
+        listProductCategories();
+
         implementsPaginate();
+
+
 
     }
 
@@ -134,8 +152,8 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
             @Override
             public boolean onQueryTextChange(String newText) {
                 if(!newText.trim().toLowerCase().equals(mQuery)) {
-                    mCurrentPage = 0;
-                    mAdapter.clear();
+
+                    clearview();
                     listProducts(newText.trim().toLowerCase());
                 }
                 return false;
@@ -146,6 +164,30 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
         return true;
     }
 
+    private List<String> createArray(List<ReportCategory> list){
+        List<String> listN=new ArrayList<>();
+        for(int i=0; i < list.size();++i){
+            if(list.get(i) != null && list.get(i).category != null){
+                listN.add(list.get(i).category);
+            }
+        }
+        return listN;
+    }
+
+    private void listProductCategories(){
+
+       ApiClient.get().getCategories(new GenericCallback<List<ReportCategory>>() {
+           @Override
+           public void onSuccess(List<ReportCategory> data) {
+               mCategories =createArray(data);
+           }
+
+           @Override
+           public void onError(Error error) {
+
+           }
+       });
+    }
 
     private void createProduct(){
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -154,6 +196,7 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
         final View dialogView = inflater.inflate(R.layout.dialog_create_product, null);
         builder.setView(dialogView);
 
+
         final TextView name= dialogView.findViewById(R.id.product_name);
         final EditText price= dialogView.findViewById(R.id.product_price);
         final EditText wholsaler_price= dialogView.findViewById(R.id.wholesaler_price);
@@ -161,6 +204,26 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
         final TextView cost= dialogView.findViewById(R.id.product_cost);
         final Button ok= dialogView.findViewById(R.id.ok);
         final TextView cancel= dialogView.findViewById(R.id.cancel);
+        final AutoCompleteTextView category = dialogView.findViewById(R.id.product_category);
+
+        adapter = new ArrayAdapter<String>(getBaseContext(),
+                android.R.layout.simple_dropdown_item_1line, mCategories);
+        category.setThreshold(1);
+        category.setAdapter(adapter);
+        category.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    String val = category.getText() + "";
+                    if(mCategories.contains(val)){
+                       // validateNeighbor=true;
+                    }else{
+                        //validateNeighbor=false;
+                       // category.setError("Categoria inválida");
+                    }
+                }
+            }
+        });
 
         final AlertDialog dialog = builder.create();
         ok.setOnClickListener(new View.OnClickListener() {
@@ -172,10 +235,11 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
                 String stockProduct=stock.getText().toString().trim();
                 String nameProduct=name.getText().toString().trim();
                 String costProduct=cost.getText().toString().trim();
+                String cat = category.getText().toString().trim();
 
                 if(!priceProduct.matches("") && !stockProduct.matches("") && !nameProduct.matches("") && !wholsaerPriceProduct.matches("")){
 
-                        Product newProduct= new Product(nameProduct,Double.valueOf(priceProduct),Double.valueOf(wholsaerPriceProduct),Double.valueOf(stockProduct),Double.valueOf(costProduct));
+                        Product newProduct= new Product( cat,nameProduct,Double.valueOf(priceProduct),Double.valueOf(wholsaerPriceProduct),Double.valueOf(stockProduct),Double.valueOf(costProduct));
                         ApiClient.get().postProduct(newProduct, new GenericCallback<Product>() {
                             @Override
                             public void onSuccess(Product data) {
@@ -214,7 +278,7 @@ public class ProductsActivity extends BaseActivity implements Paginate.Callbacks
         this.mQuery = query;
         final String newToken = UUID.randomUUID().toString();
         this.token =  newToken;
-        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive",mQuery, new GenericCallback<List<ReportProduct>>() {
+        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive",mQuery, "",new GenericCallback<List<ReportProduct>>() {
             @Override
             public void onSuccess(List<ReportProduct> data) {
 

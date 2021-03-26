@@ -10,6 +10,7 @@ public class ItemOrder {
     public Long order_id;
     public Double quantity;
     public String created;
+    public String category;
     public String product_name;
     public Double product_cost;
     public String price_type;
@@ -17,7 +18,8 @@ public class ItemOrder {
 
     public String new_version;
 
-    public ItemOrder(Long product_id, Long order_id, Double quantity,String product_name,String price_type,Double price, Double product_cost){
+    public ItemOrder(String cat,Long product_id, Long order_id, Double quantity,String product_name,String price_type,Double price, Double product_cost){
+        this.category = cat;
         this.product_id=product_id;
         this.order_id=order_id;
         this.quantity=quantity;

@@ -52,6 +52,8 @@
         </LinearLayout>
 
 
+
+
         <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
@@ -87,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Pescado"
+                    android:text=""
                     android:fontFamily="@font/opensansregular"
 
                     android:textSize="17sp"
@@ -123,8 +125,9 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list_summary"
                 android:layout_below="@+id/line1"
-                android:layout_margin="3dp"
                 android:layout_width="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
                 android:layout_height="match_parent"
                 android:paddingBottom="6dp"
                 />

@@ -14,7 +14,7 @@
 
         <RelativeLayout
             android:layout_width="50dp"
-            android:paddingLeft="12dp"
+            android:paddingLeft="6dp"
             android:orientation="vertical"
             android:layout_height="wrap_content">
             <TextView
@@ -68,7 +68,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_weight="1.8"
+            android:layout_weight="1.6"
             android:id="@+id/value"
             android:text=""
             android:gravity="right"

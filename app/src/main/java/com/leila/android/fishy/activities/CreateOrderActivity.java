@@ -24,6 +24,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EdgeEffect;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,8 +34,10 @@ import com.leila.android.fishy.CustomLoadingListItemCreator;
 import com.leila.android.fishy.DialogHelper;
 import com.leila.android.fishy.Events.EventOrderState;
 import com.leila.android.fishy.Interfaces.OnAddItemListener;
+import com.leila.android.fishy.Interfaces.OnCategoryListener;
 import com.leila.android.fishy.Interfaces.OnStartActivity;
 import com.leila.android.fishy.R;
+import com.leila.android.fishy.adapters.CategoryAdapter;
 import com.leila.android.fishy.adapters.ItemOrderAdapter;
 import com.leila.android.fishy.adapters.ProductOrderAdapter;
 import com.leila.android.fishy.network.ApiClient;
@@ -43,6 +47,7 @@ import com.leila.android.fishy.network.models.AmountResult;
 import com.leila.android.fishy.network.models.ItemOrder;
 import com.leila.android.fishy.network.models.Order;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.network.models.ReportCategory;
 import com.leila.android.fishy.network.models.ReportProduct;
 import com.leila.android.fishy.network.models.User;
 import com.leila.android.fishy.network.models.reportsOrder.ReportOrder;
@@ -59,7 +64,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class CreateOrderActivity extends BaseActivity implements Paginate.Callbacks,OnAddItemListener,OnStartActivity {
+public class CreateOrderActivity extends BaseActivity implements Paginate.Callbacks,OnAddItemListener,OnStartActivity,OnCategoryListener {
 
     String mDeliverDate;
     String mDeliveryTime;
@@ -70,16 +75,33 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
     TextView deliveryTime;
     TextView userName;
 
+    ImageView discount;
+
     ImageView observation_order;
     ImageView date_image;
     ImageView payment_image;
     ImageView time_image;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView mItemRecyclerView;
+    private ProductOrderAdapter mAdapter;
+    private ItemOrderAdapter mItemAdapter;
+    private GridLayoutManager gridlayoutmanager;
+
+    private RecyclerView.LayoutManager layoutManagerItem;
+
+
 
     TextView mPaymentMethod;
     TextView mTextObservationOrder;
 
     TextView totalAmount;
     boolean mEdithOrder;
+    String mCategory;
+
+    private RecyclerView mCategoryRecyclerview;
+    private CategoryAdapter mCategoryAdapter;
+    private RecyclerView.LayoutManager layoutManagerCategory;
 
     //pagination
     private boolean loadingInProgress;
@@ -88,6 +110,23 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
     private boolean hasMoreItems;
 
     private PaymentMethodType selectedMethodPayment = PaymentMethodType.CASH;
+
+    public void onCategoryListener(String cat){
+
+        if(cat.equals("Todas")){
+            mCategory = "";
+        }else{
+            mCategory = cat;
+        }
+
+        clearview();
+    }
+
+    private void clearview(){
+        mCurrentPage = 0;
+        mAdapter.clear();
+        hasMoreItems=true;
+    }
 
     public void onStartProducts(Long id_product){
         Intent intent = new Intent(this, ProductsActivity.class);
@@ -109,7 +148,6 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         }
     }
 
-
     public static void start(Context mContext, User user){
         Intent i=new Intent(mContext, CreateOrderActivity.class);
         i.putExtra("ID",user.id);
@@ -129,22 +167,35 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
 
     @Override
     public int getLayoutRes() {
-        return R.layout.activity_create_order;
+        return R.layout.acti_create_order_3;
     }
-
-    private RecyclerView mRecyclerView;
-    private RecyclerView mItemRecyclerView;
-    private ProductOrderAdapter mAdapter;
-    private ItemOrderAdapter mItemAdapter;
-    private GridLayoutManager gridlayoutmanager;
-
-    private RecyclerView.LayoutManager layoutManagerItem;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         showBackArrow();
+
+        mCategory = "";
+        mCategoryRecyclerview = this.findViewById(R.id.list_cat);
+        layoutManagerCategory = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mCategoryRecyclerview.setLayoutManager(layoutManagerCategory);
+        mCategoryAdapter = new CategoryAdapter(this, new ArrayList<ReportCategory>());
+        mCategoryRecyclerview.setAdapter(mCategoryAdapter);
+        mCategoryAdapter.setOnCategoryListener(this);
+
+        getCategories();
+
+        discount = this.findViewById(R.id.discount);
+        discount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mOrder.discount >0){
+                   dialogExistDiscount();
+                }else{
+                    selectDiscount();
+                }
+            }
+        });
 
         time_image=this.findViewById(R.id.time_image);
         date_image=this.findViewById(R.id.date_image);
@@ -217,6 +268,130 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
             }
         });
     }
+
+    private void selectDiscount(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.select_discount, null);
+        builder.setView(dialogView);
+
+        final EditText percentage_value = dialogView.findViewById(R.id.percentage);
+        final CheckBox check_10 = dialogView.findViewById(R.id.check_10);
+        final CheckBox check_20 = dialogView.findViewById(R.id.check_20);
+        final TextView cancel = dialogView.findViewById(R.id.cancel);
+        final Button ok = dialogView.findViewById(R.id.ok);
+
+        check_10.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(check_10.isChecked()){
+                    check_10.setChecked(true);
+                    check_20.setChecked(false);
+                    percentage_value.setText("10");
+                }else{
+                    check_10.setChecked(false);
+                }
+            }
+        });
+
+        check_20.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(check_20.isChecked()){
+                    check_20.setChecked(true);
+                    check_10.setChecked(false);
+
+                    percentage_value.setText("20");
+                }else{
+                    check_20.setChecked(false);
+                }
+            }
+        });
+
+
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!percentage_value.getText().toString().trim().matches("")) {
+
+                    final Double disc =  Double.valueOf(percentage_value.getText().toString().trim());
+
+                    ApiClient.get().applyDiscount(mOrder.id, disc, new GenericCallback<ItemOrder>() {
+                        @Override
+                        public void onSuccess(ItemOrder data) {
+                            Toast.makeText(getBaseContext() ,"El descuento a sido aplicado",Toast.LENGTH_LONG).show();
+                            //reloadItems();
+                            mItemAdapter.pushItem(data);
+                            Double d = Double.valueOf(totalAmount.getText().toString().trim());
+                            totalAmount.setText(String.valueOf(d+data.price));
+                            mOrder.discount = disc;
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            Toast.makeText(getBaseContext() ,"Error al aplicar descuento",Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                    dialog.dismiss();
+
+                }else{
+                    Toast.makeText(getBaseContext() ,"Dato inválido",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    private void getCategories(){
+
+        ApiClient.get().getCategories(new GenericCallback<List<ReportCategory>>() {
+            @Override
+            public void onSuccess(List<ReportCategory> data) {
+                ReportCategory r = new ReportCategory("Todas");
+                data.add(0,r);
+                mCategoryAdapter.setItems(data);
+            }
+
+            @Override
+            public void onError(Error error) {
+
+            }
+        });
+    }
+
+    private void dialogExistDiscount(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.exist_discount, null);
+        builder.setView(dialogView);
+
+
+        final TextView ok=  dialogView.findViewById(R.id.ok);
+        final AlertDialog dialog = builder.create();
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
+
     private void setObservation(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -458,7 +633,6 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
 
             createOrder();
         }
-
     }
 
     private void getAmount(){
@@ -500,15 +674,21 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
         listProducts();
     }
 
-    public void onAddItemToOrder(Long id,Long product_id,Long order_id, Double quantity,boolean create,String product_name
+    public void onAddItemToOrder(String cat,Long id,Long product_id,Long order_id, Double quantity,boolean create,String product_name
     ,String price_type, Double price, Double cost){
 
         if(create){
-            ItemOrder i=new ItemOrder(product_id,order_id,quantity,product_name,price_type,price,cost);
+            ItemOrder i=new ItemOrder(cat,product_id,order_id,quantity,product_name,price_type,price,cost);
             i.id=id;
             mItemAdapter.pushItem(i);
 
+        }else{
+            //esta borrando el item
+            if(cat.equals("Descuentos")){
+                mOrder.discount = 0d;
+            }
         }
+
         getAmount();
     }
 
@@ -549,6 +729,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
                 implementsPaginate();
                // listProducts();
             }
+
             @Override
             public void onError(Error error) {
 
@@ -558,7 +739,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
 
     private void listProducts() {
         loadingInProgress=true;
-        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive", "",new GenericCallback<List<ReportProduct>>() {
+        ApiClient.get().getAliveProductsByPage(mCurrentPage, "alive", "" , mCategory,new GenericCallback<List<ReportProduct>>() {
             @Override
             public void onSuccess(List<ReportProduct> data) {
                     mAdapter.setOrderId(mOrder.id);

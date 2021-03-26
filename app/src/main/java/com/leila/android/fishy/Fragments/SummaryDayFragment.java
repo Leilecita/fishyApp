@@ -27,6 +27,7 @@ import com.leila.android.fishy.network.GenericCallback;
 import com.leila.android.fishy.network.models.reportsOrder.SummaryDay;
 import com.leila.android.fishy.network.models.reportsOrder.ValuesDay;
 import com.leila.android.fishy.types.Constants;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -83,6 +84,16 @@ public class SummaryDayFragment extends BaseFragment {
         layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new ItemSummaryAdapter(getActivity(),new ArrayList<SummaryDay>());
+
+        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
+        mRecyclerView.addItemDecoration(headersDecor);
+
+        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+
+            @Override public void onChanged() {
+                headersDecor.invalidateHeaders();
+            }
+        });
 
 
         registerForContextMenu(mRecyclerView);
@@ -268,7 +279,6 @@ public class SummaryDayFragment extends BaseFragment {
                 }
             });
         }
-
     }
 
     @Override

@@ -357,8 +357,8 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
                         }
                     });
         }
-
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -374,9 +374,7 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
             loadValuesPendientsAndSend();
             listOrders("",CurrentValuesHelper.get().getLastZone(),CurrentValuesHelper.get().getLastTimeZone());
         }
-
     }
-
 
     @Override
     public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
@@ -473,8 +471,6 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
-
-
     private final static int RC_WRITE_PERMISSIONS = 132;
     private void checkPermissions(){
         if (!EasyPermissions.hasPermissions(getContext(), Manifest.permission.READ_SMS)) {
@@ -493,5 +489,4 @@ public class OrdersFragment extends BaseFragment implements Paginate.Callbacks,O
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         Log.d("PERMS", "onPermissionsDenied:" + requestCode + ":" + perms.size());
     }
-
 }

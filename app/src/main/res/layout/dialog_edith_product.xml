@@ -69,6 +69,47 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:paddingTop="16dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Categoria "
+                    android:padding="4dp"
+                    android:textSize="@dimen/general_text"
+                    android:textColor="@color/word" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:id="@+id/edith_category"
+                    android:layout_weight="1"
+                    android:layout_height="35dp"
+                    android:fontFamily="@font/opensanssight"
+                    android:paddingLeft="8dp"
+                    android:textSize="@dimen/general_text"
+                    android:textColor="@color/colorDialogButton"
+                    style="@style/Widget.Design.TextInputLayout"
+                    android:background="@drawable/rec_edit"
+                    android:inputType="textCapWords"
+
+                    />
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="12dp"
             android:orientation="vertical">

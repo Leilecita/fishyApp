@@ -23,6 +23,7 @@ public class ReportOrder {
 
     public Double debt_value;
     public String payment_method;
+    public Double discount;
 
     public String getUser_name() {
         return name;

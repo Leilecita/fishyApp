@@ -7,6 +7,8 @@ public class SummaryDay {
     public Double totalQuantity;
     public Double totalPrice;
 
+    public String category;
+
     public SummaryDay(Long idProduct,String nameProduct,Double totalQuantity,Double totalPrice ){
         this.productId=idProduct;
         this.nameProduct=nameProduct;

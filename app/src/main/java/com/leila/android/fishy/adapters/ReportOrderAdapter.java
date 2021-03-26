@@ -1,4 +1,5 @@
 package com.leila.android.fishy.adapters;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -20,12 +21,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.leila.android.fishy.DateHelper;
 import com.leila.android.fishy.DialogHelper;
 import com.leila.android.fishy.DownloadTask;
 import com.leila.android.fishy.Events.EventListUsersState;
@@ -36,6 +41,7 @@ import com.leila.android.fishy.Interfaces.OnStartDragListener;
 import com.leila.android.fishy.Interfaces.OrderFragmentListener;
 import com.leila.android.fishy.R;
 
+import com.leila.android.fishy.ValuesHelper;
 import com.leila.android.fishy.activities.CreateOrderActivity;
 import com.leila.android.fishy.network.ApiClient;
 import com.leila.android.fishy.network.ApiUtils;
@@ -45,6 +51,7 @@ import com.leila.android.fishy.network.models.Order;
 import com.leila.android.fishy.network.models.reportsOrder.ReportItemOrder;
 import com.leila.android.fishy.network.models.reportsOrder.ReportOrder;
 import com.leila.android.fishy.types.Constants;
+import com.leila.android.fishy.types.PaymentMethodType;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -62,6 +69,8 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
     private boolean mOnlyAdress;
     private boolean mHistoryuser;
     private  OnStartDragListener mDragStartListener;
+
+    private PaymentMethodType selectedMethodPayment = PaymentMethodType.CASH;
 
 
     private OrderFragmentListener onOrderFragmentLister= null;
@@ -103,6 +112,8 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         public TextView time;
         public TextView debt_value;
         public ImageView payment;
+        public LinearLayout line_discount;
+        public TextView discount;
 
         public ViewHolder(View v){
             super(v);
@@ -124,6 +135,8 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             cardView=v.findViewById(R.id.card_view);
             debt_value=v.findViewById(R.id.debt_value);
             payment=v.findViewById(R.id.card);
+            discount = v.findViewById(R.id.discount);
+            line_discount = v.findViewById(R.id.line_discount);
 
         }
 
@@ -225,9 +238,10 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         }
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         clearViewHolder(holder);
         final ReportOrder r= getItem(position);
 
@@ -239,20 +253,23 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.done_doble));
         }else{
             holder.stateImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.borrador2));
-            //holder.state.setTextColor(mContext.getResources().getColor(R.color.borrador));
         }
 
         if(!r.delivery_time.equals("Horario")){
             holder.horario.setText(r.delivery_time);
         }
 
-
-
         if(!mOnlyAdress){
+
+             if(r.discount > 0){
+                holder.line_discount.setVisibility(View.VISIBLE);
+                holder.discount.setText("-"+ValuesHelper.get().getIntegerQuantity(r.discount));
+             }else{
+                holder.line_discount.setVisibility(View.GONE);
+             }
 
             if(r.payment_method.equals(Constants.TYPE_PAYMENT_CARD)){
                 holder.payment.setImageResource(R.drawable.card);
-
             }else if(r.payment_method.equals(Constants.TYPE_PAYMENT_TRANSFER)){
                 holder.payment.setImageResource(R.drawable.transf);
                 holder.payment.setColorFilter(mContext.getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
@@ -263,15 +280,15 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             holder.payment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext,"Abona con "+r.payment_method,Toast.LENGTH_SHORT).show();
+                    selectPaymentMethod(r,holder,position);
                 }
             });
 
             if(r.debt_value != null){
-                if (Double.compare(r.debt_value, 0.0) > 0 ) {
+                if (Double.compare(r.debt_value, 0.0) > 0  ) {
 
                     holder.debt_value.setVisibility(View.VISIBLE);
-                    holder.debt_value.setText("$ "+String.valueOf(r.debt_value));
+                    holder.debt_value.setText("$ "+r.total_amount);
                 }else{
                     holder.debt_value.setVisibility(View.GONE);
                 }
@@ -285,11 +302,9 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
             }
 
             if(r.defaulter.equals("true")){
-               // holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.money_roj));
                 holder.money.setVisibility(View.GONE);
             }else{
                 holder.money.setVisibility(View.VISIBLE);
-               // holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.debt77));
                 holder.money.setImageDrawable(mContext.getResources().getDrawable(R.drawable.debtbols));
 
                 holder.money.setColorFilter(mContext.getResources().getColor(R.color.colorAccent));
@@ -306,13 +321,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
                 @Override
                 public void onClick(View v) {
                     showDialogMoney(r,position);
-                }
-            });
-
-            holder.factura.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showDialogFactura(r,position);
                 }
             });
 
@@ -490,7 +498,8 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         name.setText(r.getUser_name());
         zone.setText(r.neighborhood);
         delivery_date.setText(r.deliver_date);
-        created.setText(serverToUserFormatted(r.order_created));
+       // created.setText(serverToUserFormatted(r.order_created));
+        created.setText(DateHelper.get().changeFormatDate(r.order_created));
 
         final AlertDialog dialog = builder.create();
 
@@ -567,9 +576,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         return cadena.toString();
     }
 
-
-
-
     private void sendWhatsapp(String text, String phone){
 
 
@@ -579,20 +585,6 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
         i.putExtra(Intent.EXTRA_TEXT,text);
         //i.setType("application/pdf");
         mContext.startActivity(Intent.createChooser(i, ""));
-    }
-
-    public String serverToUserFormatted(String date){
-
-        try {
-            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            format1.setTimeZone(TimeZone.getTimeZone("UTC"));
-            Date date1 = format1.parse(date);
-            format1.setTimeZone(TimeZone.getDefault());
-            return changeFormatDate(format1.format(date1));
-        }catch (ParseException e){
-
-        }
-        return "";
     }
 
 
@@ -606,23 +598,194 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
     }
 
+    private void showDialogMoney(final ReportOrder r,final Integer pos){
 
-    public String changeFormatDate(String date){
-        try {
-            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date1 = format1.parse(date);
-            SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.dialog_defaulter, null);
+        builder.setView(dialogView);
 
-            String stringdate2 = format2.format(date1);
-            return stringdate2;
+        final TextView cancel=  dialogView.findViewById(R.id.cancel);
+        final TextView text=  dialogView.findViewById(R.id.text);
+        final TextView title=  dialogView.findViewById(R.id.title);
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return "dd/MM/yyyy";
+        final EditText debt_value=  dialogView.findViewById(R.id.debt_value);
+        debt_value.setText(String.valueOf(r.total_amount));
+        final Button ok=  dialogView.findViewById(R.id.ok);
+
+        debt_value.setHint(String.valueOf(r.debt_value));
+
+        final AlertDialog dialog = builder.create();
+
+            ok.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+
+                    if (!debt_value.getText().toString().trim().equals("")) {
+
+                        final Double val = Double.valueOf(debt_value.getText().toString().trim());
+
+                        ApiClient.get().done_payment(r.order_id, "true", val, new GenericCallback<Order>() {
+                            @Override
+                            public void onSuccess(Order data) {
+                                r.defaulter = "true";
+                                r.debt_value=data.debt_value;
+                                updateItem(pos, r);
+                                EventBus.getDefault().post(new EventListUsersState());
+                            }
+
+                            @Override
+                            public void onError(Error error) {
+                                DialogHelper.get().showMessage("Error", "No se pudo realizar el movimiento", mContext);
+                            }
+                        });
+                        dialog.dismiss();
+
+                    } else {
+                        Toast.makeText(mContext, "Tipo de dato inválido", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ApiClient.get().done_payment(r.order_id, "false",0.0, new GenericCallback<Order>() {
+                    @Override
+                    public void onSuccess(Order data) {
+                        r.defaulter="false";
+                        r.debt_value=data.debt_value;
+                        updateItem(pos,r);
+
+                        EventBus.getDefault().post(new EventListUsersState());
+                    }
+                    @Override
+                    public void onError(Error error) {
+                        DialogHelper.get().showMessage("Error", "No se pudo realizar el movimiento",mContext);
+                    }
+                });
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
-    private void showDialogFactura(final ReportOrder r,final Integer pos){
+    private void selectPaymentMethod(final ReportOrder r, final ViewHolder holder, final Integer position){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.select_payment_method, null);
+        builder.setView(dialogView);
+
+        final CheckBox check_ef = dialogView.findViewById(R.id.check_ef);
+        final CheckBox check_card = dialogView.findViewById(R.id.check_card);
+        final CheckBox check_trans = dialogView.findViewById(R.id.check_trans);
+        final ImageView tranf = dialogView.findViewById(R.id.tranf);
+        tranf.setColorFilter(mContext.getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+
+        if(r.payment_method.equals(PaymentMethodType.CARD.getName())){
+            check_card.setChecked(true);
+            check_trans.setChecked(false);
+            selectedMethodPayment=PaymentMethodType.CARD;
+            check_ef.setChecked(false);
+        }else if(r.payment_method.equals(PaymentMethodType.CASH.getName())){
+            selectedMethodPayment=PaymentMethodType.CASH;
+            check_ef.setChecked(true);
+            check_card.setChecked(false);
+            check_trans.setChecked(false);
+        }else{
+            selectedMethodPayment=PaymentMethodType.TRANSFER;
+            check_trans.setChecked(true);
+            check_card.setChecked(false);
+            check_ef.setChecked(false);
+        }
+
+        check_ef.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(check_ef.isChecked()){
+                    check_ef.setChecked(true);
+                    check_card.setChecked(false);
+                    check_trans.setChecked(false);
+                    selectedMethodPayment=PaymentMethodType.CASH;
+                }else{
+                    check_ef.setChecked(false);
+                }
+            }
+        });
+
+        check_card.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(check_card.isChecked()){
+                    check_card.setChecked(true);
+                    check_trans.setChecked(false);
+                    check_ef.setChecked(false);
+                    selectedMethodPayment=PaymentMethodType.CARD;
+                }else{
+                    check_card.setChecked(false);
+                }
+            }
+        });
+
+        check_trans.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(check_trans.isChecked()){
+                    check_trans.setChecked(true);
+                    check_card.setChecked(false);
+                    check_ef.setChecked(false);
+                    selectedMethodPayment=PaymentMethodType.TRANSFER;
+                }else{
+                    check_trans.setChecked(false);
+                }
+            }
+        });
+
+
+        final TextView cancel=  dialogView.findViewById(R.id.cancel);
+        final Button ok=  dialogView.findViewById(R.id.ok);
+        final AlertDialog dialog = builder.create();
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+                    r.payment_method=selectedMethodPayment.getName();
+
+                    Order o=new Order();
+                    o.id=r.order_id;
+                    o.payment_method=r.payment_method;
+
+                    ApiClient.get().putOrder(o, new GenericCallback<Order>() {
+                        @Override
+                        public void onSuccess(Order data) {
+
+                            updateItem(position,r);
+
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            DialogHelper.get().showMessage("Error","No se pudo cargar la información",mContext);
+                        }
+                    });
+
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+    }
+}
+/*
+  private void showDialogFactura(final ReportOrder r,final Integer pos){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -680,80 +843,34 @@ public class ReportOrderAdapter extends  BaseAdapter<ReportOrder,ReportOrderAdap
 
     }
 
-    private void showDialogMoney(final ReportOrder r,final Integer pos){
+      public String serverToUserFormatted(String date){
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View dialogView = inflater.inflate(R.layout.dialog_defaulter, null);
-        builder.setView(dialogView);
+        try {
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            format1.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date date1 = format1.parse(date);
+            format1.setTimeZone(TimeZone.getDefault());
+            return changeFormatDate(format1.format(date1));
+        }catch (ParseException e){
 
-        final TextView cancel=  dialogView.findViewById(R.id.cancel);
-        final TextView text=  dialogView.findViewById(R.id.text);
-        final TextView title=  dialogView.findViewById(R.id.title);
-
-        final EditText debt_value=  dialogView.findViewById(R.id.debt_value);
-        final Button ok=  dialogView.findViewById(R.id.ok);
-
-        debt_value.setHint(String.valueOf(r.debt_value));
-
-        final AlertDialog dialog = builder.create();
-
-
-            ok.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-
-
-                    if (!debt_value.getText().toString().trim().equals("")) {
-
-                        final Double val = Double.valueOf(debt_value.getText().toString().trim());
-
-                        ApiClient.get().done_payment(r.order_id, "true", val, new GenericCallback<Order>() {
-                            @Override
-                            public void onSuccess(Order data) {
-                                r.defaulter = "true";
-                                r.debt_value=data.debt_value;
-                                updateItem(pos, r);
-
-                                EventBus.getDefault().post(new EventListUsersState());
-
-                            }
-
-                            @Override
-                            public void onError(Error error) {
-                                DialogHelper.get().showMessage("Error", "No se pudo realizar el movimiento", mContext);
-                            }
-                        });
-                        dialog.dismiss();
-
-                    } else {
-                        Toast.makeText(mContext, "Tipo de dato inválido", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ApiClient.get().done_payment(r.order_id, "false",0.0, new GenericCallback<Order>() {
-                    @Override
-                    public void onSuccess(Order data) {
-                        r.defaulter="false";
-                        r.debt_value=data.debt_value;
-                        updateItem(pos,r);
-
-                        EventBus.getDefault().post(new EventListUsersState());
-                    }
-                    @Override
-                    public void onError(Error error) {
-                        DialogHelper.get().showMessage("Error", "No se pudo realizar el movimiento",mContext);
-                    }
-                });
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        return "";
     }
-}
+
+
+    public String changeFormatDate(String date){
+        try {
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date1 = format1.parse(date);
+            SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+            String stringdate2 = format2.format(date1);
+            return stringdate2;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "dd/MM/yyyy";
+    }
+
+ */

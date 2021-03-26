@@ -7,6 +7,7 @@ import com.leila.android.fishy.network.models.Neighborhood;
 import com.leila.android.fishy.network.models.Order;
 import com.leila.android.fishy.network.models.Outcome;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.network.models.ReportCategory;
 import com.leila.android.fishy.network.models.ReportIncome;
 import com.leila.android.fishy.network.models.ReportOutcome;
 import com.leila.android.fishy.network.models.ReportProduct;
@@ -36,6 +37,9 @@ public interface APIService {
 
     @GET("items_order.php")
     Observable<Response<AmountResult>>  getAmountByOrder(@Query("method") String method, @Query("order_id") Long order_id);
+
+    @GET("orders.php")
+    Observable<Response<ItemOrder>>  applyDiscount(@Query("method") String method, @Query("order_id") Long order_id,  @Query("discount") Double discount );
 
     @GET("orders.php")
     Observable<Response<Order>>  finishOrder(@Query("method") String method, @Query("order_id") Long order_id);
@@ -80,7 +84,10 @@ public interface APIService {
     //PRODUCTS
 
     @GET("products.php")
-    Observable<Response<List<ReportProduct>>> getAliveProductsByPage(@Query("method") String method, @Query("page") Integer page, @Query("state") String state, @Query("query") String query);
+    Observable<Response<List<ReportCategory>>> getCategories(@Query("method") String method);
+
+    @GET("products.php")
+    Observable<Response<List<ReportProduct>>> getAliveProductsByPage(@Query("method") String method, @Query("page") Integer page, @Query("state") String state, @Query("query") String query, @Query("category") String category);
 
 
     @GET("products.php")
@@ -101,7 +108,7 @@ public interface APIService {
     Observable<Response<List<ItemOrder>>> getItemsOrder();
 
     @GET("items_order.php")
-    Observable<Response<List<ItemOrder>>> getItemsOrderByOrderId(@Query("order_id") Long id);
+    Observable<Response<List<ItemOrder>>> getItemsOrderByOrderId(@Query("method") String method, @Query("order_id") Long id);
 
     @GET("items_order.php")
     Observable<Response<ItemOrder>> getItemOrder(@Query("id") Long id);

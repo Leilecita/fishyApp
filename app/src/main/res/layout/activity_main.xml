@@ -33,23 +33,23 @@ android:background="#c2dbfd">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
-            android:layout_weight="1"
+
             android:background="@color/white_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_agregarTod"
             android:layout_weight="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="16dp"
 
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
 
             />
-
     </RelativeLayout>
 
 </FrameLayout>

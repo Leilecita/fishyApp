@@ -226,7 +226,7 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
 
                       //  ItemOrder itemOrder=new ItemOrder(p.id,mOrderId,Double.valueOf(fishQuantity)
 
-                        ItemOrder itemOrder=new ItemOrder(p.id,mOrderId,Double.valueOf(fishQuantity)
+                        ItemOrder itemOrder=new ItemOrder(p.category,p.id,mOrderId,Double.valueOf(fishQuantity)
                                 ,p.fish_name,getPriceTypeSelected(check_min,check_may),
                                 getPriceSelected(check_min,check_may,p),p.product_cost);
 
@@ -237,7 +237,7 @@ public class ProductOrderAdapter  extends BaseAdapter<ReportProduct,ProductOrder
                                     Toast.makeText(mContext, "Se ha agregado el producto "+name.getText().toString(),Toast.LENGTH_SHORT).show();
 
                                     if(onAddItemOrderLister!=null){
-                                        onAddItemOrderLister.onAddItemToOrder(data.id,data.product_id,data.order_id,data.quantity,true,
+                                        onAddItemOrderLister.onAddItemToOrder(data.category,data.id,data.product_id,data.order_id,data.quantity,true,
                                                 data.product_name,data.price_type,data.price,data.product_cost);
                                     }
                                 }

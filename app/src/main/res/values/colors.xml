@@ -77,6 +77,7 @@
     <color name="FishyBlueSoft">#2e566c</color>
     <color name="white">#ffffff</color>
     <color name="white_background">#F7F5F5</color>
+    <color name="white_background_transp">#C6F7F5F5</color>
     <color name="background">#F0EEEE</color>
 
    <color name="colorlineheader">#376983</color>

@@ -19,6 +19,10 @@ public class Order {
     public Double debt_value;
     public String payment_method;
 
+    public Double discount;
+
+    public Order(){}
+
     public Order(Long user_id, String deliver_date, String observation,String state,String delivery_time){
         this.user_id=user_id;
         this.deliver_date=deliver_date;

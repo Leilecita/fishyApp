@@ -7,6 +7,7 @@ package com.leila.android.fishy.network.models;
 public class Product {
 
     public Long id;
+    public String category;
     public String fish_name;
     public Double price;
     public Double wholesaler_price;
@@ -37,7 +38,9 @@ public class Product {
         this.stock = stock;
     }
 
-    public Product(String fish_name, Double price,Double wholesaler_price, Double stock,Double cost){
+    public Product(String category, String fish_name, Double price,Double wholesaler_price, Double stock,Double cost){
+
+        this.category=category;
         this.fish_name=fish_name;
         this.price=price;
         this.wholesaler_price=wholesaler_price;

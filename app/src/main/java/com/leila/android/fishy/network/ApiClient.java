@@ -9,6 +9,7 @@ import com.leila.android.fishy.network.models.Neighborhood;
 import com.leila.android.fishy.network.models.Order;
 import com.leila.android.fishy.network.models.Outcome;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.network.models.ReportCategory;
 import com.leila.android.fishy.network.models.ReportIncome;
 import com.leila.android.fishy.network.models.ReportOutcome;
 import com.leila.android.fishy.network.models.ReportProduct;
@@ -46,6 +47,10 @@ public class ApiClient {
         handleRequest( ApiUtils.getAPIService().getAmountByOrder("amount", order_id), callback);
     }
 
+    public void applyDiscount(Long order_id, Double discount,GenericCallback<ItemOrder> callback){
+        handleRequest( ApiUtils.getAPIService().applyDiscount("discount", order_id, discount), callback);
+    }
+
     public void finishOrder(Long order_id,GenericCallback<Order> callback){
         handleRequest( ApiUtils.getAPIService().finishOrder("finish", order_id), callback);
     }
@@ -57,7 +62,6 @@ public class ApiClient {
     public void done_payment(Long order_id,String state,Double debt_value,GenericCallback<Order> callback){
         handleRequest( ApiUtils.getAPIService().done_payment("done_payment",state, order_id,debt_value), callback);
     }
-
 
     public void getValuesOrderReport(String deliver_date,GenericCallback<ValuesOrderReport> callback){
         handleRequest( ApiUtils.getAPIService().getValuesOrdersReport("getOrdersValues", deliver_date), callback);
@@ -82,7 +86,6 @@ public class ApiClient {
     public void getValuesDay(String deliver_date,GenericCallback<ValuesDay> callback){
         handleRequest( ApiUtils.getAPIService().getValuesDay("summaryDayValues", deliver_date), callback);
     }
-
 
     public void updatePriority(Long order_id,Integer priority,GenericCallback<Order> callback){
         handleRequest( ApiUtils.getAPIService().updatePriority("priority", order_id,priority), callback);
@@ -111,12 +114,16 @@ public class ApiClient {
 
     //PRODUCTS
 
-    public void getAliveProductsByPage(Integer page,String state,String query,final GenericCallback<List<ReportProduct>> callback){
-        handleRequest( ApiUtils.getAPIService().getAliveProductsByPage("getProducts",page,state,query), callback);
+    public void getAliveProductsByPage(Integer page,String state,String query, String category,final GenericCallback<List<ReportProduct>> callback){
+        handleRequest( ApiUtils.getAPIService().getAliveProductsByPage("getProducts",page,state,query, category), callback);
     }
 
     public void getProduct(Long id,final GenericCallback<Product> callback){
         handleRequest( ApiUtils.getAPIService().getProduct(id), callback);
+    }
+
+    public void getCategories(final GenericCallback<List<ReportCategory>> callback){
+        handleRequest( ApiUtils.getAPIService().getCategories("getCategories"), callback);
     }
 
 
@@ -140,7 +147,7 @@ public class ApiClient {
     }
 
     public void getItemsOrderByOrderId(Long orderId, final GenericCallback<List<ItemOrder>> callback){
-        handleRequest( ApiUtils.getAPIService().getItemsOrderByOrderId(orderId), callback);
+        handleRequest( ApiUtils.getAPIService().getItemsOrderByOrderId("getItemsByOrderId",orderId), callback);
     }
 
     public void postItemOrder(ItemOrder itemOrder,GenericCallback<ItemOrder> callback){

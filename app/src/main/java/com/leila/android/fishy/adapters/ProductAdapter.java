@@ -1,5 +1,6 @@
 package com.leila.android.fishy.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -15,24 +16,30 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.leila.android.fishy.DateHelper;
 import com.leila.android.fishy.DialogHelper;
 import com.leila.android.fishy.Events.EventProductState;
 import com.leila.android.fishy.R;
 import com.leila.android.fishy.ValidatorHelper;
+import com.leila.android.fishy.ValuesHelper;
 import com.leila.android.fishy.network.ApiClient;
 import com.leila.android.fishy.network.Error;
 import com.leila.android.fishy.network.GenericCallback;
 import com.leila.android.fishy.network.models.Product;
+import com.leila.android.fishy.network.models.ReportOutcome;
 import com.leila.android.fishy.network.models.ReportProduct;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Date;
 import java.util.List;
 
-public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.ViewHolder> {
+public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.ViewHolder> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
 
@@ -44,6 +51,88 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
     public ProductAdapter(){
 
     }
+
+    private long getLongFromCat(String cat){
+
+        long l= 0;
+        for(int i =0; i < cat.length(); ++i){
+            char c = cat.charAt(i);
+
+            long x = c;
+            l = l +x;
+        }
+        return l;
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        if(position>= getItemCount()){
+            return -1;
+        } else {
+
+
+            return getLongFromCat(getItem(position).category.toLowerCase()) ;
+
+
+
+        }
+    }
+
+
+    @Override
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.view_header_cat, parent, false);
+        return new RecyclerView.ViewHolder(view) {
+        };
+    }
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if(position < getItemCount()) {
+            LinearLayout linear = (LinearLayout) holder.itemView;
+
+            final ReportProduct e = getItem(position);
+            String dateToShow = e.category;
+
+            int count = linear.getChildCount();
+            View v = null;
+            View v2 = null;
+            View v3 = null;
+
+            for(int i=0; i<count; i++) {
+                v = linear.getChildAt(i);
+                if(i==0){
+                    LinearLayout linear2= (LinearLayout) v;
+
+                    int count2 = linear2.getChildCount();
+
+                    for(int j=0; j<count2; j++) {
+
+                        v2 = linear2.getChildAt(j);
+
+                        if(j==0){
+
+                            RelativeLayout rel1= (RelativeLayout) v2;
+
+                            int coutn3=rel1.getChildCount();
+
+                            for(int k=0;k< coutn3; ++k){
+                                v3=rel1.getChildAt(k);
+
+                                if(k==0){
+                                    TextView t= (TextView) v3;
+                                    t.setText(dateToShow);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+
 
     public List<ReportProduct> getListProduct(){
         return getList();
@@ -105,7 +194,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position){
+    public void onBindViewHolder(final ViewHolder holder, @SuppressLint("RecyclerView") final int position){
         clearViewHolder(holder);
 
         final ReportProduct currentProduct=getItem(position);
@@ -225,6 +314,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
         builder.setView(dialogView);
 
 
+        final TextView edit_category= dialogView.findViewById(R.id.edith_category);
         final TextView edit_name= dialogView.findViewById(R.id.edit_name);
         final TextView edit_price= dialogView.findViewById(R.id.edit_price);
         final TextView edit_wholesaler_price= dialogView.findViewById(R.id.edit_wholesaler_price);
@@ -267,11 +357,14 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
         stock2.setText(getIntegerQuantity(p.stock2));
         text.setText("Este valor se modifica en la aplicacion "+p.serverStock2);
 
+        edit_category.setText(p.category);
+
         final AlertDialog dialog = builder.create();
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String productCategory=edit_category.getText().toString().trim();
                 String productName=edit_name.getText().toString().trim();
                 String productPrice=edit_price.getText().toString().trim();
                 String productWholesalerPrice=edit_wholesaler_price.getText().toString().trim();
@@ -279,6 +372,8 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
                 String costProduct=edit_cost.getText().toString().trim();
 
                 boolean isDataValid=true;
+
+                p.category = productCategory;
 
                 if(!productName.matches("")){
                     p.fish_name=productName;
@@ -302,7 +397,7 @@ public class ProductAdapter  extends BaseAdapter<ReportProduct,ProductAdapter.Vi
                 if(isDataValid){
                     updateItem(position,p);
 
-                    Product p2= new Product(p.fish_name,p.price,p.wholesaler_price,p.stock,p.product_cost);
+                    Product p2= new Product(p.category,p.fish_name,p.price,p.wholesaler_price,p.stock,p.product_cost);
                     p2.id=p.id;
 
                     ApiClient.get().putProduct(p2, new GenericCallback<Product>() {

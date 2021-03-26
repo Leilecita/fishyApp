@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:id="@+id/listado">
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_products"
+        android:clipToPadding="false"
+        android:paddingBottom="30dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="40dp"
 
         />
 
@@ -19,7 +19,7 @@
         android:layout_weight="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="16dp"
         android:src="@drawable/add"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"

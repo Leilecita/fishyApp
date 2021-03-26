@@ -1,5 +1,6 @@
 package com.leila.android.fishy.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -33,6 +34,7 @@ import java.text.DecimalFormat;
 public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.ViewHolder> {
 
     private OnAddItemListener onAddItemOrderLister = null;
+
 
     public void setOnAddItemListener(OnAddItemListener lister){
         onAddItemOrderLister = lister;
@@ -109,7 +111,7 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position){
+    public void onBindViewHolder(final ViewHolder holder, @SuppressLint("RecyclerView") final int position){
         clearViewHolder(holder);
 
         final ItemOrder currentItem=getItem(position);
@@ -204,7 +206,11 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
         final Button ok = dialogView.findViewById(R.id.ok);
 
         nameFish.setText(holder.name.getText().toString());
-        kg.setText(holder.cant.getText().toString()+"kg");
+        if(currentItem.product_name.equals(Constants.DISCOUNT)){
+            kg.setText("");
+        }else{
+            kg.setText(holder.cant.getText().toString()+"kg");
+        }
 
         final AlertDialog dialog = builder.create();
 
@@ -214,12 +220,22 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
                ApiClient.get().deleteItemOrder(currentItem.id, new GenericCallback<Void>() {
                    @Override
                    public void onSuccess(Void data) {
-                       Toast.makeText(mContext,"El producto ha sido borrado",Toast.LENGTH_SHORT).show();
-                       removeItem(position);
-                      if(onAddItemOrderLister!=null){
-                           onAddItemOrderLister.onAddItemToOrder(0l,0l,0l,0d,false,""
-                           ,"",0.0,0.0);
+                       if(currentItem.product_name.equals(Constants.DISCOUNT)){
+                           Toast.makeText(mContext,"El descuento ha sido borrado",Toast.LENGTH_SHORT).show();
+                       }else{
+                           Toast.makeText(mContext,"El producto ha sido borrado",Toast.LENGTH_SHORT).show();
                        }
+
+
+
+
+                      if(onAddItemOrderLister!=null){
+                           onAddItemOrderLister.onAddItemToOrder(currentItem.category,0l,0l,0l,0d,false,""
+                           ,"",0.0,0.0);
+
+                       }
+
+                       removeItem(position);
                    }
 
                    @Override

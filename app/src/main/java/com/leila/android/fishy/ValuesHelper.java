@@ -4,7 +4,6 @@ public class ValuesHelper {
 
     private static ValuesHelper INSTANCE = new ValuesHelper();
 
-    public Integer mPreviousPosition=0;
 
     private ValuesHelper(){
 
@@ -33,21 +32,25 @@ public class ValuesHelper {
 
     }
 
-
+    //no se porque desaparecio asique hacen lo mismo que el de arriba.
     public String getIntegerQuantity(Double val){
 
-        return String.valueOf(val);
-       /* String[] arr= String.valueOf(val).split("\\.");
+        val=roundTwoDecimals(val);
+
+        String[] arr=String.valueOf(val).split("\\.");
         int[] intArr=new int[2];
-        intArr[0]= Integer.parseInt(arr[0]);
-        intArr[1]= Integer.parseInt(arr[1]);
+
+        intArr[0]=Integer.parseInt(arr[0]);
+        intArr[1]=Integer.parseInt(arr[1]);
 
         if(intArr[1] == 0){
             return String.valueOf(intArr[0]);
         }else{
             return String.valueOf(val);
-        }*/
+        }
+
     }
+
 
     public Double roundTwoDecimals(double d)
     {

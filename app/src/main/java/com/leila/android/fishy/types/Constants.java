@@ -16,4 +16,7 @@ public class Constants {
     public static String INCOME_PERSONAL = "personal";
     public static String INCOME_ENTREGA = "entrega";
     public static String INCOME_ALL = "todos";
+
+
+    public static String DISCOUNT = "Descuento";
 }

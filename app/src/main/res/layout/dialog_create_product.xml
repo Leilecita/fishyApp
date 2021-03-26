@@ -54,6 +54,33 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Categoria "
+                android:textSize="@dimen/general_text"
+                android:textColor="@color/word" />
+
+            <AutoCompleteTextView
+                android:id="@+id/product_category"
+                android:layout_height="35dp"
+                android:paddingLeft="8dp"
+                style="@style/Widget.Design.TextInputLayout"
+                android:layout_width="match_parent"
+
+                android:textColor="#5c5c5c"
+                android:textSize="16sp"
+                android:fontFamily="@font/opensanssight"
+                android:background="@drawable/rec_edit"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_marginTop="12dp"
             android:layout_height="wrap_content"

@@ -8,16 +8,20 @@ import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
 import com.leila.android.fishy.R;
 import com.leila.android.fishy.ValuesHelper;
+import com.leila.android.fishy.network.models.ReportProduct;
 import com.leila.android.fishy.network.models.reportsOrder.SummaryDay;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.List;
 
-public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapter.ViewHolder> {
+public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapter.ViewHolder> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
 
@@ -30,6 +34,88 @@ public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapt
     public ItemSummaryAdapter(){
 
     }
+
+    private long getLongFromCat(String cat){
+
+        long l= 0;
+        for(int i =0; i < cat.length(); ++i){
+            char c = cat.charAt(i);
+
+            long x = c;
+            l = l +x;
+        }
+        return l;
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        if(position>= getItemCount()){
+            return -1;
+        } else {
+
+            return getLongFromCat(getItem(position).category.toLowerCase()) ;
+
+
+        }
+    }
+
+
+    @Override
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.view_header_cat_summary, parent, false);
+        return new RecyclerView.ViewHolder(view) {
+        };
+    }
+
+
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if(position < getItemCount()) {
+            LinearLayout linear = (LinearLayout) holder.itemView;
+
+            final SummaryDay e = getItem(position);
+            String dateToShow = e.category;
+
+            int count = linear.getChildCount();
+            View v = null;
+            View v2 = null;
+            View v3 = null;
+
+            for(int i=0; i<count; i++) {
+                v = linear.getChildAt(i);
+                if(i==0){
+                    LinearLayout linear2= (LinearLayout) v;
+
+                    int count2 = linear2.getChildCount();
+
+                    for(int j=0; j<count2; j++) {
+
+                        v2 = linear2.getChildAt(j);
+
+                        if(j==0){
+
+                            LinearLayout rel1= (LinearLayout) v2;
+
+                            int coutn3=rel1.getChildCount();
+
+                            for(int k=0;k< coutn3; ++k){
+                                v3=rel1.getChildAt(k);
+
+                                if(k==0){
+                                    TextView t= (TextView) v3;
+                                    t.setText(toLowerCase(dateToShow));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder  {
         TextView cant;
@@ -52,7 +138,6 @@ public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapt
         return vh;
     }
 
-
     private void clearViewHolder(ItemSummaryAdapter.ViewHolder vh){
         if(vh.cant!=null)
             vh.cant.setText(null);
@@ -68,7 +153,7 @@ public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapt
         clearViewHolder(holder);
 
         final SummaryDay item= getItem(position);
-        holder.cant.setText(ValuesHelper.get().getIntegerQuantity(round(item.totalQuantity,2)));
+        holder.cant.setText(ValuesHelper.get().getIntegerQuantityRounded(round(item.totalQuantity,2)));
 
        // holder.total_amount.setText(String.valueOf(round(item.price*item.totalQuantity,2)));
 
@@ -96,5 +181,11 @@ public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapt
     }
 
 
-
+    public String toLowerCase(String text){
+        if (text.equals("")) {
+            return text;
+        }else{
+            return text.substring(0,1).toUpperCase() + text.substring(1).toLowerCase();
+        }
+    }
 }
