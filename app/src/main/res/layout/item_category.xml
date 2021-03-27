@@ -12,13 +12,11 @@
         android:layout_height="match_parent"
         android:paddingLeft="4dp"
         android:id="@+id/name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:textColor="@color/FishyLetraDark"
         android:gravity="center_vertical"
+        android:fontFamily="@font/opensanssight"
         android:textSize="15sp"
-
-
         />
-
 
 </LinearLayout>

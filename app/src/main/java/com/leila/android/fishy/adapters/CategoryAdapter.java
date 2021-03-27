@@ -1,8 +1,12 @@
 package com.leila.android.fishy.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
+import android.support.annotation.FontRes;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +27,8 @@ public class CategoryAdapter extends BaseAdapter<ReportCategory, CategoryAdapter
 
     private OnCategoryListener onCategoryListener = null;
 
+    private Integer prevPosOpenView;
+
     public void setOnCategoryListener(OnCategoryListener lister){
         onCategoryListener = lister;
     }
@@ -30,6 +36,7 @@ public class CategoryAdapter extends BaseAdapter<ReportCategory, CategoryAdapter
     public CategoryAdapter(Context context, List<ReportCategory> outcomes) {
         setItems(outcomes);
         mContext = context;
+        prevPosOpenView=-1;
     }
 
     public CategoryAdapter() {
@@ -66,24 +73,36 @@ public class CategoryAdapter extends BaseAdapter<ReportCategory, CategoryAdapter
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onBindViewHolder(final CategoryAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final CategoryAdapter.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         clearViewHolder(holder);
-
         final ReportCategory current = getItem(position);
+
         holder.name.setText(current.category);
+
+        Typeface typeface = ResourcesCompat.getFont(mContext, R.font.opensanssight);
+        holder.name.setTypeface(typeface);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("toca acaa");
+                clearPrevious();
+                prevPosOpenView=position;
+
+                Typeface typeface = ResourcesCompat.getFont(mContext, R.font.opensansregular);
+                holder.name.setTypeface(typeface);
+
                 if(onCategoryListener!=null){
-
                     onCategoryListener.onCategoryListener(current.category);
-
                 }
             }
         });
 
 
+    }
+
+    private void clearPrevious(){
+        if(prevPosOpenView != -1){
+            notifyItemChanged(prevPosOpenView);
+        }
     }
 }
