@@ -1,6 +1,6 @@
 package com.leila.android.fishy.network.models.reportsOrder;
 
-public class SummaryDay {
+public class  SummaryDay {
 
     public Long productId;
     public String nameProduct;
@@ -8,6 +8,7 @@ public class SummaryDay {
     public Double totalPrice;
 
     public String category;
+    public String created;
 
     public SummaryDay(Long idProduct,String nameProduct,Double totalQuantity,Double totalPrice ){
         this.productId=idProduct;

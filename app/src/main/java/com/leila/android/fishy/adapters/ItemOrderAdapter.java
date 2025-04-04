@@ -220,7 +220,7 @@ public class ItemOrderAdapter  extends BaseAdapter<ItemOrder,ItemOrderAdapter.Vi
                ApiClient.get().deleteItemOrder(currentItem.id, new GenericCallback<Void>() {
                    @Override
                    public void onSuccess(Void data) {
-                       if(currentItem.product_name.equals(Constants.DISCOUNT)){
+                       if(currentItem.category.equals("Descuentos")){
                            Toast.makeText(mContext,"El descuento ha sido borrado",Toast.LENGTH_SHORT).show();
                        }else{
                            Toast.makeText(mContext,"El producto ha sido borrado",Toast.LENGTH_SHORT).show();

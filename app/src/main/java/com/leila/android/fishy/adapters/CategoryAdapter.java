@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.support.annotation.FontRes;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.leila.android.fishy.Interfaces.OnAddItemListener;
 import com.leila.android.fishy.Interfaces.OnCategoryListener;
 import com.leila.android.fishy.R;
 import com.leila.android.fishy.network.models.ReportCategory;
@@ -96,8 +93,6 @@ public class CategoryAdapter extends BaseAdapter<ReportCategory, CategoryAdapter
                 }
             }
         });
-
-
     }
 
     private void clearPrevious(){

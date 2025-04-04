@@ -76,7 +76,7 @@ public class UserHistoryOrders extends BaseActivity implements Paginate.Callback
         implementsPaginate();
 
     }
-
+/*
     @Override
     public void onResume() {
         super.onResume();
@@ -90,7 +90,7 @@ public class UserHistoryOrders extends BaseActivity implements Paginate.Callback
         }
 
     }
-
+*/
 
     private void listHistoryUser(){
 

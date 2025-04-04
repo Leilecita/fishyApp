@@ -7,18 +7,15 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
-
 import com.leila.android.fishy.Fragments.BaseFragment;
 import com.leila.android.fishy.R;
 import com.leila.android.fishy.adapters.PageAdapter;
-import com.leila.android.fishy.network.ApiClient;
 
 import android.support.design.widget.TabLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
 
 public class MainActivity extends BaseActivity {
     PageAdapter mAdapter;
@@ -126,13 +123,11 @@ public class MainActivity extends BaseActivity {
         intArr[0]=Integer.parseInt(arr[0]);
         intArr[1]=Integer.parseInt(arr[1]);
 
-
         if(intArr[1] == 0){
             return String.valueOf(intArr[0]);
         }else{
             return String.valueOf(val);
         }
-
     }
 
     private String getIntegerQuantity(Double val){
@@ -160,8 +155,8 @@ public class MainActivity extends BaseActivity {
         }else{
             return String.valueOf(val);
         }
-
     }
+
     private void setTextByPosition(TextView t, Integer i) {
         if (i == 0) {
             t.setText("CLIENTES");
@@ -178,18 +173,17 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
     @Override
     public int getLayoutRes() {
         return R.layout.activity_main;
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
@@ -200,8 +194,12 @@ public class MainActivity extends BaseActivity {
             case R.id.action_ventas:
                 startIncomesActivity();
                 return true;
-            case R.id.action_statistics:
+            /*case R.id.action_statistics:
                 startStatisticActivity();
+                return true;*/
+
+            case R.id.action_summary:
+                startSummaryPeriodByFishProduct();
                 return true;
 
             case android.R.id.home:
@@ -223,6 +221,9 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(MainActivity.this, StatisticsActivity.class));
     }
 
+    private void startSummaryPeriodByFishProduct(){
+        startActivity(new Intent(MainActivity.this, SummaryPeriodByFishProduct.class));
+    }
 
     public void actionFloatingButton(){
         int position = mTabLayout.getSelectedTabPosition();
@@ -238,7 +239,6 @@ public class MainActivity extends BaseActivity {
             }
     }
 
-
     public void refreshFragment(){
         int position = mTabLayout.getSelectedTabPosition();
         Fragment f = mAdapter.getItem(position);
@@ -247,7 +247,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
     public void setVisibilityButton(){
         int position = mTabLayout.getSelectedTabPosition();
         Fragment f = mAdapter.getItem(position);
@@ -255,9 +254,8 @@ public class MainActivity extends BaseActivity {
         if( f instanceof BaseFragment){
             button.setVisibility(((BaseFragment)f).getVisibility());
         }
-
-
     }
+
     public void setImageButton(){
         int position = mTabLayout.getSelectedTabPosition();
         Fragment f = mAdapter.getItem(position);

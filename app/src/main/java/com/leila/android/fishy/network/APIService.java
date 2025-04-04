@@ -146,6 +146,18 @@ public interface APIService {
     Observable<Response<List<ReportOrder>>>  getOrdersReportByUserId( @Query("user_id") Long user_id);
     */
 
+
+    @GET("orders.php")
+    Observable<Response<List<SummaryDay>>>  getSummaryByPeriod(@Query("method") String method,@Query("page") Integer page,  @Query("since") String date,@Query("to") String to );
+
+    @GET("orders.php")
+    Observable<Response<List<SummaryDay>>>  getSummaryByMonth(@Query("method") String method,@Query("page") Integer page,  @Query("since") String date,@Query("to") String to );
+
+
+    @GET("orders.php")
+    Observable<Response<SummaryDay>>  getAmountSalesByPeriod(@Query("method") String method, @Query("since") String date,@Query("to") String to );
+
+
     @GET("orders.php")
     Observable<Response<List<SummaryDay>>>  getSummaryDay(@Query("method") String method, @Query("deliver_date") String date);
 

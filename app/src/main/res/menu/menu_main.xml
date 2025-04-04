@@ -11,12 +11,13 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_ventas"
-        android:title="Ventas"
+        android:title="Resumen mensual ventas"
         app:showAsAction="never" />
 
+
     <item
-        android:id="@+id/action_statistics"
-        android:title="Estadísticas"
+        android:id="@+id/action_summary"
+        android:title="Resumen productos vendidos"
         app:showAsAction="never" />
 
     <item

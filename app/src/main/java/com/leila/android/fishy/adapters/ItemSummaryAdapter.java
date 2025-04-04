@@ -52,10 +52,7 @@ public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapt
         if(position>= getItemCount()){
             return -1;
         } else {
-
             return getLongFromCat(getItem(position).category.toLowerCase()) ;
-
-
         }
     }
 
@@ -153,7 +150,13 @@ public class ItemSummaryAdapter extends  BaseAdapter<SummaryDay,ItemSummaryAdapt
         clearViewHolder(holder);
 
         final SummaryDay item= getItem(position);
-        holder.cant.setText(ValuesHelper.get().getIntegerQuantityRounded(round(item.totalQuantity,2)));
+
+        if(item.totalQuantity!=null){
+            holder.cant.setText(ValuesHelper.get().getIntegerQuantityRounded(round(item.totalQuantity,2)));
+        }else{
+            holder.cant.setText("");
+        }
+
 
        // holder.total_amount.setText(String.valueOf(round(item.price*item.totalQuantity,2)));
 

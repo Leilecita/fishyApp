@@ -123,6 +123,7 @@ public class CreateOrderActivity extends BaseActivity implements Paginate.Callba
     }
 
     private void clearview(){
+
         mCurrentPage = 0;
         mAdapter.clear();
         hasMoreItems=true;

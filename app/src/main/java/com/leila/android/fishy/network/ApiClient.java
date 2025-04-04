@@ -83,6 +83,18 @@ public class ApiClient {
         handleRequest( ApiUtils.getAPIService().getSummaryDay("summaryDay", deliver_date), callback);
     }
 
+    public void getSummaryByPeriod(Integer page,String since,String to,GenericCallback<List<SummaryDay>> callback){
+        handleRequest( ApiUtils.getAPIService().getSummaryByPeriod("summaryKgByFish",page, since,to), callback);
+    }
+
+    public void getSummaryByMonth(Integer page,String since,String to,GenericCallback<List<SummaryDay>> callback){
+        handleRequest( ApiUtils.getAPIService().getSummaryByMonth("summaryKgByFishByMonth",page, since,to), callback);
+    }
+
+    public void getAmountSalesByPeriod(String since,String to,GenericCallback<SummaryDay> callback){
+        handleRequest( ApiUtils.getAPIService().getAmountSalesByPeriod("sumSalesByPeriod", since,to), callback);
+    }
+
     public void getValuesDay(String deliver_date,GenericCallback<ValuesDay> callback){
         handleRequest( ApiUtils.getAPIService().getValuesDay("summaryDayValues", deliver_date), callback);
     }

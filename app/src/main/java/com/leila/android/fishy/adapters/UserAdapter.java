@@ -1,5 +1,6 @@
 package com.leila.android.fishy.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -175,7 +176,7 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position){
+    public void onBindViewHolder(final ViewHolder holder, @SuppressLint("RecyclerView") final int position){
         clearViewHolder(holder);
 
         final User currentUser=getItem(position);
@@ -192,7 +193,10 @@ public class UserAdapter extends BaseAdapter<User,UserAdapter.ViewHolder> {
         }
 
 
-        holder.photo.setImageDrawable(getDrawableFirstLetter(currentUser));
+        if(!currentUser.name.equals("")){
+            holder.photo.setImageDrawable(getDrawableFirstLetter(currentUser));
+        }
+
 
         holder.text_name.setText(currentUser.name);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
